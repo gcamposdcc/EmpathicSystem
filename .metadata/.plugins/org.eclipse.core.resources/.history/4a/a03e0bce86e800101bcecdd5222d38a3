@@ -1,5 +1,0 @@
-package cl.automind.empathy.test;
-
-public class MethodCache {
-	private Map<String, Map<String, Method>> classToMapMappings;
-}

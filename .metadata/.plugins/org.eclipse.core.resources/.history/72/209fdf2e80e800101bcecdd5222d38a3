@@ -1,8 +1,0 @@
-package cl.automind.empathy.data;
-
-public interface IData {
-	public IData boolean like(T template);
-	public boolean like(IData template, String field);
-	public boolean like(IData template, String... fields);
-	public <T> boolean valueOfField(String field, T value );
-}

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<section name="Workbench">
-	<section name="org.eclipse.wb.internal.swing.model.property.editor.border.BorderDialog">
-		<item value="480" key="height"/>
-		<item value="482" key="width"/>
-		<item value="164" key="y"/>
-		<item value="442" key="x"/>
-	</section>
-</section>

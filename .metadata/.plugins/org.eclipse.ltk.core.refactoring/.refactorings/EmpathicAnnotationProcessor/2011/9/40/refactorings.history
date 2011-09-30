@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;EmpathicAnnotationProcessor&apos;&#x0D;&#x0A;- Original project: &apos;EmpathicAnnotationProcessor&apos;&#x0D;&#x0A;- Original element: &apos;cl.automind.empathy.annotation.Sample.java&apos;" description="Delete element" element1="/src&lt;cl.automind.empathy.annotation{Sample.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1317064746623" subPackages="false" version="1.0"/>
-</session>

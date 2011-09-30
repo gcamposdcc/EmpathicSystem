@@ -1,6 +1,0 @@
-package cl.automind.empathy.automind;
-
-public enum AlertSystemInfo {
-	On,
-	Off
-}

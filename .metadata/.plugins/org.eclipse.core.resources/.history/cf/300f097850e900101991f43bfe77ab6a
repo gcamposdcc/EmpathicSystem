@@ -1,5 +1,0 @@
-package cl.automind.empathy.data;
-
-public abstract class QueryConstrain {
-	public abstract boolean eval();
-}

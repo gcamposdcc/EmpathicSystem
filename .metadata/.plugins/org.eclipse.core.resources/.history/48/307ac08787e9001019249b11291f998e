@@ -1,9 +1,0 @@
-package cl.automind.empathy.test.t00;
-
-public class Score {
-	private final int turn;
-	private final int value;
-	public int getTurn() {
-		return turn;
-	}
-}

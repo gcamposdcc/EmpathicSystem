@@ -1,7 +1,0 @@
-package cl.automind.empathy.test.t00;
-
-import cl.automind.empathy.fw.DefaultEmpathicPlugin;
-
-public class TestPlugin extends DefaultEmpathicPlugin {
-
-}

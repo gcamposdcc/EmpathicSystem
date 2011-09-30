@@ -1,9 +1,0 @@
-package cl.automind.vote.android.empathy;
-
-import cl.automind.empathy.fw.DefaultEmpathicKernel;
-
-public class EmpathicEngine extends EmpathicKernel{
-	public EmpathicEngine(){
-		super();
-	}
-}
