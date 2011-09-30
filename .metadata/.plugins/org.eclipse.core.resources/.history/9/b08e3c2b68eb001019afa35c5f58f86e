@@ -1,0 +1,7 @@
+package cl.automind.vote.android.empathy;
+
+import cl.automind.empathy.EmpathicPlugin;
+
+public class VoteEmpathicPlugin extends EmpathicPlugin{
+
+}

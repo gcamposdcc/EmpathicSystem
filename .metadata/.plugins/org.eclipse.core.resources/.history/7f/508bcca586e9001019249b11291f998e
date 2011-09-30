@@ -1,0 +1,10 @@
+package cl.automind.empathy.test.t00;
+
+import cl.automind.empathy.fw.data.DefaultDataManager;
+
+public class TestDataManager extends DefaultDataManager {
+
+	public TestDataManager() {
+		super();
+	}
+}

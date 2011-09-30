@@ -1,0 +1,21 @@
+package cl.automind.empathy.rule;
+
+import cl.automind.empathy.feedback.AbstractMessage;
+
+public class EmptyRule extends AbstractRule {
+
+	@Override
+	public double evaluateImpl() {
+		return 100;
+	}
+
+	@Override
+	public boolean canEvaluate(Object... params) {
+		return true;
+	}
+	@Override
+	public AbstractMessage getMessage() {
+		return new EmptyMessage();
+	}
+
+}

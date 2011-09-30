@@ -1,0 +1,48 @@
+package cl.automind.vote.empathy;
+
+import java.util.List;
+
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.vote.model.Score;
+
+public class FirstPollScoreRule extends AbstractRule {
+	private final static String RESULT = "result";
+	@Override
+	public boolean canEvaluate(Object... params) {
+		return countAllInSource(EmpathicConstants.DS_SCORES) < 2;
+	}
+
+	@Override
+	public double evaluateImpl() {
+		int total = 0;
+		List<Score> scores = getAllInSource(EmpathicConstants.DS_SCORES, EmpathicConstants.TP_SCORE);
+		for (int i = 0; i < scores.size() && i < 1; i++){
+			if (scores.get(i).getValue() > 0) total++;
+		}
+		if (total > 0) {
+			clearValues();
+			putValue(RESULT, total);
+		}
+		return total;
+	}
+
+
+	public class FirstRuleMessage extends AbstractMessage{
+
+		@Override
+		public String getName() {
+			return "mFirstPollScore00";
+		}
+
+		@Override
+		public String getEmotionName() {
+			return "happiness";
+		}
+
+		@Override
+		public String getUnfilteredText() {
+			return "Acabas de contestar "+key(RESULT)+"tu primera pregunta!!!";
+		}
+	}
+}

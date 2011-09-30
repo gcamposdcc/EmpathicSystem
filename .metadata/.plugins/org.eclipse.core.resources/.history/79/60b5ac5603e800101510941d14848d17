@@ -1,0 +1,19 @@
+package cl.automind.empathy.automind;
+
+public class AutomindMetadata {
+	private SagdeMetadata sagdeMetadata;
+	private SessionContext sessionContext;
+	private AlertSystemInfo alertSystem;
+	public void setSessionContext(SessionContext sessionContext) {
+		this.sessionContext = sessionContext;
+	}
+	public SessionContext getSessionContext() {
+		return sessionContext;
+	}
+	public void setSagdeMetadata(SagdeMetadata sagdeMetadata) {
+		this.sagdeMetadata = sagdeMetadata;
+	}
+	public SagdeMetadata getSagdeMetadata() {
+		return sagdeMetadata;
+	}
+}

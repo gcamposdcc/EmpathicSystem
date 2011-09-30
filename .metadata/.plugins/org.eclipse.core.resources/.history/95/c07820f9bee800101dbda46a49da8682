@@ -1,0 +1,16 @@
+package cl.automind.empathy.fw.arbiter;
+
+import java.util.Set;
+
+import cl.automind.empathy.rule.AbstractArbiter;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.ArbiterCriterion;
+
+public class RandomSelectionCriterion extends ArbiterCriterion {
+
+	@Override
+	public AbstractRule visit(AbstractArbiter arbiter) {
+		Set<String> rulenames = arbiter.getAllRuleNames();
+	}
+
+}

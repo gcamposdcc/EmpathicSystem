@@ -1,0 +1,39 @@
+package cl.automind.empathy.automind;
+
+public class UserFeedback {
+	public enum Result {
+		Answered(1),
+		NotShown(0),
+		Timeout(-1),
+		Skipped(-2);
+		private int mark;
+		Result(int mark){
+			setMark(mark);
+		}
+		private void setMark(int mark){
+			if(this != Answered) return;
+			this.mark = mark;
+		}
+		private int getMark(){
+			return mark;
+		}
+	}
+	
+	private final Result result;
+	private String message;
+	public void setMark(int mark){
+		getResult().setMark(mark);
+	}
+	public int getMark(){
+		return getResult().getMark();
+	}
+	public Result getResult() {
+		return result;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getMessage() {
+		return message;
+	}
+}

@@ -1,0 +1,5 @@
+package cl.automind.empathy.data;
+
+public interface IData {
+	public boolean compare(String field, Object value);
+}

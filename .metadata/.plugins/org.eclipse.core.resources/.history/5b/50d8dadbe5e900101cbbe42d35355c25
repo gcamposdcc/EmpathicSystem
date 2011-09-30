@@ -1,0 +1,21 @@
+package cl.automind.empathy.test;
+
+import cl.automind.empathy.EmpathicKernel;
+import cl.automind.empathy.fw.data.DefaultDataManager;
+import cl.automind.empathy.test.t00.TestUIManager;
+
+public class EmpathyTest extends EmpathicKernel {
+
+	@Override
+	public void loadPlugins() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startEmpathy() {
+		getManagers().setUiManager(new TestUIManager());
+		getManagers().setDataManager(new DefaultDataManager());
+	}
+
+}

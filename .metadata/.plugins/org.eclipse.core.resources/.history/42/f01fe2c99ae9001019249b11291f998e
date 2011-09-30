@@ -1,0 +1,107 @@
+package cl.automind.empathy.test;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
+
+public class DeskMain {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DeskMain window = new DeskMain();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public DeskMain() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "var00", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+					.addComponent(btnUpdate)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnUpdate)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		
+		JButton btnIncrease = new JButton("increase");
+		
+		JButton btnDecrease = new JButton("decrease");
+		
+		JButton btnReset = new JButton("reset");
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnIncrease, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+						.addComponent(btnDecrease, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+						.addComponent(btnReset, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(btnIncrease)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnDecrease)
+					.addPreferredGap(ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+					.addComponent(btnReset)
+					.addContainerGap())
+		);
+		panel.setLayout(gl_panel);
+		frame.getContentPane().setLayout(groupLayout);
+	}
+}

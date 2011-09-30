@@ -1,0 +1,22 @@
+package cl.automind.empathy.automind;
+
+import cl.automind.empathy.data.IData;
+
+public class SessionInfo implements IData{
+	public enum Context{
+		School,
+		Tournament
+	}
+
+	@Override
+	public CompareResult compare(String field, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String[] getFieldNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

@@ -1,0 +1,34 @@
+package cl.automind.empathy.automind;
+
+import cl.automind.empathy.data.IData;
+
+public class SessionInfo implements IData{
+	public enum Context{
+		School,
+		Tournament
+	}
+
+	@Override
+	public boolean like(IData template) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean like(IData template, String field) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean like(IData template, String... fields) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public <T> boolean valueOfField(String field, T value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}

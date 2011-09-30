@@ -1,0 +1,9 @@
+package patterns.creational;
+
+import cl.automind.empathy.lang.INamed;
+
+public interface NamedFactory<TOut> extends IFactory<INamed, TOut> {
+	boolean isValidName(INamed name);
+	boolean isValidName(String name);
+	TOut createElement(String name);
+}

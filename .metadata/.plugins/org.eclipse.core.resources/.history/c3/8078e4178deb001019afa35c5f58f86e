@@ -1,0 +1,14 @@
+package cl.automind.vote.empathy;
+
+import cl.automind.empathy.EmpathicPlugin;
+import cl.automind.vote.android.empathy.VoteEmpathicKernel;
+
+public class AndroidEmpathicEngine extends VoteEmpathicKernel{
+	@Override
+	protected EmpathicPlugin[] getDefaultPlugins(){
+		return new EmpathicPlugin[]
+		{
+			new AndroidVoteEmpathicPlugin()
+		};
+	}
+}

@@ -1,0 +1,17 @@
+package cl.automind.empathy.data;
+
+public abstract class DataConstrain {
+	private final String field;
+	private final Object value;
+	public final DataConstrain(String field, Object value){
+		this.field = field;
+		this.value = value;
+	}
+	public abstract boolean eval();
+	public String getField() {
+		return field;
+	}
+	public Object getValue() {
+		return value;
+	}
+}

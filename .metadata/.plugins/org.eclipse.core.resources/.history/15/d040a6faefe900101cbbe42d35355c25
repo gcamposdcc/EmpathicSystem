@@ -1,0 +1,16 @@
+package cl.automind.empathy.feedback;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface EmotionMetadata {
+	public static final String DEFAULT = "default";
+	
+	public String name() default "emotion";
+	public String[] families() default { DEFAULT };
+	public static String[] FAMILIES = new String[]{ DEFAULT };
+}

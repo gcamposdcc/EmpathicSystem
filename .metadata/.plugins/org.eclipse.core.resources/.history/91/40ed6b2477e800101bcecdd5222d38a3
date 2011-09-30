@@ -1,0 +1,11 @@
+package cl.automind.sagde;
+
+public class DataSample implements IData<DataSample>{
+
+	@Override
+	public int compareTo(DataSample arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -1,0 +1,6 @@
+package cl.automind.empathy.feedback;
+
+import cl.automind.empathy.lang.INamed;
+
+public abstract class EmotionArgs implements INamed{
+}

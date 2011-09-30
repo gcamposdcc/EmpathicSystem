@@ -1,0 +1,18 @@
+package cl.automind.empathy;
+
+import java.util.Collection;
+
+import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.feedback.AbstractEmotion;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.AbstractRuleManager;
+import cl.automind.empathy.ui.AbstractUiManager;
+
+public abstract class EmpathicPlugin {
+	private abstract AbstractRuleManager getRuleManager();
+	private abstract AbstractDataManager getDataManager();
+	private abstract AbstractUiManager getUiManager();
+	
+	private abstract Collection<AbstractRule> getRules();
+	private abstract Collection<AbstractEmotion> getEmotions();
+}

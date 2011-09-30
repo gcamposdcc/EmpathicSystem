@@ -1,0 +1,25 @@
+package cl.automind.vote.empathy;
+
+import android.os.AsyncTask;
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.feedback.EmptyMessage;
+import cl.automind.empathy.rule.EmptyRule;
+import cl.automind.empathy.rule.IRule;
+import cl.automind.vote.android.application.AppContext;
+
+public class EmpathyAsyncTask extends AsyncTask<Object, AbstractMessage, IRule>{
+
+	@Override
+	protected IRule doInBackground(Object... params) {
+		IRule rule = AppContext.getInstance().getEmpathy().getArbiter().getValidRule();
+		if (rule != EmptyRule.instance){
+			publishProgress(rule.getMessage());
+		}
+		return rule;
+	}
+	@Override
+	protected void onProgressUpdate(AbstractMessage... values) {
+		super.onProgressUpdate(values);
+		AppContext.getInstance().getEmpathy().showEmpathy(values[0]);
+	}
+}

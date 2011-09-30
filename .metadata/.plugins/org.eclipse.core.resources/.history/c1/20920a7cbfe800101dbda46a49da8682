@@ -1,0 +1,25 @@
+package cl.automind.empathy.test.t00;
+
+import cl.automind.empathy.rule.AbstractRule;
+
+public class ScoreRule extends AbstractRule {
+
+	@Override
+	public boolean canExecute(Object... params) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void execute(Object... params) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public double evaluateImpl() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

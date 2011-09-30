@@ -1,0 +1,32 @@
+package cl.automind.empathy.data;
+
+import java.util.Collection;
+
+import cl.automind.empathy.lang.INamed;
+
+import patterns.behavioral.IObservable;
+
+public interface IDataSpace extends IObservable<IDataSpace>, INamed{
+	// CREAIDataE
+	int insert(IData value);
+	Collection<Integer> insert(Collection<IData> value);
+	// READ
+	IData selectById(int id);
+	IData selectNewerById(int id, int version);
+	Collection<IData> selectLike(IData template);
+	Collection<IData> selectLike(IData template, String... fields);
+	IData selectNewerLike(int version, IData template);
+	IData selectNewerLike(int version, IData template, String[] fields);
+	Collection<IData> selectAll();
+	// UPDAIDataE
+	int updateById(int id, IData value);
+	Collection<Integer> updateLike(IData template, IData value);
+	Collection<Integer> updateLike(IData template, IData value, String[] fields);
+	// DELEIDataE
+	boolean deleteById(int id);
+	boolean deleteLike(IData template);
+	// CLEAR
+	void clear();
+	// UTILS
+	boolean validId(int id);
+}

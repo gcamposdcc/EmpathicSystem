@@ -1,0 +1,4 @@
+package cl.automind.sagde;
+
+public interface IData<T> extends Comparable<T>{
+}

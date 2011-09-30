@@ -1,0 +1,10 @@
+package cl.automind.empathy.data;
+
+public class DataComparer {
+	public enum Result{
+		LessThan,
+		EqualTo,
+		GreaterThan,
+		NonComparable
+	}
+}

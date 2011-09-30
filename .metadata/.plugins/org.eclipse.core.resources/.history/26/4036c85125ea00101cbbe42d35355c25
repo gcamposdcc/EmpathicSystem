@@ -1,0 +1,13 @@
+package cl.automind.empathy;
+
+import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.rule.AbstractRuleManager;
+
+public class DataRuleMediator {
+	private AbstractDataManager dataManager;
+	private AbstractRuleManager ruleManager;
+	public Object getValueById(String dataSourceName, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

@@ -1,0 +1,37 @@
+package cl.automind.vote.android.empathy;
+
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.rule.AbstractRule;
+
+public class FirstScoreRule extends AbstractRule {
+
+	@Override
+	public double evaluateImpl() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean canEvaluate(Object... params) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public class FirstRuleMessage extends AbstractMessage{
+
+		@Override
+		public String getName() {
+			return "mFirstScore00";
+		}
+
+		@Override
+		public String getEmotionName() {
+			return "happiness";
+		}
+
+		@Override
+		public String getUnfilteredText() {
+			return "Acabas de anotar @streak puntos consecutivos!!!";
+		}
+	}
+}

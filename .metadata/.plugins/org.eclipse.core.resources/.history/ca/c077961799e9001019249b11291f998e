@@ -1,0 +1,31 @@
+package cl.automind.empathy.test.t00;
+
+import java.util.List;
+
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.RuleMetadata;
+
+@RuleMetadata(minVal = 0, maxVal = 10, threshold = 3, name = "score_streak")
+public class ScoreStreakRule extends AbstractRule {
+	private final static Score dummyScore = new Score(0,0);
+
+	@Override
+	public boolean canEvaluate(Object... params) {
+		int count = countAllInSource(TestDataManager.DS_SCORE);
+		System.out.println("TotalScores::"+count+"::Can evaluate::"+(count > 3));
+		return count > 3;
+	}
+	
+	@Override
+	public double evaluateImpl() {
+		int total = 0;
+		List<Score> scores = getAllInSource(TestDataManager.DS_SCORE, dummyScore);
+		getValuesMap().clear();
+		for (int i = scores.size() - 1; i >= 0; i--){
+			if (scores.get(i).getValue() > 0) total++;
+			else break;
+		}
+		return total;
+	}
+
+}

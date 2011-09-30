@@ -1,0 +1,115 @@
+package cl.automind.vote.android.view;
+
+import java.util.logging.Logger;
+
+import patterns.behavioral.IObserver;
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.widget.TextView;
+import cl.automind.android.vote.R;
+import cl.automind.vote.android.application.AppContext;
+import cl.automind.vote.command.RequestPollCommand;
+import cl.automind.vote.controller.RequestPollController;
+import cl.automind.vote.values.NetworkConstants;
+import cl.automind.vote.values.StringConstants;
+
+public class Choices extends Activity {
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(AppContext.ChoicesState);
+		new RequestChoicesThread().execute(this);
+	}
+	@Override
+	public void setContentView(int layoutResID){
+		super.setContentView(layoutResID);
+		AppContext.getInstance().setState(layoutResID);
+	}
+
+
+	class RequestChoicesThread extends AsyncTask<Object, Object, Object> implements IObserver<String>{
+		@Override protected void onPreExecute(){
+		}
+		@Override protected Object doInBackground(Object... params) {
+			try {
+				RequestPollController controller = new RequestPollController();
+				controller.suscribe(this);
+				controller.executeTask(RequestPollCommand.class, new Object[]{ AppContext.getInstance().getKeyCode(), AppContext.getInstance().getQuestionId()});
+			} catch (Exception e) {
+				Logger.global.warning("Catastrophical error!");
+			}
+			return null;
+		}
+		@Override protected void onProgressUpdate(Object... params){
+			String pollMessage = (String) params[0];
+			String[] pollTexts = (String[]) params[1];
+			//			String pollInfo = (String) params[2];
+
+			int count = 0;
+			((TextView)findViewById(R.id.questionHeader))
+			.setText(pollMessage);
+			((TextView)findViewById(R.id.questionChoice00))
+			.setText(pollTexts.length > count ? pollTexts[count] : "Texto Alternativa"); count++;
+			((TextView)findViewById(R.id.questionChoice01))
+			.setText(pollTexts.length > count ? pollTexts[count] : "Texto Alternativa"); count++;
+			((TextView)findViewById(R.id.questionChoice02))
+			.setText(pollTexts.length > count ? pollTexts[count] : "Texto Alternativa"); count++;
+			((TextView)findViewById(R.id.questionChoice03))
+			.setText(pollTexts.length > count ? pollTexts[count] : "Texto Alternativa"); count++;
+			((TextView)findViewById(R.id.questionChoice04))
+			.setText(pollTexts.length > count ? pollTexts[count] : "Texto Alternativa"); count++;
+			((TextView)findViewById(R.id.questionChoice05))
+			.setText(pollTexts.length > count ? pollTexts[count] : "Texto Alternativa"); count++;
+		}
+		@Override protected void onPostExecute(Object in){
+		}
+		@Override
+		public void onSuscription(String data) {
+			// TODO Auto-generated method stub
+
+		}
+		@Override
+		public void onNew(String data) {
+			String message = data;
+			String[] pollTexts = data.split("&&");
+			String pollInfo = "";
+			String pollMessage = "No hay una votación activa";
+			if (pollTexts.length > 1){
+				pollMessage = pollTexts[0].substring(pollTexts[0].indexOf("---")+3);
+//				AppContext.getInstance().setQuestionId(
+//						Integer.parseInt(pollTexts[0].substring(2,pollTexts[0].indexOf("--")))
+//				);
+				pollInfo =(
+						StringConstants.POLL_PEOPLE_POLLED + " " +
+						pollTexts[0].substring(pollTexts[0].indexOf("--") + 2,pollTexts[0].indexOf("---")) + " " +
+						StringConstants.PEOPLE
+				);
+			} else {
+				if(message.startsWith(""+NetworkConstants.FAIL+NetworkConstants.FAIL)){
+
+				} else
+					if(message.startsWith(""+NetworkConstants.FAIL)){
+						pollInfo =(StringConstants.VOTE_NULL);
+					} else
+						if(message.startsWith(""+NetworkConstants.FAIL_NULL)){
+							pollInfo =(StringConstants.VOTE_NULL);
+						} else
+							if(message.startsWith(""+NetworkConstants.SUCCESS+NetworkConstants.FAIL_DUPLICATE)){
+								pollInfo =(
+										StringConstants.POLL_PEOPLE_POLLED + " " +
+										pollTexts[0].substring(2) + " " +
+										StringConstants.PEOPLE
+								);
+							}
+			}
+			publishProgress(new Object[]{pollMessage, pollTexts, pollInfo});
+		}
+		@Override
+		public void onCompletition() {
+			// TODO Auto-generated method stub
+
+		}
+	}
+}

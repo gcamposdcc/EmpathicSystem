@@ -1,0 +1,116 @@
+package cl.automind.vote.desk.viewmodel;
+
+import interfaces.behavioral.IDisposable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import patterns.behavioral.IObserver;
+import ui.IViewModel;
+import cl.automind.vote.command.VoteCastCommand;
+import cl.automind.vote.controller.VoteCastController;
+import cl.automind.vote.values.NetworkConstants;
+import cl.automind.vote.values.StringConstants;
+
+public class VoteCastViewModel implements IViewModel, IObserver<String>{
+
+	List<IObserver<IViewModel>> observers;
+	private boolean voteEnabled;
+
+	public VoteCastViewModel(){
+		observers = new ArrayList<IObserver<IViewModel>>();
+	}
+
+	public void castVote(Object... params){
+		VoteCastController controller = new VoteCastController();
+		controller.suscribe(this);
+		controller.executeTask(VoteCastCommand.class, params);
+	}
+
+	@Override
+	public void update(IViewModel value) {
+		for (IObserver<IViewModel> observer: observers){
+			observer.onNew(this);
+		}
+	}
+
+	@Override
+	public IDisposable suscribe(IObserver<IViewModel> observer) {
+		if (! observers.contains(observer)) {
+			observers.add(observer);
+			observer.onSuscription(this);
+		}
+		return null;
+	}
+
+	@Override
+	public void unsuscribe(IObserver<IViewModel> observer) {
+		if (observers.contains(observer)){
+			observers.remove(observer);
+			observer.onCompletition();
+		}
+	}
+
+	@Override
+	public void onSuscription(String data) {
+
+	}
+
+	@Override
+	public void onNew(String data) {
+		setMessage(data);
+		update(this);
+	}
+
+	@Override
+	public void onCompletition() {
+
+	}
+
+	public void setMessage(String message) {
+		setVoteEnabled(!message.startsWith(""+NetworkConstants.SUCCESS));
+		if (message.startsWith(""+NetworkConstants.SUCCESS)){
+			this.message = StringConstants.VOTE_RECEIVED;
+			try{
+				String time = message.substring(2);
+				String[] times = time.split(":");
+				this.message += " en " + times[0] + " mins, " + times[1] + " segs." ;
+           }
+			catch (Exception e){}
+		} else {
+			this.message = StringConstants.VOTE_FAILURE;
+			if (message.length() > 1) {
+				switch(message.charAt(1)){
+				case 'D':
+					this.message += " - " + StringConstants.VOTE_DUPLICATED;
+					setVoteEnabled(false);
+					break;
+				case 'F':
+					this.message += " - " + StringConstants.VOTE_FAILURE;
+					break;
+				case 'N':
+					this.message += " - " + StringConstants.VOTE_NULL;
+					break;
+				case 'P':
+					this.message += " - " + StringConstants.PERMISION_REQUIRED;
+					setVoteEnabled(false);
+					break;
+				}
+			}
+		}
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setVoteEnabled(boolean voteEnabled) {
+		this.voteEnabled = voteEnabled;
+	}
+
+	public boolean isVoteEnabled() {
+		return voteEnabled;
+	}
+
+	private String message;
+}

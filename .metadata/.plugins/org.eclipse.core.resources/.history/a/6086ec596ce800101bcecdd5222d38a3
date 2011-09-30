@@ -1,0 +1,5 @@
+package cl.automind.sagde;
+
+public class DataSample extends IData<DataSample>{
+
+}

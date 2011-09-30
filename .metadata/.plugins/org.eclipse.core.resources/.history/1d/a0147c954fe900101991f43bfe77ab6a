@@ -1,0 +1,44 @@
+package cl.automind.empathy.data;
+
+
+public abstract class DataEntry {
+	private final int id;
+	private int version;
+	private IData value;
+	
+	public final static DataEntry Null = new DataEntry(NullData.Value) {		
+		@Override
+		protected void onSetValue(IData oldValue, IData newValue) { }
+	};
+	
+	protected abstract void onSetValue(IData oldValue, IData newValue);
+	
+	public DataEntry(IData value){
+		id = 0;
+		setVersion(0);
+		setValue(value);
+	}
+	public DataEntry(int id, IData value){
+		this.id = id;
+		setVersion(0);
+		setValue(value);
+	}
+	
+	public int setValue(IData value) {
+		onSetValue(this.value, value);
+		this.value = value;
+		return getVersion();
+	}
+	public IData getValue() {
+		return value;
+	}
+	protected void setVersion(int version) {
+		this.version = version;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public int getId() {
+		return id;
+	}
+}

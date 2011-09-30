@@ -1,0 +1,38 @@
+package cl.automind.vote.android.view;
+
+import cl.automind.android.vote.R;
+import cl.automind.vote.android.application.AppContext;
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public abstract class VoteActivity extends Activity {
+	public abstract int getLayoutId();
+	protected void setAsCurrentActivity(){
+		AppContext.getInstance().setState(getLayoutId());
+		AppContext.getInstance().setActivity(this);
+	}
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		setContentView(getLayoutId());
+	}
+	@Override
+	public void setContentView(int layoutResID){
+		super.setContentView(layoutResID);
+		setAsCurrentActivity();
+		((TextView)findViewById(R.id.KeyCode)).setText("Presiona para votar");
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setAsCurrentActivity();
+	}
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus){
+			setAsCurrentActivity();
+		}
+	}
+}

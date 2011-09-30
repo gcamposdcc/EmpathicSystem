@@ -1,0 +1,6 @@
+package interfaces.structural;
+
+public interface IProperty<T> {
+	public T get();
+	public void set(T value);
+}

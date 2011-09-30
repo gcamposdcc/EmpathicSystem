@@ -1,0 +1,62 @@
+package cl.automind.empathy.rule;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
+
+import patterns.creational.FlyweightNamedFactory;
+
+
+
+public abstract class AbstractRuleManager{
+	
+	private final EmpathicRuleFactory ruleFactory;
+	protected AbstractRuleManager(){
+		ruleFactory = initializeRuleFactory();
+	}
+	protected EmpathicRuleFactory initializeRuleFactory(){
+		return new EmpathicRuleFactory();
+	}
+	public void registerRule(String ruleName, AbstractRule rule){
+		getRuleFactory().registerElement(ruleName, rule);
+	}
+	public AbstractRule getRule(String ruleName){
+		return getRuleFactory().createElement(ruleName);
+	}
+	public Set<String> getAllRulenames(){
+		return getRuleFactory().getAllRulenames();
+	}
+	protected EmpathicRuleFactory getRuleFactory(){
+		return ruleFactory;
+	}
+	protected Collection<AbstractRule> ruleByStrategy(String strategyName){
+		return getRuleFactory().getRulesByStrategy(strategyName);
+	}
+	public void printElements(){
+		getRuleFactory().printElements();
+	}
+	
+	protected class EmpathicRuleFactory extends FlyweightNamedFactory<AbstractRule>{
+		
+		@Override
+		public Map<String, AbstractRule> initializeMap() {
+			return new Hashtable<String, AbstractRule>();
+		}
+		public Collection<AbstractRule> getRulesByStrategy(String strategyName){
+			Collection<AbstractRule> rules = getRegistry().values();
+			Collection<AbstractRule> selectedRules = new ArrayList<AbstractRule>();
+			for (AbstractRule rule : rules){
+				if (rule.hasStrategy(strategyName)) {
+					selectedRules.add(rule);
+				}
+			}
+			return selectedRules;
+		}
+		public Set<String> getAllRulenames(){
+			System.out.println("GettingAllRuleNames");
+			return getRegistry().keySet();
+		}
+	}
+}

@@ -1,0 +1,34 @@
+package cl.automind.vote.android.empathy;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import cl.automind.empathy.EmpathicKernel;
+import cl.automind.empathy.EmpathicPlugin;
+import cl.automind.empathy.fw.data.InternalDataSource;
+import cl.automind.vote.model.Score;
+
+public class VoteEmpathicKernel extends EmpathicKernel{
+
+	protected EmpathicPlugin[] getDefaultPlugins(){
+		return new EmpathicPlugin[]
+		{
+			new VoteEmpathicPlugin()
+		};
+	}
+
+	@Override
+	public Collection<EmpathicPlugin> loadPluginClasses() {
+		Collection<EmpathicPlugin> plugins = new ArrayList<EmpathicPlugin>();
+		for(EmpathicPlugin plugin : getDefaultPlugins()){
+			System.out.println(plugin);
+			plugins.add(plugin);
+		}
+		return plugins;
+	}
+
+	@Override
+	public void startEmpathy() {
+		getManagers().getDataManager().registerDataSource(EmpathicConstants.DS_SCORES, new InternalDataSource<Score>(false));
+	}
+}

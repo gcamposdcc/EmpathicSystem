@@ -1,0 +1,90 @@
+package cl.automind.vote.desk.controller;
+
+import interfaces.behavioral.IController;
+import interfaces.behavioral.IDisposable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import patterns.behavioral.IObservable;
+import patterns.behavioral.IObserver;
+import cl.automind.vote.command.PollCommandFactory;
+import cl.automind.vote.command.PollCommands;
+import cl.automind.vote.command.RequestPollCommand;
+
+public class RequestPollController implements IController<RequestPollCommand>, IObservable<String>, IObserver<String>{
+	private RequestPollCommand requestPollCommand;
+
+	public RequestPollController(){
+		setObservers(new ArrayList<IObserver<String>>());
+		setCommand((RequestPollCommand)(new PollCommandFactory()).createElement(PollCommands.RequestPoll));
+	}
+
+	@Override
+	public void setCommand(RequestPollCommand command) {
+		this.requestPollCommand = command;
+	}
+
+	@Override
+	public RequestPollCommand getCommand() {
+		return requestPollCommand;
+	}
+
+	@Override
+	public void executeTask(Class<? extends RequestPollCommand> commandType, Object... params) {
+		if (getCommand().canExecute(params)) {
+			getCommand().suscribe(this);
+			getCommand().execute(params);
+		}
+	}
+
+	@Override
+	public void onSuscription(String data) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onNew(String data) {
+		update(data);
+	}
+
+	@Override
+	public void onCompletition() {
+		getCommand().unsuscribe(this);
+	}
+
+	@Override
+	public void update(String value) {
+		System.out.println("RequestPollController::NotifyObservers");
+		for(IObserver<String> observer: getObservers()){
+			observer.onNew(value);
+		}
+	}
+
+	List<IObserver<String>> observers;
+	@Override
+	public IDisposable suscribe(IObserver<String> observer) {
+		// TODO Auto-generated method stub
+		if(!getObservers().contains(observer)) {
+			getObservers().add(observer);
+			observer.onSuscription("");
+		}
+		return null;
+	}
+
+	@Override
+	public void unsuscribe(IObserver<String> observer) {
+		getObservers().remove(observer);
+		observer.onCompletition();
+	}
+
+	protected void setObservers(List<IObserver<String>> observers) {
+		this.observers = observers;
+	}
+
+	public List<IObserver<String>> getObservers() {
+		return observers;
+	}
+
+}

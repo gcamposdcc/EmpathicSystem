@@ -1,0 +1,8 @@
+package cl.automind.empathy.automind;
+
+public enum SessionInfo {
+	public enum Context{
+		School,
+		Tournament
+	}
+}

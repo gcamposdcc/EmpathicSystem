@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=DevelopmentLib/src&lt;patterns.behavioral{IStrategy.java[IStrategy" modifiers="513" timestamp="1310450233433"/>
+<typeInfo handle="=DevelopmentLib/src&lt;patterns.behavioral{IObservable.java[IObservable" modifiers="513" timestamp="1310624829969"/>
+<typeInfo handle="=DevelopmentLib/src&lt;patterns.behavioral{IObserver.java[IObserver" modifiers="513" timestamp="1310681023660"/>
+<typeInfo handle="=DevelopmentLib/src&lt;patterns.creational{IFactory.java[IFactory" modifiers="513" timestamp="1314815732216"/>
+<typeInfo handle="=EmpathicCore/C:\/Program Files\/Java\/jre6\/lib\/rt.jar&lt;com.sun.corba.se.spi.ior(IdentifiableFactory.class[IdentifiableFactory" modifiers="1537" timestamp="1304498639000"/>
+<typeInfo handle="=EmpathicCore/C:\/Program Files\/Java\/jre6\/lib\/rt.jar&lt;java.lang(Exception.class[Exception" modifiers="33" timestamp="1304498639000"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy{EmpathicKernel.java[EmpathicKernel" modifiers="1025" timestamp="1317405175844"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{AbstractDataManager.java[AbstractDataManager" modifiers="1025" timestamp="1317246981469"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.rule{AbstractRule.java[AbstractRule" modifiers="1025" timestamp="1317275917846"/>
+<typeInfo handle="=EmpathicFramework/src&lt;cl.automind.empathy.fw.data{DefaultDataManager.java[DefaultDataManager" modifiers="1" timestamp="1317228966163"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.rule{AbstractRuleManager.java[AbstractRuleManager" modifiers="1025" timestamp="1317268607789"/>
+<typeInfo handle="=EmpathicFramework/src&lt;cl.automind.empathy.fw.rule{DefaultRuleManager.java[DefaultRuleManager" modifiers="1" timestamp="1317182466854"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy{EmpathicPlugin.java[EmpathicPlugin" modifiers="1025" timestamp="1317399607265"/>
+<typeInfo handle="=EmpathicFramework/src&lt;cl.automind.empathy.fw{DefaultEmpathicPlugin.java[DefaultEmpathicPlugin" modifiers="1" timestamp="1317399642967"/>
+<typeInfo handle="=AutomindVoter/C:\/Users\/Guillermo\/Programas\/development\/AndroidSDK\/platforms\/android-4\/android.jar&lt;android.app(Activity.class[Activity" modifiers="33" timestamp="1291785376168"/>
+<typeInfo handle="=AutomindVoter/src&lt;cl.automind.vote.empathy{EmpathyAsyncTask.java[EmpathyAsyncTask" modifiers="1" timestamp="1317402360519"/>
+</typeInfoHistroy>

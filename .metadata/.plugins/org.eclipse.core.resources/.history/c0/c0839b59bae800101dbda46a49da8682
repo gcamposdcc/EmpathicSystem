@@ -1,0 +1,5 @@
+package cl.automind.empathy.data;
+
+public abstract class DataConstrain {
+	public abstract boolean eval();
+}

@@ -1,0 +1,5 @@
+package cl.automind.empathy.lang;
+
+public interface INamed {
+	public String getName();
+}

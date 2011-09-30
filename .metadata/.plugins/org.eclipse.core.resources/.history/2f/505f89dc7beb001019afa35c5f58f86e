@@ -1,0 +1,60 @@
+package cl.automind.vote.android.empathy;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import cl.automind.empathy.AbstractArbiter;
+import cl.automind.empathy.ArbiterCriterion;
+import cl.automind.empathy.EmpathicPlugin;
+import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.feedback.AbstractEmotion;
+import cl.automind.empathy.fw.arbiter.DefaultArbiter;
+import cl.automind.empathy.fw.arbiter.LessUsedCriterion;
+import cl.automind.empathy.fw.data.DefaultDataManager;
+import cl.automind.empathy.fw.rule.DefaultRuleManager;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.AbstractRuleManager;
+import cl.automind.empathy.ui.IUiManager;
+
+public class VoteEmpathicPlugin extends EmpathicPlugin{
+	private final AbstractArbiter arbiter = new DefaultArbiter();
+	private final ArbiterCriterion criterion = new LessUsedCriterion();
+
+	@Override
+	public AbstractRuleManager getRuleManager() {
+		return new DefaultRuleManager();
+	}
+
+	@Override
+	public AbstractDataManager getDataManager() {
+		return new DefaultDataManager();
+	}
+
+	@Override
+	public IUiManager getUiManager() {
+		return new VoteUiManager();
+	}
+
+	@Override
+	public AbstractArbiter getArbiter() {
+		return new DefaultArbiter();
+	}
+
+	@Override
+	public ArbiterCriterion getCriterion() {
+		return new LessUsedCriterion();
+	}
+
+	@Override
+	public Collection<AbstractRule> getRules() {
+		List<AbstractRule> rules = new ArrayList<AbstractRule>();
+		return rules;
+	}
+
+	@Override
+	public Collection<AbstractEmotion> getEmotions() {
+		return new ArrayList<AbstractEmotion>();
+	}
+
+}

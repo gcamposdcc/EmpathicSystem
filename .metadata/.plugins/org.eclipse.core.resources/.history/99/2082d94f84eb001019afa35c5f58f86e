@@ -1,0 +1,12 @@
+package cl.automind.vote.android.view;
+
+import cl.automind.vote.android.application.AppContext;
+import android.app.Activity;
+
+public class VoteActivity extends Activity {
+
+	protected void setAsCurrentActivity(){
+		AppContext.getInstance().setState(AppContext.VoteState);
+		AppContext.getInstance().setActivity(this);
+	}
+}

@@ -1,0 +1,8 @@
+package cl.automind.empathy.ui;
+
+import cl.automind.empathy.feedback.AbstractMessage;
+
+public abstract class AbstractUiManager {
+	public abstract void displayMessage(AbstractMessage message);
+	public abstract void hideCurrentMessage();
+}

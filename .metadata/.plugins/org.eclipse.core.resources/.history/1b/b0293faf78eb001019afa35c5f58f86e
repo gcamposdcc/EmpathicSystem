@@ -1,0 +1,68 @@
+package cl.automind.vote.android.empathy;
+
+import java.util.Collection;
+
+import cl.automind.empathy.AbstractArbiter;
+import cl.automind.empathy.ArbiterCriterion;
+import cl.automind.empathy.EmpathicPlugin;
+import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.feedback.AbstractEmotion;
+import cl.automind.empathy.fw.arbiter.DefaultArbiter;
+import cl.automind.empathy.fw.arbiter.LessUsedCriterion;
+import cl.automind.empathy.fw.data.DefaultDataManager;
+import cl.automind.empathy.fw.rule.DefaultRuleManager;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.AbstractRuleManager;
+import cl.automind.empathy.ui.IUiManager;
+
+public class VoteEmpathicPlugin extends EmpathicPlugin{
+	private final AbstractArbiter arbiter = new DefaultArbiter();
+	private final ArbiterCriterion criterion = new LessUsedCriterion();
+
+	private final AbstractRuleManager ruleManager = new DefaultRuleManager();
+	private final AbstractDataManager dataManager = new DefaultDataManager();
+	private final IUiManager uiManager = new VoteUiManager();
+
+	@Override
+	public AbstractRuleManager getRuleManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractDataManager getDataManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IUiManager getUiManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractArbiter getArbiter() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArbiterCriterion getCriterion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<AbstractRule> getRules() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<AbstractEmotion> getEmotions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

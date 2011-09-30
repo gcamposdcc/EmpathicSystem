@@ -1,0 +1,19 @@
+package cl.automind.empathy.data;
+
+import cl.automind.empathy.data.DataComparer.Result;
+
+public final class NullData implements IData {
+	
+	private NullData(){
+		
+	}
+	
+	public final static NullData Value = new NullData();
+
+	@Override
+	public Result compare(String field, Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

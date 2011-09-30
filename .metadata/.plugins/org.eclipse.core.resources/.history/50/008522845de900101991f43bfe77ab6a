@@ -1,0 +1,7 @@
+package cl.automind.empathy.fw.arbiter;
+
+import cl.automind.empathy.rule.ArbiterCriterion;
+
+public class LessUsedCriterion extends ArbiterCriterion{
+
+}

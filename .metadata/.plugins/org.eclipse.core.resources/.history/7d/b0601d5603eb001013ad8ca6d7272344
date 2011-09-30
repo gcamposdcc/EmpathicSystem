@@ -1,0 +1,142 @@
+package cl.automind.vote.connectivity;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.Properties;
+
+import cl.automind.vote.model.ExportableObject;
+import cl.automind.vote.values.NetworkConstants;
+/**
+ * El puente Java-C# usando un Socket
+ * @author Guillermo
+ *
+ */
+public class Client implements IClient{
+	private static String HOST = "172.16.254.209";
+	private static String DEFAULT_HOST = "192.168.0.0";
+	private static String PORT = "8001";
+	private int TIMEOUT = 2000;
+	private Socket socket;
+	public static final String SUCCESS = "S";
+	public static final String FAIL = "F";
+	private static Client instance;
+
+	private Client(){
+	}
+
+	private Client(String host, String port){
+		try{
+			Properties p = new Properties();
+			p.load(Client.class.getResourceAsStream("connection.properties"));
+			p.getProperty("host", HOST);
+			p.getProperty("port", PORT);
+		} catch (Exception e){
+			HOST = host;
+			PORT = port;
+		}
+	}
+
+	public static Client getClient(String ip, String port){
+		if (instance == null) instance =  new Client();
+		HOST = ip != null ? ip : DEFAULT_HOST;
+		PORT = port;
+		return instance;
+	}
+
+	public String exportObject(ExportableObject data, String host){
+		String output = FAIL+FAIL;
+		try {
+			// Code in parent process
+			InetAddress address = InetAddress.getByName(host);
+			socket = new Socket();
+			InetSocketAddress isa = new InetSocketAddress(address, Integer.parseInt(PORT));
+			ThreadGroup tgroup = new ThreadGroup("mysockgrp");
+
+			SocketTimeoutThread sct = new SocketTimeoutThread(tgroup, "myname", TIMEOUT, socket);
+			sct.start();
+			socket.connect(isa);
+			sct.set(null);
+
+			// send
+			OutputStream os = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(os, true);
+			String[] values = data.getValues();
+			for (int i = 0; i < values.length; i++){
+				if (i != values.length - 1) pw.print(values[i]+ ExportableObject.SEP) ;
+				else pw.println(values[i]);
+			}
+			// receive
+			InputStream  is = socket.getInputStream();
+			BufferedReader bf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			String incoming = bf.readLine();
+			if (incoming.startsWith(NetworkConstants.SUCCESS+"")
+				|| incoming.startsWith(NetworkConstants.FAIL+"")){
+				output = incoming;
+			} else {
+				output = FAIL;
+			}
+			pw.close();
+			os.close();
+			socket.close();
+		} catch (Exception e) {
+			output = FAIL+FAIL+e.getMessage();
+		}
+//		Logger.global.warning(output);
+		return output;
+	}
+
+	public ExportableObject importObject() {
+		return null;
+	}
+
+
+	@Override
+	public void setPreferredPort(int port) {
+		PORT = port+"";
+	}
+
+	@Override
+	public void setPreferredPort(String port) {
+		PORT = port;
+	}
+	/******* Below thread class ***/
+	class SocketTimeoutThread extends Thread{
+
+		private int sleepValue = 5000; // In millis!!! 5 seconds
+		private Socket remember;
+
+		public SocketTimeoutThread(ThreadGroup tg, String u, int i, Socket sock){
+			super(tg, u);
+			sleepValue = i;
+			remember = sock;
+		}
+
+		public void set(Socket s){
+			remember = s;
+		}
+
+		public void run(){
+			try{
+				Thread.sleep(sleepValue);
+				if(remember != null){
+					remember.close();
+					System.out.println("Socket thread expired, had to closed");
+				} else {
+					System.out.println("Socket thread expired, all okay");
+				}
+			} catch(Exception ie) {
+				ie.printStackTrace();
+			}
+		}
+
+		public void end(){
+			interrupt();
+		}
+	}
+}

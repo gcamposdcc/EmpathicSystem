@@ -1,0 +1,59 @@
+package cl.automind.empathy.fw.data;
+
+import java.util.Hashtable;
+import java.util.Map;
+
+import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.data.IDataSpace;
+
+import patterns.creational.FlyweightNamedFactory;
+
+public class DefaultDataManager extends AbstractDataManager{
+	
+	private final FlyweightNamedFactory<IDataSpace> dataSpaces;
+	public DefaultDataManager(){
+		dataSpaces = new FlyweightNamedFactory<IDataSpace>() {
+			@Override
+			public Map<String, IDataSpace> initializeMap() {
+				return new Hashtable<String, IDataSpace>();
+			}
+		};
+	}
+	@Override
+	public boolean createSpaceIfNotFound() {
+		return true;
+	}
+	@Override
+	public IDataSpace getDataSpace(String dataSpaceName) {
+		IDataSpace space = dataSpaces.createElement(dataSpaceName);
+		if (space == null && createSpaceIfNotFound()){
+			space = new InternalDataSpace(true);
+			dataSpaces.registerElement(dataSpaceName, space);
+		}
+		return space;
+	}
+	
+	@Override
+	public void onSuscription(IDataSpace data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNew(IDataSpace data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCompletition() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean registerDataSpace(String dataSpace, IDataSpace dataspace2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

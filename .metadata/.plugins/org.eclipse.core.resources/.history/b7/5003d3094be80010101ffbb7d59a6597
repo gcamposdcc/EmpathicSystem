@@ -1,0 +1,18 @@
+package cl.automind.empathy.feedback;
+
+import cl.automind.empathy.lang.INamed;
+
+public abstract class AbstractMessage implements INamed{
+	/**
+	 * @return The codename of the EmpathicMessage, this should be unique.
+	 */
+	@Override public abstract String getName();
+	/**
+	 * @return The message that will be shown to the player
+	 */
+	public abstract String getMessage();
+	/**
+	 * @return The codename of the EmpathicEmotion that will be displayed with this message.
+	 */
+	public abstract String getEmotionName();
+}

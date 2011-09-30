@@ -1,0 +1,29 @@
+package cl.automind.empathy.test.t00;
+
+import java.util.Collection;
+
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.RuleMetadata;
+
+@RuleMetadata(minVal = 0, maxVal = 10, threshold = 0, name = "score_total")
+public class ScoreRule extends AbstractRule {
+	private final static Score dummyScore = new Score(0,0);
+
+	@Override
+	public boolean canEvaluate(Object... params) {
+		int count = countAllInSource(TestDataManager.DS_SCORE);
+		System.out.println("TotalScores::"+count+"::Can evaluate::"+(count > 3));
+		return count > 3;
+	}
+	
+	@Override
+	public double evaluateImpl() {
+		int total = 0;
+		Collection<Score> scores = getAllInSource(TestDataManager.DS_SCORE, dummyScore);
+		for (Score score: scores){
+			total += score.getValue();
+		}
+		return total;
+	}
+
+}

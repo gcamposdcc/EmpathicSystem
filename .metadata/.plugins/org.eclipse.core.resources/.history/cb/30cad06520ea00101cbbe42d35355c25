@@ -1,0 +1,17 @@
+package cl.automind.empathy.rule;
+
+public class EmptyRule extends AbstractRule {
+
+	@Override
+	public double evaluateImpl() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean canEvaluate(Object... params) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,70 @@
+package cl.automind.empathy.ui;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
+
+import patterns.creational.FlyweightNamedFactory;
+import cl.automind.empathy.feedback.AbstractEmotion;
+import cl.automind.empathy.feedback.AbstractMessage;
+
+public abstract class AbstractUiManager {
+
+	
+	public AbstractUiManager(){
+		emotionFactory = initializeEmotionFactory();
+	}
+	public abstract void displayMessage(AbstractMessage message);
+	public abstract void hideCurrentMessage();
+	
+	
+	// <emotion-factory>
+
+	private final EmpathicEmotionFactory emotionFactory;
+	
+	protected EmpathicEmotionFactory initializeEmotionFactory(){
+		return new EmpathicEmotionFactory();
+	}
+	public void registerEmotion(String ruleName, AbstractEmotion emotion){
+		getEmotionFactory().registerElement(ruleName, emotion);
+	}
+	public AbstractEmotion getEmotion(String ruleName){
+		return getEmotionFactory().createElement(ruleName);
+	}
+	public Set<String> getAllEmotionnames(){
+		return getEmotionFactory().getAllEmotionnames();
+	}
+	protected EmpathicEmotionFactory getEmotionFactory(){
+		return emotionFactory;
+	}
+	protected Collection<AbstractEmotion> ruleByFamily(String familyName){
+		return getEmotionFactory().getEmotionsByFamily(familyName);
+	}
+	public void printElements(){
+		getEmotionFactory().printElements();
+	}
+	
+	protected class EmpathicEmotionFactory extends FlyweightNamedFactory<AbstractEmotion>{
+		
+		@Override
+		public Map<String, AbstractEmotion> initializeMap() {
+			return new Hashtable<String, AbstractEmotion>();
+		}
+		public Collection<AbstractEmotion> getEmotionsByFamily(String strategyName){
+			Collection<AbstractEmotion> emotions = getRegistry().values();
+			Collection<AbstractEmotion> selectedEmotions = new ArrayList<AbstractEmotion>();
+			for (AbstractEmotion emotion : emotions){
+				if (emotion.hasFamily(strategyName)) {
+					selectedEmotions.add(emotion);
+				}
+			}
+			return selectedEmotions;
+		}
+		public Set<String> getAllEmotionnames(){
+			return getRegistry().keySet();
+		}
+	}
+	// </emotion-factory>
+}

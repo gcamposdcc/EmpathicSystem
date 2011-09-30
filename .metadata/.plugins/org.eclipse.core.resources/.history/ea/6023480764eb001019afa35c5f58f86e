@@ -1,0 +1,9 @@
+package cl.automind.vote.android.empathy;
+
+public class EmpathicConstants {
+	// DATASOURCE NAME
+		public final static String DS_SCORES = "Scores";
+		public final static String DS_ATTEMPTS = "Attempts";
+		public final static String DS_CHOICES = "Choices";
+
+}

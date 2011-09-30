@@ -1,0 +1,40 @@
+package cl.automind.empathy.data;
+
+import java.util.Collection;
+
+import interfaces.behavioral.IDisposable;
+import patterns.behavioral.IObserver;
+
+
+
+public abstract class AbstractDataManager implements IDataSourceObserver{
+	/// ABSTRACT METHODS
+	public abstract <T> IDataSource<T> getDataSource(String dataSourceName);
+	public abstract <T> IDataSource<T> getDataSource(String dataSourceName, T template);
+	public abstract <T> boolean registerDataSource(String DataSource, IDataSource<T> dataSource);
+	public abstract boolean createSpaceIfNotFound();
+	
+	protected <T> IDisposable suscribeDataSourceObserver(String dataSourceName, IObserver<IDataSource<T>> observer){
+		IDataSource<T> dataSource = getDataSource(dataSourceName);
+		if (dataSource == null) return null;
+		return dataSource.suscribe(observer);
+	}
+	
+	protected <T> int pushValue(String dataSourceName, T value){
+		return getDataSource(dataSourceName, value).insert(value);
+	}
+	protected <T> int updateValue(String dataSourceName, int id, T value){
+		return getDataSource(dataSourceName).updateById(id, value);
+	}
+	
+	public Object getValueById(String dataSourceName, int id){
+		return getDataSource(dataSourceName).selectById(id);
+	}
+	public <T> Collection<T> getAll(String dataSourceName, T template){
+		return getDataSource(dataSourceName).selectAll();
+	}
+	public <T> Object getValueLike(String dataSourceName, T template){
+		return getDataSource(dataSourceName).selectLike(template);
+	}
+	
+}

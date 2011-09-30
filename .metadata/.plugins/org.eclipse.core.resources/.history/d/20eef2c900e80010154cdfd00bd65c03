@@ -1,0 +1,7 @@
+package cl.automind.empathy.automind;
+
+public class AutomindMetadata {
+	private SagdeMetadata sagdeMetadata;
+	private SessionContext context;
+	private AlertSystem alerts;
+}

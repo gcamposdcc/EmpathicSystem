@@ -1,0 +1,31 @@
+package cl.automind.empathy.test;
+
+import java.lang.reflect.Method;
+import java.util.Hashtable;
+import java.util.Map;
+
+public class MethodCache {
+	private final Map<String, Map<String, Method>> classMap;
+	private static volatile MethodCache instance;
+	private MethodCache(){
+		classMap = initializeMap();
+	}
+	private Map<String, Map<String, Method>> initializeMap() {
+		return new Hashtable<String, Map<String,Method>>();
+	}
+	public static MethodCache getInstance(){
+		if (instance == null) instance = new MethodCache();
+		return instance;
+	}
+	public synchronized <T> Method getMethod(Class<T> clazz, String methodname){
+		if(classMap.containsKey(clazz.getCanonicalName())){
+			if (classMap.get(clazz.getCanonicalName()).containsKey(methodname)){
+				return classMap.get(clazz.getCanonicalName()).get(methodname);
+			} else {
+				try {
+					
+				}
+			}
+		}
+	}
+}

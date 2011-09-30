@@ -1,0 +1,11 @@
+package cl.automind.vote.empathy;
+
+import cl.automind.empathy.rule.IRule;
+import cl.automind.vote.android.application.AppContext;
+
+public class PushAndEval extends EmpathyAsyncTask {
+	@Override
+	protected IRule doInBackground(Object... params) {
+		return super.doInBackground(params);
+	}
+}

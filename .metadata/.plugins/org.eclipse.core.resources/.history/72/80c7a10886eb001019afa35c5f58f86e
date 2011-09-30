@@ -1,0 +1,15 @@
+package cl.automind.vote.empathy;
+
+import android.os.AsyncTask;
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.vote.android.application.AppContext;
+
+public class EmpathyAsyncTask extends AsyncTask<Object, AbstractMessage, IRule>{
+
+	@Override
+	protected IRule doInBackground(Object... params) {
+		return AppContext.getInstance().getEmpathy().getArbiter().getValidRule();
+	}
+
+}

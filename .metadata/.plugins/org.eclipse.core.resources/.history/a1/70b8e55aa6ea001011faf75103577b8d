@@ -1,0 +1,90 @@
+package cl.automind.vote.desk.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import interfaces.behavioral.IController;
+import interfaces.behavioral.IDisposable;
+import patterns.behavioral.IObservable;
+import patterns.behavioral.IObserver;
+import cl.automind.vote.command.LoginCommand;
+import cl.automind.vote.command.PollCommandFactory;
+import cl.automind.vote.command.PollCommands;
+
+public class LoginController implements IController<LoginCommand>, IObserver<String>, IObservable<String>{
+
+	public LoginController(){
+		setObservers(new ArrayList<IObserver<String>>());
+		setCommand((LoginCommand)(new PollCommandFactory()).createElement(PollCommands.Login));
+	}
+
+	private LoginCommand loginCommand;
+
+	@Override
+	public void setCommand(LoginCommand loginCommand) {
+		this.loginCommand = loginCommand;
+	}
+
+	@Override
+	public LoginCommand getCommand() {
+		return this.loginCommand;
+	}
+
+	@Override
+	public void executeTask(Class<? extends LoginCommand> commandType, Object... params) {
+		// TODO Auto-generated method stub
+		if (getCommand().canExecute(params)) {
+			getCommand().suscribe(this);
+			getCommand().execute(params);
+		}
+	}
+
+	@Override
+	public void onSuscription(String data) {
+
+	}
+
+	@Override
+	public void onNew(String data) {
+		update(data);
+	}
+
+	@Override
+	public void onCompletition() {
+		getCommand().unsuscribe(this);
+	}
+
+
+	@Override
+	public void update(String value) {
+		System.out.println("LoginController::NotifyObservers");
+		for(IObserver<String> observer: getObservers()){
+			observer.onNew(value);
+		}
+	}
+
+	List<IObserver<String>> observers;
+	@Override
+	public IDisposable suscribe(IObserver<String> observer) {
+		// TODO Auto-generated method stub
+		if(!getObservers().contains(observer)) {
+			getObservers().add(observer);
+			observer.onSuscription("");
+		}
+		return null;
+	}
+
+	@Override
+	public void unsuscribe(IObserver<String> observer) {
+		getObservers().remove(observer);
+		observer.onCompletition();
+	}
+
+	protected void setObservers(List<IObserver<String>> observers) {
+		this.observers = observers;
+	}
+
+	public List<IObserver<String>> getObservers() {
+		return observers;
+	}
+}

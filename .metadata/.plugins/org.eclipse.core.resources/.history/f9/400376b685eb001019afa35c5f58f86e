@@ -1,0 +1,14 @@
+package cl.automind.vote.empathy;
+
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.vote.android.application.AppContext;
+import android.os.AsyncTask;
+
+public class EmpathyAsyncTask extends AsyncTask<Object, AbstractMessage, Object>{
+
+	@Override
+	protected Object doInBackground(Object... params) {
+		return null;
+	}
+
+}

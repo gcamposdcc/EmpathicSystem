@@ -1,0 +1,6 @@
+package cl.automind.sagde;
+
+public interface IData {
+	int like(IData data);
+	IData get(String field);
+}

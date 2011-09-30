@@ -1,0 +1,12 @@
+package cl.automind.empathy.data;
+
+public interface IData<T> {
+	public String[] getFieldNames();
+	public CompareResult compare(String field, Object value);
+	public enum CompareResult{
+		LessThan,
+		EqualTo,
+		GreaterThan,
+		NonComparable
+	}
+}

@@ -1,0 +1,18 @@
+package cl.automind.empathy.data;
+
+import interfaces.structural.INamed;
+
+public abstract class AIndicator<T> implements INamed{
+	private String name;
+	
+	public AIndicator(String indicatorName){
+		setName(indicatorName);
+	}
+	abstract T evaluate();
+	protected void setName(String name) {
+		this.name = name;
+	}
+	@Override public String getName() {
+		return name;
+	}
+}

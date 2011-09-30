@@ -1,0 +1,14 @@
+package cl.automind.empathy.fw.arbiter;
+
+import cl.automind.empathy.rule.AbstractArbiter;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.ArbiterCriterion;
+
+public class LessUsedCriterion extends ArbiterCriterion{
+
+	@Override
+	public AbstractRule visit(AbstractArbiter arbiter) {
+		return arbiter.getRule(arbiter.getLessUsedRuleName());
+	}
+
+}

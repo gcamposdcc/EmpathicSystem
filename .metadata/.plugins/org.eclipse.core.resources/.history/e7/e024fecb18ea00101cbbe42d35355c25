@@ -1,0 +1,29 @@
+package cl.automind.empathy.fw;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import cl.automind.empathy.EmpathicKernel;
+import cl.automind.empathy.EmpathicPlugin;
+
+public class DefaultEmpathicKernel extends EmpathicKernel{
+	protected EmpathicPlugin[] defaultPlugins = 
+	{
+		new DefaultEmpathicPlugin()
+	};
+	@Override
+	public Collection<EmpathicPlugin> loadPluginClasses() {
+		Collection<EmpathicPlugin> plugins = new ArrayList<EmpathicPlugin>();
+		for(EmpathicPlugin plugin : defaultPlugins){
+			plugins.add(plugin);
+		}
+		return plugins;
+	}
+
+	@Override
+	public void startEmpathy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

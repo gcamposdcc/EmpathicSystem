@@ -1,0 +1,5 @@
+package cl.automind.empathy.data;
+
+public abstract class WebDataSource implements IDataSource {
+	public enum Format {Plain, XML, JSON}
+}

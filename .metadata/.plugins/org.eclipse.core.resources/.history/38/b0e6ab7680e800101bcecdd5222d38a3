@@ -1,0 +1,41 @@
+package cl.automind.empathy.data;
+
+public final class NullData implements IData {
+	
+	private NullData(){
+		
+	}
+	
+	public final static NullData Value = new NullData();
+		
+	
+	@Override
+	public boolean like(IData template) {
+		return false;
+	}
+	public boolean like(NullData template){
+		return true;
+	}
+
+	@Override
+	public boolean like(IData template, String field) {
+		return false;
+	}
+	public boolean like(NullData template, String field){
+		return true;
+	}
+
+	@Override
+	public boolean like(IData template, String... fields) {
+		return false;
+	}
+
+	public boolean like(NullData template, String... fields){
+		return true;
+	}
+	@Override
+	public boolean valueOfField(String field, Object value) {
+		return false;
+	}
+
+}

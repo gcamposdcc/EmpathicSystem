@@ -1,0 +1,37 @@
+package cl.automind.empathy.ui;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
+
+import patterns.creational.FlyweightNamedFactory;
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.rule.AbstractRule;
+
+public abstract class AbstractUiManager {
+	public abstract void displayMessage(AbstractMessage message);
+	public abstract void hideCurrentMessage();
+	
+	protected class EmpathicRuleFactory extends FlyweightNamedFactory<AbstractRule>{
+		
+		@Override
+		public Map<String, AbstractRule> initializeMap() {
+			return new Hashtable<String, AbstractRule>();
+		}
+		public Collection<AbstractRule> getRulesByStrategy(String strategyName){
+			Collection<AbstractRule> rules = getRegistry().values();
+			Collection<AbstractRule> selectedRules = new ArrayList<AbstractRule>();
+			for (AbstractRule rule : rules){
+				if (rule.hasStrategy(strategyName)) {
+					selectedRules.add(rule);
+				}
+			}
+			return selectedRules;
+		}
+		public Set<String> getAllRulenames(){
+			return getRegistry().keySet();
+		}
+	}
+}

@@ -1,0 +1,5 @@
+package cl.automind.android.empathy;
+
+public class VoteUiManager {
+
+}

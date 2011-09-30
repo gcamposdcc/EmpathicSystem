@@ -1,0 +1,34 @@
+package cl.automind.empathy.feedback;
+
+import util.ArrayUtils;
+import cl.automind.empathy.rule.RuleMetadata;
+import cl.automind.empathy.rule.StrategyMetadata;
+import interfaces.structural.INamed;
+
+public abstract class AbstractEmotion implements INamed{
+	// <metadata-fields>
+	private final String name;
+	private final String[] families;
+	// </metadata-fields>
+	public AbstractEmotion(){
+		EmotionMetadata metadata = getClass().getAnnotation(EmotionMetadata.class);
+		if (metadata == null) name = getClass().getSimpleName().toLowerCase().replaceAll("emotion", "");
+		else name = metadata.name();
+		// <metadata-fields-init>
+		//TODO: Implement metadata corrections
+		name = metadata != null ? metadata.name() : getClass().getSimpleName().toLowerCase().replaceAll("emotion", "");
+		families = metadata != null ? metadata.families() : EmotionMetadata.;
+		// </metadata-fields-init>
+	}
+	@Override public final String getName(){
+		return name;
+	}
+	public boolean hasStrategy(String familyName){
+		if (familyName.equals(StrategyMetadata.DEFAULT)) return true;
+		return ArrayUtils.contains(getFamilies(), familyName);
+	}
+	private String[] getFamilies() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

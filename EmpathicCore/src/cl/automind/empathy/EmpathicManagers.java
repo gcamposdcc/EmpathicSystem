@@ -1,0 +1,55 @@
+package cl.automind.empathy;
+
+import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.rule.AbstractRuleManager;
+import cl.automind.empathy.ui.AbstractUiManager;
+import cl.automind.empathy.ui.IUiManager;
+/**
+ * This is class is responsible for the manager containment and
+ * administration, as such it should provide the getters and setters
+ * to access them and the methods required for their initialization.
+ * This class should only be used paired with a {@link EmpathicKernel}
+ * @author Guillermo
+ */
+public final class EmpathicManagers {
+	/**
+	 * The manager responsible of the data management. 
+	 * @see AbstractDataManager
+	 */
+	private AbstractDataManager dataManager;
+	/**
+	 * The manager responsible of the rule management.
+	 * @see AbstractRuleManager
+	 */
+	private AbstractRuleManager ruleManager;
+	/**
+	 * The manager responsible of the ui operations. 
+	 * @see AbstractUiManager
+	 */
+	private IUiManager uiManager;
+	
+	// GETTERS AND SETTERS
+	public void setDataManager(AbstractDataManager dataManager) {
+		this.dataManager = dataManager;
+	}
+
+	public AbstractDataManager getDataManager() {
+		return dataManager;
+	}
+
+	public void setUiManager(IUiManager uiManager) {
+		this.uiManager = uiManager;
+	}
+
+	public IUiManager getUiManager() {
+		return uiManager;
+	}
+
+	public void setRuleManager(AbstractRuleManager ruleManager) {
+		this.ruleManager = ruleManager;
+	}
+
+	public AbstractRuleManager getRuleManager() {
+		return ruleManager;
+	}
+}

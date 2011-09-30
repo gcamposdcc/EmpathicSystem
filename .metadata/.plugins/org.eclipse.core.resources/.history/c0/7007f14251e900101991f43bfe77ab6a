@@ -1,0 +1,29 @@
+package cl.automind.empathy.fw.data;
+
+import cl.automind.empathy.data.IData;
+
+public class StringData implements IData {
+	
+	private String value = "";
+	private final static String fields[] = {"value"};
+	@Override
+	public String[] getFieldNames() {
+		return fields;
+	}
+
+	@Override
+	public CompareResult compare(String field, Object value) {
+		if(field.equals("value")){
+			return compareValue((String) value);
+		}
+		else return CompareResult.NonComparable;
+	}
+
+	private CompareResult compareValue(String value) {
+		int v = this.value.compareTo(value);
+		if (v > 0) return CompareResult.GreaterThan;
+		else if (v < 0) return CompareResult.LessThan;
+		else return CompareResult.EqualTo;
+	}
+
+}

@@ -1,0 +1,13 @@
+package cl.automind.empathy.test;
+
+import cl.automind.empathy.fw.DefaultEmpathicKernel;
+
+public class EmpathyTest extends DefaultEmpathicKernel {
+
+
+	@Override
+	public void startEmpathy() {
+		System.out.println("EmpathicKernelLoaded");
+	}
+
+}

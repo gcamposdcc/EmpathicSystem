@@ -1,0 +1,10 @@
+package cl.automind.empathy.rule;
+
+import cl.automind.empathy.rule.AbstractRule;
+
+
+public abstract class ArbiterCriterion{
+	
+	public abstract AbstractRule visit(AbstractArbiter arbiter);
+
+}

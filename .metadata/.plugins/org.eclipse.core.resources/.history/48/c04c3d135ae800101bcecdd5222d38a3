@@ -1,0 +1,16 @@
+package cl.automind.empathy.automind;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import lombok.Data;
+
+import cl.automind.empathy.data.IData;
+
+public @Data class SagdeMetadata implements IData{
+	
+	private final int idSector;
+	private final int idAxis;
+	private final int idCMO;
+	private final int idKO;
+}

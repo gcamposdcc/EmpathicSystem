@@ -1,0 +1,11 @@
+package cl.automind.empathy.data;
+
+public final class NullData implements IData {
+	
+	private NullData(){
+		
+	}
+	
+	public final static NullData Value = new NullData();
+
+}

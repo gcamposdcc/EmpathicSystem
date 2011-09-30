@@ -1,0 +1,23 @@
+package cl.automind.vote.command;
+
+import cl.automind.vote.command.socket.SocketLoginCommand;
+import cl.automind.vote.command.socket.SocketRequestPollCommand;
+import cl.automind.vote.command.socket.SocketVoteCastCommand;
+import patterns.behavioral.ICommand;
+import patterns.creational.IFactory;
+
+public class PollCommandFactory {
+
+	public ICommand createElement(PollCommands param) {
+		switch(param){
+		case Login:
+			return new SocketLoginCommand();
+		case RequestPoll:
+			return new SocketRequestPollCommand();
+		case Vote:
+			return new SocketVoteCastCommand();
+		}
+		return null;
+	}
+
+}

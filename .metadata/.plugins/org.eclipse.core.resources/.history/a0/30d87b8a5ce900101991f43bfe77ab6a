@@ -1,0 +1,23 @@
+package cl.automind.empathy.rule;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import cl.automind.empathy.rule.RuleUsage.Source;
+
+public class RuleUsageData {
+	private List<RuleUsage> dates = new ArrayList<RuleUsage>();
+	public RuleUsageData(){
+		
+	}
+	public int getTimesUsed(){
+		return dates.size();
+	}
+	public void newUse(Date date){
+		dates.add(new RuleUsage(date));
+	}
+	public void newUse(Date date, Source source){
+		dates.add(new RuleUsage(date, source));
+	}
+}
