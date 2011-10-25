@@ -7,10 +7,10 @@ import cl.automind.empathy.data.AbstractDataManager;
 import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.feedback.AbstractMessage;
 import cl.automind.empathy.rule.AbstractRule;
-import cl.automind.empathy.rule.AbstractRuleManager;
 import cl.automind.empathy.rule.DataRuleMediator;
 import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
+import cl.automind.empathy.rule.IRuleManager;
 import cl.automind.empathy.ui.IUiManager;
 
 /**
@@ -30,11 +30,11 @@ public abstract class EmpathicKernel {
 		startEmpathy();
 	}
 	// <arbiter>
-	private AbstractArbiter arbiter;
-	public void setArbiter(AbstractArbiter arbiter) {
+	private IArbiter arbiter;
+	public void setArbiter(IArbiter arbiter) {
 		this.arbiter = arbiter;
 	}
-	public AbstractArbiter getArbiter() {
+	public IArbiter getArbiter() {
 		return arbiter;
 	}
 	// </arbiter>
@@ -92,7 +92,7 @@ public abstract class EmpathicKernel {
 		}
 	}
 	private void deployPluginArbiter(EmpathicPlugin plugin) {
-		AbstractArbiter arbiter = plugin.getArbiter();
+		IArbiter arbiter = plugin.getArbiter();
 		if (arbiter != null){
 			arbiter.setEmpathicKernel(this);
 			setArbiter(arbiter);
@@ -100,7 +100,7 @@ public abstract class EmpathicKernel {
 	}
 	private final void deployPluginManagers(EmpathicPlugin plugin) {
 		AbstractDataManager dataManager = plugin.getDataManager();
-		AbstractRuleManager ruleManager = plugin.getRuleManager();
+		IRuleManager ruleManager = plugin.getRuleManager();
 		IUiManager uiManager = plugin.getUiManager();
 		if (dataManager != null) getManagers().setDataManager(dataManager);
 		if (ruleManager != null) getManagers().setRuleManager(ruleManager);
@@ -125,7 +125,9 @@ public abstract class EmpathicKernel {
 		}
 	}
 	public abstract Collection<EmpathicPlugin> loadPluginClasses();
-	public abstract void startEmpathy();
+	public void startEmpathy(){
+
+	}
 
 	public <T> int pushValue(String dataSourceName, T value){
 		System.out.println("PushTo::"+dataSourceName+"::Value::"+value);

@@ -6,7 +6,7 @@ public abstract class DataEntry<T> implements Comparable<DataEntry<T>>{
 	private int version;
 	private T value;
 
-	public final static DataEntry<Object> Null = new DataEntry<Object>(null) {
+	static public final DataEntry<Object> Null = new DataEntry<Object>(null) {
 		@Override protected void onSetValue(Object oldValue, Object newValue) { }
 	};
 

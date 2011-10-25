@@ -10,7 +10,7 @@ import patterns.creational.FlyweightNamedFactory;
 
 
 
-public abstract class AbstractRuleManager{
+public class AbstractRuleManager implements IRuleManager{
 
 	private final EmpathicRuleFactory ruleFactory;
 	protected AbstractRuleManager(){
@@ -19,12 +19,24 @@ public abstract class AbstractRuleManager{
 	protected EmpathicRuleFactory initializeRuleFactory(){
 		return new EmpathicRuleFactory();
 	}
+	/* (non-Javadoc)
+	 * @see cl.automind.empathy.rule.IRuleManager#registerRule(java.lang.String, cl.automind.empathy.rule.IRule)
+	 */
+	@Override
 	public void registerRule(String ruleName, IRule rule){
 		getRuleFactory().registerElement(ruleName, rule);
 	}
+	/* (non-Javadoc)
+	 * @see cl.automind.empathy.rule.IRuleManager#getRule(java.lang.String)
+	 */
+	@Override
 	public IRule getRule(String ruleName){
 		return getRuleFactory().createElement(ruleName);
 	}
+	/* (non-Javadoc)
+	 * @see cl.automind.empathy.rule.IRuleManager#getAllRulenames()
+	 */
+	@Override
 	public Set<String> getAllRulenames(){
 		return getRuleFactory().getAllRulenames();
 	}
@@ -34,6 +46,10 @@ public abstract class AbstractRuleManager{
 	protected Collection<IRule> ruleByStrategy(String strategyName){
 		return getRuleFactory().getRulesByStrategy(strategyName);
 	}
+	/* (non-Javadoc)
+	 * @see cl.automind.empathy.rule.IRuleManager#printElements()
+	 */
+	@Override
 	public void printElements(){
 		getRuleFactory().printElements();
 	}

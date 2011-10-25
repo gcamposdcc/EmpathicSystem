@@ -6,20 +6,20 @@ import cl.automind.empathy.data.AbstractDataManager;
 
 public class DataRuleMediator {
 	private AbstractDataManager dataManager;
-	private AbstractRuleManager ruleManager;
+	private IRuleManager ruleManager;
 	protected void setDataManager(AbstractDataManager dataManager) {
 		this.dataManager = dataManager;
 	}
 	protected AbstractDataManager getDataManager() {
 		return dataManager;
 	}
-	protected void setRuleManager(AbstractRuleManager ruleManager) {
+	protected void setRuleManager(IRuleManager ruleManager) {
 		this.ruleManager = ruleManager;
 	}
-	protected AbstractRuleManager getRuleManager() {
+	protected IRuleManager getRuleManager() {
 		return ruleManager;
 	}
-	public DataRuleMediator(AbstractDataManager dataManager, AbstractRuleManager ruleManager){
+	public DataRuleMediator(AbstractDataManager dataManager, IRuleManager ruleManager){
 		setDataManager(dataManager);
 		setRuleManager(ruleManager);
 	}
