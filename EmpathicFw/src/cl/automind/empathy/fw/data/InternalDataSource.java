@@ -88,17 +88,6 @@ public class InternalDataSource<T> implements IDataSource<T> {
 		DataEntry<T> d = getData().get(id);
 		return d != null ? d.getValue() : null;
 	}
-//	@Override
-//	public Collection<T> selectLike(T template, String... fields) {
-//		Collection<T> likes = new ArrayList<T>();
-//		for(DataEntry<T> t : getData().values()){
-//			// FIXME
-//			if(t.getValue().like(template, fields)){
-//				likes.add(t.getValue());
-//			}
-//		}
-//		return likes;
-//	}
 	@Override
 	public List<T> selectAll() {
 		List<T> list = new ArrayList<T>();

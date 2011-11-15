@@ -3,6 +3,7 @@ package cl.automind.empathy.test;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Statement;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -12,11 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
-import cl.automind.connectivity.IHttpClient;
-import cl.automind.desk.connectivity.DeskHttpClient;
-import cl.automind.empathy.query.EmpathicObject;
+import cl.automind.empathy.fw.data.sql.AbstractSqlConnector;
+import cl.automind.empathy.fw.data.sql.AbstractSqlDataSource;
+import cl.automind.empathy.fwdesk.data.sql.HsqldbDataSource;
 import cl.automind.empathy.test.t00.Score;
 import cl.automind.empathy.test.t00.TestDataManager;
+import cl.automind.empathy.testquery.TestSqlConnectionInfo;
 
 public class DeskMain {
 
@@ -31,44 +33,23 @@ public class DeskMain {
 				try {
 					DeskMain window = new DeskMain();
 					window.frame.setVisible(true);
+					TestSqlConnectionInfo tsci = new TestSqlConnectionInfo();
+					AbstractSqlConnector asc = new AbstractSqlConnector(tsci) {
 
-//					EmpathicObject object00 = new EmpathicObject();
-//					object00.set(EmpathicObject.Id, 1);
-//
-//					EmpathicObject object01 = new EmpathicObject();
-//					object01.set(EmpathicObject.Id, object00.get(EmpathicObject.Id));
-//
-//					int K = 1000;
-//					int LOOPS = 100*K*K;
-//					int cache00 = 0;
-//					int cache01 = 0;
-//					long time = System.currentTimeMillis();
-//					long result = 0;
-//					for (int i = 0; i < LOOPS; i++) {
-//						cache00 = i%2 == 0? object00.getId() : object01.getId();
-//						cache01 = i%3 == 0? object01.getId() : object00.getId();
-//					}
-//					result = System.currentTimeMillis() - time;
-//					System.out.println("Loops = " + LOOPS + ";; Time = "+result+";;");
-//					time = System.currentTimeMillis();
-//					for (int i = 0; i < LOOPS; i++) {
-//						cache00 = i%2 == 0? object00.get(EmpathicObject.Id) : object01.get(EmpathicObject.Id);
-//						cache01 = i%3 == 0? object01.get(EmpathicObject.Id) : object00.get(EmpathicObject.Id);
-//					}
-//					result = System.currentTimeMillis() - time;
-//					System.out.println("Loops = " + LOOPS + ";; Time = "+result+";;");
-//
-//					System.out.println(object00.compareTo(object01));
+						@Override
+						public Statement getStatement(String statement) {
+							// TODO Auto-generated method stub
+							return null;
+						}
 
-					IHttpClient http = new DeskHttpClient();
-//					http.setUrl("http://web.simt.cl/simtweb/buscarAction.do");
-//					http.addRequestParameter("ingresar_paradero", "pe375");
-//					http.addRequestParameter("d", "busquedaParadero");
-					http.setUrl("http://localhost:3000/empathy");
-					http.addRequestParameter("value", "2");
-					System.out.println(http.getRequestString());
-					http.sendRequest();
-					System.out.println(http.getResponse());
+					};
+					System.out.println(asc.getDriverString());
+					System.out.println(asc.getUrlString());
+					System.out.println(asc.getFullConnectionString());
+
+					AbstractSqlDataSource<Score> ds = new HsqldbDataSource<Score>(new Score(0,0));
+
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

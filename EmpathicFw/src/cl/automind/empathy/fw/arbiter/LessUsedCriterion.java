@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import cl.automind.empathy.ArbiterCriterion;
+import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.IArbiter;
 import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
 
-public class LessUsedCriterion extends ArbiterCriterion{
+public class LessUsedCriterion implements IArbiterCriterion{
 
 	@Override
 	public IRule visit(IArbiter arbiter) {

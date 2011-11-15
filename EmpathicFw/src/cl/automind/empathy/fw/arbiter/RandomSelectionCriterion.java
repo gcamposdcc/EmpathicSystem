@@ -2,11 +2,11 @@ package cl.automind.empathy.fw.arbiter;
 
 import java.util.Random;
 
-import cl.automind.empathy.ArbiterCriterion;
+import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.IArbiter;
 import cl.automind.empathy.rule.IRule;
 
-public class RandomSelectionCriterion extends ArbiterCriterion {
+public class RandomSelectionCriterion implements IArbiterCriterion {
 	private Random random = new Random();
 	@Override
 	public IRule visit(IArbiter arbiter) {

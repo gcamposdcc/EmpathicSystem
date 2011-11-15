@@ -5,6 +5,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/DevLib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EmpathicCore"/>
 	<classpathentry kind="lib" path="lib/coollection-0.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EmpathicFw"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Automind"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/AutomindDesk"/>

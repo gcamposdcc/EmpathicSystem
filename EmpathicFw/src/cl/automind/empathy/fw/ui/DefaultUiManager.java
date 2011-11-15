@@ -1,7 +1,6 @@
 package cl.automind.empathy.fw.ui;
 
 import cl.automind.empathy.feedback.AbstractMessage;
-import cl.automind.empathy.ui.AbstractUiManager;
 
 public class DefaultUiManager extends AbstractUiManager{
 

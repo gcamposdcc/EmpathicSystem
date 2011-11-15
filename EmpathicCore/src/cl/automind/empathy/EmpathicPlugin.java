@@ -15,7 +15,7 @@ public abstract class EmpathicPlugin {
 	public abstract IUiManager getUiManager();
 
 	public abstract IArbiter getArbiter();
-	public abstract ArbiterCriterion getCriterion();
+	public abstract IArbiterCriterion getCriterion();
 
 	public abstract Collection<AbstractRule> getRules();
 	public abstract Collection<AbstractEmotion> getEmotions();

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cl.automind.empathy.AbstractArbiter;
-import cl.automind.empathy.ArbiterCriterion;
+import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.EmpathicKernel;
 import cl.automind.empathy.rule.RuleUsageData;
 
@@ -25,7 +25,7 @@ public class DefaultArbiter extends AbstractArbiter {
 		ruleUsageData = new HashMap<String, RuleUsageData>();
 		ruleUsageList = new ArrayList<String>();
 	}
-	public DefaultArbiter(EmpathicKernel kernel, ArbiterCriterion criterion) {
+	public DefaultArbiter(EmpathicKernel kernel, IArbiterCriterion criterion) {
 		super(kernel, criterion);
 		ruleUsageData = new HashMap<String, RuleUsageData>();
 		ruleUsageList = new ArrayList<String>();

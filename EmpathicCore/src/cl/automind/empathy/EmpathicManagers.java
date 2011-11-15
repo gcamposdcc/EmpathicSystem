@@ -3,7 +3,6 @@ package cl.automind.empathy;
 import cl.automind.empathy.data.AbstractDataManager;
 import cl.automind.empathy.rule.AbstractRuleManager;
 import cl.automind.empathy.rule.IRuleManager;
-import cl.automind.empathy.ui.AbstractUiManager;
 import cl.automind.empathy.ui.IUiManager;
 /**
  * This is class is responsible for the manager containment and
@@ -14,7 +13,7 @@ import cl.automind.empathy.ui.IUiManager;
  */
 public final class EmpathicManagers {
 	/**
-	 * The manager responsible of the data management. 
+	 * The manager responsible of the data management.
 	 * @see AbstractDataManager
 	 */
 	private AbstractDataManager dataManager;
@@ -24,11 +23,11 @@ public final class EmpathicManagers {
 	 */
 	private IRuleManager ruleManager;
 	/**
-	 * The manager responsible of the ui operations. 
+	 * The manager responsible of the ui operations.
 	 * @see AbstractUiManager
 	 */
 	private IUiManager uiManager;
-	
+
 	// GETTERS AND SETTERS
 	public void setDataManager(AbstractDataManager dataManager) {
 		this.dataManager = dataManager;

@@ -11,12 +11,12 @@ import cl.automind.empathy.rule.RuleUsageData;
 
 public abstract class AbstractArbiter implements IArbiter{
 	private IRule validRule;
-	private ArbiterCriterion criterion;
+	private IArbiterCriterion criterion;
 	private EmpathicKernel empathicKernel;
 	public AbstractArbiter(){
 
 	}
-	public AbstractArbiter(EmpathicKernel kernel, ArbiterCriterion criterion){
+	public AbstractArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
 		this.setEmpathicKernel(kernel);
 		setCriterion(criterion);
 	}
@@ -105,21 +105,21 @@ public abstract class AbstractArbiter implements IArbiter{
 	 * @see cl.automind.empathy.IArbiter#accept(cl.automind.empathy.ArbiterCriterion)
 	 */
 	@Override
-	public IRule accept(ArbiterCriterion visitor){
+	public IRule accept(IArbiterCriterion visitor){
 		return visitor.visit(this);
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.IArbiter#setCriterion(cl.automind.empathy.ArbiterCriterion)
 	 */
 	@Override
-	public void setCriterion(ArbiterCriterion criterion){
+	public void setCriterion(IArbiterCriterion criterion){
 		this.criterion = criterion;
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.IArbiter#getCriterion()
 	 */
 	@Override
-	public ArbiterCriterion getCriterion(){
+	public IArbiterCriterion getCriterion(){
 		return criterion;
 	}
 	/* (non-Javadoc)

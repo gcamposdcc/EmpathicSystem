@@ -83,11 +83,11 @@ public interface IArbiter {
 	 */
 	public abstract boolean needsUpdate();
 
-	public abstract IRule accept(ArbiterCriterion visitor);
+	public abstract IRule accept(IArbiterCriterion visitor);
 
-	public abstract void setCriterion(ArbiterCriterion criterion);
+	public abstract void setCriterion(IArbiterCriterion criterion);
 
-	public abstract ArbiterCriterion getCriterion();
+	public abstract IArbiterCriterion getCriterion();
 
 	public abstract IRule getRule(String rulename);
 

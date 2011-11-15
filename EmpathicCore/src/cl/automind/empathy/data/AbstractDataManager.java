@@ -10,7 +10,7 @@ import patterns.behavioral.IObserver;
 
 public abstract class AbstractDataManager{
 	/// ABSTRACT METHODS
-	abstract public IDataSource<?> getDataSource(String dataSourceName);
+	abstract protected IDataSource<?> getDataSource(String dataSourceName);
 	abstract public <T> IDataSource<T> getDataSource(String dataSourceName, T template);
 	abstract public <T> boolean registerDataSource(String dataSourceName, IDataSource<T> dataSource);
 	abstract public <T> IDataSource<T> createDataSource(String dataSourceName, T template);
