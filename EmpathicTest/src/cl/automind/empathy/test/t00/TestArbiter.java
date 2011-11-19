@@ -8,7 +8,6 @@ public class TestArbiter extends DefaultArbiter{
 
 	public TestArbiter(EmpathicKernel kernel) {
 		super(kernel);
-		// TODO Auto-generated constructor stub
 	}
 	public TestArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
 		super(kernel, criterion);

@@ -6,7 +6,7 @@ import java.util.Collection;
 import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.EmpathicPlugin;
 import cl.automind.empathy.IArbiter;
-import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.fw.arbiter.DefaultArbiter;
@@ -23,7 +23,7 @@ public class DefaultEmpathicPlugin extends EmpathicPlugin {
 	private final IArbiterCriterion criterion = new LessUsedCriterion();
 
 	private final IRuleManager ruleManager = new DefaultRuleManager();
-	private final AbstractDataManager dataManager = new DefaultDataManager();
+	private final IDataManager dataManager = new DefaultDataManager();
 	private final IUiManager uiManager = new DefaultUiManager();
 
 	@Override
@@ -32,7 +32,7 @@ public class DefaultEmpathicPlugin extends EmpathicPlugin {
 	}
 
 	@Override
-	public AbstractDataManager getDataManager() {
+	public IDataManager getDataManager() {
 		return dataManager;
 	}
 

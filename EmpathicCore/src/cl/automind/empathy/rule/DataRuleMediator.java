@@ -2,15 +2,17 @@ package cl.automind.empathy.rule;
 
 import java.util.List;
 
-import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.data.IDataManager;
+import cl.automind.empathy.data.IQueryCriterion;
+import cl.automind.empathy.data.IQueryOption;
 
 public class DataRuleMediator {
-	private AbstractDataManager dataManager;
+	private IDataManager dataManager;
 	private IRuleManager ruleManager;
-	protected void setDataManager(AbstractDataManager dataManager) {
+	protected void setDataManager(IDataManager dataManager) {
 		this.dataManager = dataManager;
 	}
-	protected AbstractDataManager getDataManager() {
+	protected IDataManager getDataManager() {
 		return dataManager;
 	}
 	protected void setRuleManager(IRuleManager ruleManager) {
@@ -19,12 +21,12 @@ public class DataRuleMediator {
 	protected IRuleManager getRuleManager() {
 		return ruleManager;
 	}
-	public DataRuleMediator(AbstractDataManager dataManager, IRuleManager ruleManager){
+	public DataRuleMediator(IDataManager dataManager, IRuleManager ruleManager){
 		setDataManager(dataManager);
 		setRuleManager(ruleManager);
 	}
-	public Object getValueById(String dataSourceName, int id) {
-		return getDataManager().getValueById(dataSourceName, id);
+	public <T> List<T> getValue(String dataSourceName, IQueryOption option, IQueryCriterion<T>... criteria) {
+		return getDataManager().getValue(dataSourceName, option, criteria);
 	}
 	public int countElements(String dataSourceName) {
 		return getDataManager().countElements(dataSourceName);

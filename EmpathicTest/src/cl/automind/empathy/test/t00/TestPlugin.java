@@ -2,7 +2,7 @@ package cl.automind.empathy.test.t00;
 
 import java.util.Collection;
 
-import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.fw.DefaultEmpathicPlugin;
 import cl.automind.empathy.rule.AbstractRule;
 
@@ -11,9 +11,9 @@ public class TestPlugin extends DefaultEmpathicPlugin {
 		new ScoreStreakRule(),
 		new TotalScoreRule()
 	};
-	private AbstractDataManager dataManager = new TestDataManager();
+	private IDataManager dataManager = new TestDataManager();
 	@Override
-	public AbstractDataManager getDataManager() {
+	public IDataManager getDataManager() {
 		return dataManager;
 	}
 	@Override

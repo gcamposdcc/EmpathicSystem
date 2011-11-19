@@ -20,7 +20,7 @@ public interface IRule {
 	 * Determinates the priority of this rule.
 	 * @return
 	 */
-	public abstract double evaluateImpl();
+	public abstract double evaluateImpl(Object...params);
 
 	public abstract double evaluate(Object... params);
 
@@ -45,5 +45,9 @@ public interface IRule {
 	public abstract DataRuleMediator getDataMediator();
 
 	public abstract double getValue();
+
+	public abstract void setParams(Object...params);
+
+	public abstract Object[] getParams();
 
 }

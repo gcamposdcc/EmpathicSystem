@@ -19,7 +19,7 @@ public class MethodCache {
 		if (instance == null) instance = new MethodCache();
 		return instance;
 	}
-	private final Class[] classes;
+	private final Class<?>[] classes;
 	public <T> Method getMethod(Class<T> clazz, String methodname){
 		String classname = clazz.getCanonicalName();
 		if(!classMap.containsKey(classname)) {

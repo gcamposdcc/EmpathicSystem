@@ -5,9 +5,10 @@ import cl.automind.empathy.feedback.EmptyMessage;
 
 public final class EmptyRule extends AbstractRule {
 	public final static AbstractRule instance = new EmptyRule();
+	private final Object[] params = {};
 	private EmptyRule(){ super(); }
 	@Override
-	public double evaluateImpl() {
+	public double evaluateImpl(Object... params) {
 		return 0;
 	}
 
@@ -18,6 +19,14 @@ public final class EmptyRule extends AbstractRule {
 	@Override
 	public AbstractMessage getMessage() {
 		return new EmptyMessage();
+	}
+	@Override
+	public void setParams(Object... params) {
+		// do nothing
+	}
+	@Override
+	public Object[] getParams() {
+		return params;
 	}
 
 }

@@ -3,7 +3,8 @@ package cl.automind.empathy;
 import java.util.Collection;
 import java.util.Set;
 
-import cl.automind.empathy.data.AbstractDataManager;
+import cl.automind.empathy.data.IDataManager;
+import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.feedback.AbstractMessage;
 import cl.automind.empathy.rule.AbstractRule;
@@ -99,7 +100,7 @@ public abstract class EmpathicKernel {
 		}
 	}
 	private final void deployPluginManagers(EmpathicPlugin plugin) {
-		AbstractDataManager dataManager = plugin.getDataManager();
+		IDataManager dataManager = plugin.getDataManager();
 		IRuleManager ruleManager = plugin.getRuleManager();
 		IUiManager uiManager = plugin.getUiManager();
 		if (dataManager != null) getManagers().setDataManager(dataManager);
@@ -122,6 +123,10 @@ public abstract class EmpathicKernel {
 		for (AbstractEmotion emotion: emotions){
 			System.out.println("Load::Emotion::"+emotion);
 			getManagers().getUiManager().registerEmotion(emotion.getName(), emotion);
+		}
+		for (IDataSource<?> dataSource : plugin.getDataSources()){
+			System.out.println("Load::Source::"+dataSource.getName());
+			getManagers().getDataManager().registerDataSource(dataSource.getName(), dataSource);
 		}
 	}
 	public abstract Collection<EmpathicPlugin> loadPluginClasses();
@@ -148,4 +153,10 @@ public abstract class EmpathicKernel {
 	public void triggerEmpathy(long millis){
 		showEmpathy(getArbiter().getValidRule().getMessage(), millis);
 	}
+
+	public void putParams(String ruleName, Object... params){
+		IRule rule = getManagers().getRuleManager().getRule(ruleName);
+		if(rule != null) rule.setParams(params);
+	}
+
 }

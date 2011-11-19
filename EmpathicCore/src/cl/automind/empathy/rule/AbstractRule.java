@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import util.ArrayUtils;
+import cl.automind.empathy.data.IQueryCriterion;
+import cl.automind.empathy.data.IQueryOption;
 import cl.automind.empathy.feedback.AbstractMessage;
 import cl.automind.empathy.feedback.EmptyMessage;
 
@@ -19,6 +21,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	private AbstractMessage message = new EmptyMessage();
 	private final Map<String, Object> valuesMap = new HashMap<String, Object>();
 	private DataRuleMediator dataMediator;
+	private Object[] params = {};
 
 	// <metadata-fields>
 	private final String name;
@@ -94,13 +97,19 @@ public abstract class AbstractRule implements INamed, IRule{
 	 * @see cl.automind.empathy.rule.IRule#evaluateImpl()
 	 */
 	@Override
-	public abstract double evaluateImpl();
+	public abstract double evaluateImpl(Object... params);
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#evaluate(java.lang.Object)
 	 */
 	@Override
 	public final double evaluate(Object... params){
-		setValue(evaluateImpl());
+		double eval = 0;
+//		try{
+			eval = evaluateImpl(params);
+//		} catch (Exception e){
+//
+//		}
+		setValue(eval);
 		pushValues();
 		return getValue();
 	}
@@ -114,7 +123,9 @@ public abstract class AbstractRule implements INamed, IRule{
 	 */
 	@Override
 	public final boolean isSelectable(){
-//		System.out.println("Rule::"+getName()+"::Selectable?::"+normalize(value)+">="+normalize(threshold)+"?");
+		System.out.println("Rule::" + getName() +
+				"Value:" + normalize(getValue()) +
+				"::Threshold:" + normalize(getThreshold()));
 		return normalize(getValue()) >= normalize(getThreshold());
 	}
 	protected final double normalize(double d){
@@ -138,8 +149,8 @@ public abstract class AbstractRule implements INamed, IRule{
 		this.message = message;
 	}
 
-	protected Object getValueByIdInSource(String dataSourceName, int id){
-		return getDataMediator().getValueById(dataSourceName, id);
+	protected <T> List<T> getInSource(String dataSourceName, IQueryOption option, IQueryCriterion<T>... criteria){
+		return getDataMediator().getValue(dataSourceName, option, criteria);
 	}
 	protected <T> List<T> getAllInSource(String dataSourceName, T template){
 		return getDataMediator().getAllInSource(dataSourceName, template);
@@ -176,11 +187,6 @@ public abstract class AbstractRule implements INamed, IRule{
 		getValuesMap().remove(key);
 	}
 	private void pushValues(){
-//		System.out.println("Rule::"+getName()+"::PushValues::Start");
-//		for (Map.Entry<String, Object> entry: getValuesMap().entrySet()){
-//			System.out.println("Rule::"+getName()+"::PushValues::Key::"+entry.getKey()+"::Value::"+entry.getValue());
-//		}
-//		System.out.println("Rule::"+getName()+"::PushValues::End");
 		getMessage().setDefaultValues(getValuesMap());
 	}
 	/* (non-Javadoc)
@@ -208,6 +214,14 @@ public abstract class AbstractRule implements INamed, IRule{
 	public double getValue() {
 //		System.out.println("Rule::"+getName()+"::GetValue::"+value);
 		return value;
+	}
+	@Override
+	public void setParams(Object... params) {
+		this.params = params;
+	}
+	@Override
+	public Object[] getParams() {
+		return params;
 	}
 
 }

@@ -24,4 +24,10 @@ public class HsqldbDataSource<T> extends AbstractSqlDataSource<T> {
 		return null;
 	}
 
+	@Override
+	public T getTemplate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

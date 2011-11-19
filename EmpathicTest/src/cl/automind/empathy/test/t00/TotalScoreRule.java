@@ -21,7 +21,7 @@ public class TotalScoreRule extends AbstractRule {
 	}
 
 	@Override
-	public double evaluateImpl() {
+	public double evaluateImpl(Object... params) {
 		int total = 0;
 		Collection<Score> scores = getAllInSource(TestDataManager.DS_SCORE, dummyScore);
 		for (Score score: scores){

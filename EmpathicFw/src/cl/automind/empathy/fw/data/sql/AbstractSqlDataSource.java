@@ -14,8 +14,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import patterns.behavioral.IObserver;
+import util.NamedValuePair;
 import util.Strings;
+import cl.automind.empathy.data.DefaultQueryOptions;
 import cl.automind.empathy.data.IDataSource;
+import cl.automind.empathy.data.IQueryCriterion;
+import cl.automind.empathy.data.IQueryOption;
 import cl.automind.empathy.data.sql.Column;
 import cl.automind.empathy.data.sql.ISqlDataSource;
 import cl.automind.empathy.data.sql.Id;
@@ -27,22 +31,24 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	private final Map<String, String> queryMap;
 	private final Collection<IObserver<IDataSource<T>>> observers;
 	private final String name;
+	private final T template;
 	public AbstractSqlDataSource(T template){
 		// INIT GLOBALS
-		queryMap = new ConcurrentHashMap<String, String>();
-		observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
+		this.template = template;
+		this.queryMap = new ConcurrentHashMap<String, String>();
+		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
 		Class<?> templateClass = template.getClass();
 		// METADATA
 		SqlMetadata metadata = getClass().getAnnotation(SqlMetadata.class);
 		if (metadata != null){
-			name = metadata.name().trim().equals("") ? Strings.englishPlural(templateClass.getSimpleName()) : metadata.name().trim();
+			this.name = metadata.name().trim().equals("") ? Strings.englishPlural(templateClass.getSimpleName()) : metadata.name().trim();
 			if(metadata.queries() != null){
 				for (NamedQuery query: metadata.queries().queries()){
 					getQueryMap().put(query.name(), query.query());
 				}
 			}
 		} else {
-			name = Strings.englishPlural(templateClass.getSimpleName()).toLowerCase();
+			this.name = Strings.englishPlural(templateClass.getSimpleName()).toLowerCase();
 		}
 		String insert = "INSERT INTO "+ getName() + " ";
 		String field_name = "";
@@ -109,56 +115,6 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			}
 		}
 		return ids;
-	}
-
-	@Override
-	public T selectById(int id) {
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectById"));
-		ResultSet rs;
-		List<T> result = new ArrayList<T>();
-		try {
-			rs = query.executeQuery();
-			result = parse(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result.size() > 0 ? result.get(0) : null;
-	}
-
-	@Override
-	public List<T> selectAll() {
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectAll"));
-		ResultSet rs;
-		List<T> result = new ArrayList<T>();
-		try {
-			rs = query.executeQuery();
-			result = parse(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
-	public int updateById(int id, T value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean deleteById(int id) {
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("deleteById"));
-		ResultSet rs;
-		List<T> result = new ArrayList<T>();
-		try {
-			query.setInt(0, id);
-			rs = query.executeQuery();
-			result = parse(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		//FIXME result
-		return true;
 	}
 
 	@Override
@@ -237,5 +193,92 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 		return output;
 	}
+	@Override
+	public T getTemplate() {
+		return template;
+	}
 
+	@Override
+	public final cl.automind.empathy.data.IDataSource.Type getType() {
+		return Type.Sql;
+	}
+
+	@Override
+	public List<T> select(IQueryOption option, IQueryCriterion<T>... criteria) {
+		if (option.getName().equals(DefaultQueryOptions.All.getName())){
+			return selectAll();
+		} else {
+			//TODO build query
+			String query = "SELECT * FROM " + getName() + " WHERE ";
+			for (IQueryCriterion<T> criterion : criteria){
+				for (NamedValuePair<?> pair: criterion.getParams()){
+					query += pair;
+				}
+			}
+			query += "LIMIT " + option.getValue() +";";
+			ResultSet rs = null;
+			try {
+				rs = getConnector().preparedStatement(query).executeQuery();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return parse(rs);
+		}
+	}
+
+	public T select(int id) {
+		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectById"));
+		ResultSet rs;
+		List<T> result = new ArrayList<T>();
+		try {
+			rs = query.executeQuery();
+			result = parse(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result.size() > 0 ? result.get(0) : null;
+	}
+
+	public List<T> selectAll() {
+		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectAll"));
+		ResultSet rs;
+		List<T> result = new ArrayList<T>();
+		try {
+			rs = query.executeQuery();
+			result = parse(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int update(T value, IQueryOption option, IQueryCriterion<T>... criteria) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean delete(IQueryOption option, IQueryCriterion<T>... criteria) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public int update(int id, T value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean delete(int id) {
+		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("deleteById"));
+		try {
+			query.setInt(0, id);
+			query.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//FIXME result
+		return true;
+	}
 }

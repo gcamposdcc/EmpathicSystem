@@ -13,9 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
+import net.AbstractHttpClient;
+
+import cl.automind.empathy.data.DefaultQueryOptions;
+import cl.automind.empathy.data.IQueryOption;
 import cl.automind.empathy.fw.data.sql.AbstractSqlConnector;
-import cl.automind.empathy.fw.data.sql.AbstractSqlDataSource;
-import cl.automind.empathy.fwdesk.data.sql.HsqldbDataSource;
+import cl.automind.empathy.fwdesk.net.DeskHttpClient;
+import cl.automind.empathy.test.t00.Choice;
 import cl.automind.empathy.test.t00.Score;
 import cl.automind.empathy.test.t00.TestDataManager;
 import cl.automind.empathy.testquery.TestSqlConnectionInfo;
@@ -47,8 +51,14 @@ public class DeskMain {
 					System.out.println(asc.getUrlString());
 					System.out.println(asc.getFullConnectionString());
 
-					AbstractSqlDataSource<Score> ds = new HsqldbDataSource<Score>(new Score(0,0));
-
+//					AbstractSqlDataSource<Score> ds = new HsqldbDataSource<Score>(new Score(0,0));
+					AbstractHttpClient client = new DeskHttpClient();
+					client.setUrl("http://localhost:8080/TestWebService/CmoPerformance");
+					client.addRequestParameter("idcmo", "333");
+					client.addRequestParameter("idestablishment", "181");
+					client.addRequestParameter("user", "196324577");
+//					idcmo=333&idestablishment=181&user=196324577
+					String response = client.sendRequest();
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -105,6 +115,7 @@ public class DeskMain {
 		btnIncrease.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AppContext.getInstance().getEmpathy().pushValue(TestDataManager.DS_SCORE, new Score(turn++, 1));
+				AppContext.getInstance().getEmpathy().pushValue(TestDataManager.DS_SCORE, new Choice(1, 1, 'A'));
 			}
 		});
 

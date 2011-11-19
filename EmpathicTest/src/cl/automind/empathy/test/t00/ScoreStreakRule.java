@@ -21,7 +21,7 @@ public class ScoreStreakRule extends AbstractRule {
 	}
 
 	@Override
-	public double evaluateImpl() {
+	public double evaluateImpl(Object... params) {
 		int total = 0;
 		List<Score> scores = getAllInSource(TestDataManager.DS_SCORE, dummyScore);
 		for (int i = scores.size() - 1; i >= 0; i--){

@@ -143,8 +143,10 @@ public abstract class AbstractArbiter implements IArbiter{
 	@Override
 	public List<String> getEvaluableRules(){
 		List<String> list = new ArrayList<String>();
+		IRule rule;
 		for(String rulename: getAllRuleNames()){
-			if (getRule(rulename).canEvaluate()){
+			rule = getRule(rulename);
+			if (rule.canEvaluate(rule.getParams())){
 				list.add(rulename);
 				System.out.println("Rule::"+rulename+"::Evaluable?:YES");
 			} else {
@@ -163,7 +165,7 @@ public abstract class AbstractArbiter implements IArbiter{
 		IRule rule;
 		for (String rulename: getEvaluableRules()){
 			rule = getRule(rulename);
-			rule.evaluate();
+			rule.evaluate(rule.getParams());
 			if (rule.isSelectable()) list.add(rulename);
 		}
 		return list;

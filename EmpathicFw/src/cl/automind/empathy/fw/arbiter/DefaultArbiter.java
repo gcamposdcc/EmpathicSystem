@@ -20,7 +20,6 @@ public class DefaultArbiter extends AbstractArbiter {
 		ruleUsageList = new ArrayList<String>();
 	}
 	public DefaultArbiter(EmpathicKernel kernel) {
-		// FIXME
 		super(kernel, null);
 		ruleUsageData = new HashMap<String, RuleUsageData>();
 		ruleUsageList = new ArrayList<String>();
