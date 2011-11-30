@@ -10,49 +10,46 @@ import cl.automind.empathy.rule.IRule;
 import cl.automind.empathy.rule.RuleUsageData;
 
 public abstract class AbstractArbiter implements IArbiter{
+	/**
+	 * The current selected {@link IRule}
+	 */
 	private IRule validRule;
+	/**
+	 * The current preferred {@link IArbiterCriterion}
+	 */
 	private IArbiterCriterion criterion;
+	/**
+	 * The current responsible {@link EmpathicKernel}
+	 */
 	private EmpathicKernel empathicKernel;
 	public AbstractArbiter(){
 
 	}
+
 	public AbstractArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
 		this.setEmpathicKernel(kernel);
 		setCriterion(criterion);
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getAllRuleUsageData()
-	 */
+
 	@Override
 	public abstract Map<String, RuleUsageData> getAllRuleUsageData();
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getRuleUsageData(java.lang.String)
-	 */
+
 	@Override
 	public RuleUsageData getRuleUsageData(String rulename) {
 		return getAllRuleUsageData().get(rulename);
 	}
 
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getRuleUsageList()
-	 */
 	@Override
 	public abstract List<String> getRuleUsageList();
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getDifferentRulesUsedCount()
-	 */
+
 	@Override
 	public abstract int getDifferentRulesUsedCount();
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getRuleTriggeredCount()
-	 */
+
 	@Override
 	public int getRuleTriggeredCount(){
 		return getRuleUsageList().size();
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getValidRule()
-	 */
+
 	@Override
 	public final IRule getValidRule(){
 		if (needsUpdate()){
@@ -60,6 +57,12 @@ public abstract class AbstractArbiter implements IArbiter{
 		}
 		return getCurrentValidRule();
 	}
+	/**
+	 * Gets the current valid rule. This method does not check if the
+	 * rule needs to be updated nor it updates the rule (and therefore
+	 * it doesn't evaluate any rule).
+	 * @return the current valid rule
+	 */
 	protected IRule getCurrentValidRule(){
 		return validRule;
 	}
@@ -70,76 +73,55 @@ public abstract class AbstractArbiter implements IArbiter{
 	protected void setValidRule(IRule rule){
 		validRule = rule;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#updateValidRule()
-	 */
+
 	@Override
 	public final void updateValidRule(){
 		preUpdateValidRule();
 		setValidRule(applyCriterion());
 		postUpdateValidRule();
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#preUpdateValidRule()
-	 */
+
 	@Override
 	public abstract void preUpdateValidRule();
 	/**
-	 * Performs the update of the valid rule. At this method a
+	 * Calls the preferred {@link IArbiterCriterion}
+	 * @return the rule selected by the criterion
 	 */
 	private final IRule applyCriterion(){
 		return accept(getCriterion());
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#postUpdateValidRule()
-	 */
+
 	@Override
 	public abstract void postUpdateValidRule();
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#needsUpdate()
-	 */
+
 	@Override
 	public abstract boolean needsUpdate();
 
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#accept(cl.automind.empathy.ArbiterCriterion)
-	 */
 	@Override
 	public IRule accept(IArbiterCriterion visitor){
 		return visitor.visit(this);
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#setCriterion(cl.automind.empathy.ArbiterCriterion)
-	 */
+
 	@Override
 	public void setCriterion(IArbiterCriterion criterion){
 		this.criterion = criterion;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getCriterion()
-	 */
+
 	@Override
 	public IArbiterCriterion getCriterion(){
 		return criterion;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getRule(java.lang.String)
-	 */
+
 	@Override
 	public IRule getRule(String rulename){
 		return getEmpathicKernel().getRule(rulename);
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getAllRuleNames()
-	 */
+
 	@Override
 	public Set<String> getAllRuleNames(){
 		return getEmpathicKernel().getAllRuleNames();
 	}
 
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getEvaluableRules()
-	 */
 	@Override
 	public List<String> getEvaluableRules(){
 		List<String> list = new ArrayList<String>();
@@ -156,9 +138,7 @@ public abstract class AbstractArbiter implements IArbiter{
 		if(list.size() == 0) list.add(EmptyRule.instance.getName());
 		return list;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getSelectableRules()
-	 */
+
 	@Override
 	public List<String> getSelectableRules(){
 		List<String> list = new ArrayList<String>();
@@ -170,27 +150,21 @@ public abstract class AbstractArbiter implements IArbiter{
 		}
 		return list;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#timesUsed(java.lang.String, int)
-	 */
+
 	@Override
-	public int timesUsed(String rulename, int ifNotFound){
+	public int timesSelected(String rulename, int ifNotFound){
 		RuleUsageData rud = getAllRuleUsageData().get(rulename);
 		if (rud != null){
 			return rud.getTimesUsed();
 		}
 		else return getAllRuleNames().contains(rulename) ? 0: ifNotFound;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#setEmpathicKernel(cl.automind.empathy.EmpathicKernel)
-	 */
+
 	@Override
 	public void setEmpathicKernel(EmpathicKernel empathicKernel) {
 		this.empathicKernel = empathicKernel;
 	}
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.IArbiter#getEmpathicKernel()
-	 */
+
 	@Override
 	public	EmpathicKernel getEmpathicKernel() {
 		return empathicKernel;

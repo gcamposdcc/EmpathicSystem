@@ -15,14 +15,14 @@ public abstract class AbstractSqlConnectionInfo implements ISqlConnectionInfo {
 
 	protected void updateProperties(){
 		if (getProperties() == null) setProperties(new Properties());
-		getProperties().setProperty("username", getUsername());
-		getProperties().setProperty("password", getPassword());
-		getProperties().setProperty("database", getDatabase());
-		getProperties().setProperty("host", getHostname());
-		getProperties().setProperty("port", ""+getPort());
-		getProperties().setProperty("driver", getDriver());
-		getProperties().setProperty("driver_classname", getDriverClassname());
-		getProperties().setProperty("url", getDatabaseUrl());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.Username.toString(), getUsername());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.Password.toString(), getPassword());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.Database.toString(), getDatabase());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.Hostname.toString(), getHostname());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.Port.toString(), getPort());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.Driver.toString(), getDriver());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.DriverClassname.toString(), getDriverClassname());
+		getProperties().setProperty(ISqlConnectionInfo.Fields.DatabaseUrl.toString(), getDatabaseUrl());
 		for (Property p: getAdditionalConfig()){
 			getProperties().setProperty(p.getKey(), p.getValue());
 		}

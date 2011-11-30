@@ -8,7 +8,19 @@ import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.rule.AbstractRule;
 import cl.automind.empathy.rule.IRuleManager;
 import cl.automind.empathy.ui.IUiManager;
-
+/**
+ * The extensibility and mutability of this library is oriented to
+ * class aggregation. To make this all new elements are added via
+ * plugins (even the elements for default execution). This class is responsible
+ * of containing the new elements.
+ * Almost anything of the default execution can be replaced using plugins.
+ * The new elements are accessed using the different getters.
+ * Correct usage of this class is done via extension.
+ * For example:
+ * If attempting to replace the default {@link IRuleManager}
+ *
+ * @author Guillermo
+ */
 public abstract class EmpathicPlugin {
 	public abstract IRuleManager getRuleManager();
 	public abstract IDataManager getDataManager();

@@ -22,7 +22,7 @@ public class LessUsedCriterion implements IArbiterCriterion{
 		List<String> l_rulenames = new ArrayList<String>();
 		for (String rulename: rulenames){
 			if (rulename.equals(EmptyRule.instance.getName())) continue;
-			current = arbiter.timesUsed(rulename, Integer.MAX_VALUE);
+			current = arbiter.timesSelected(rulename, Integer.MAX_VALUE);
 			System.out.println("Rule::"+rulename+"::Used::"+current);
 			if (current < min){
 				min = current;

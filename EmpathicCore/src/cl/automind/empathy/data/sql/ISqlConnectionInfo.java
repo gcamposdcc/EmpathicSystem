@@ -15,4 +15,10 @@ public interface ISqlConnectionInfo {
 	public String getPort();
 	public Property[] getAdditionalConfig();
 	public Properties asProperties();
+
+	public enum Fields {
+		Username {@Override public String toString() {return "user";} },
+		Password {@Override public String toString() {return "password";} },
+		Hostname, Database, Driver, DriverClassname, DatabaseUrl, Port
+	}
 }

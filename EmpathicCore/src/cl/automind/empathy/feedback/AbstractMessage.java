@@ -1,15 +1,23 @@
 package cl.automind.empathy.feedback;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import interfaces.structural.INamed;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractMessage implements INamed{
 	public final static String KEY_PREFIX = "@";
 	public final static String KEY_SUFFIX = "";
 	public final static String key(String s){
 		return KEY_PREFIX+s+KEY_SUFFIX;
+	}
+
+	private final Context context = new Context();
+
+	public final Context getContext(){
+		return this.context;
 	}
 	private Map<String, Object> defaultValues = new HashMap<String, Object>();
 	/**
@@ -47,5 +55,23 @@ public abstract class AbstractMessage implements INamed{
 	}
 	public Map<String, Object> getDefaultValues() {
 		return defaultValues;
+	}
+
+	static public class Context{
+		private String callingRuleName = "";
+		private List<Object> data = new ArrayList<Object>();
+
+		public void setCallingRuleName(String rulename){
+			this.callingRuleName = rulename;
+		}
+		public String getCallingRuleName(){
+			return callingRuleName;
+		}
+		public void setData(List<Object> data) {
+			this.data = data;
+		}
+		public List<Object> getData() {
+			return data;
+		}
 	}
 }

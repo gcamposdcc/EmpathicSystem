@@ -35,7 +35,7 @@ public class DefaultDataManager extends AbstractDataManager{
 	}
 	@Override
 	public IDataSource<?> getDataSource(String dataSourceName) {
-		System.out.println("GettingSource::" + dataSourceName + "::NoTemplate");
+		System.out.println("GettingSource::" + dataSourceName + "::UsingNoTemplate");
 		return getDataSources().createElement(dataSourceName);
 	}
 	@SuppressWarnings("unchecked")

@@ -5,8 +5,9 @@ import java.sql.Statement;
 
 public interface ISqlConnector {
 	public ISqlConnectionInfo getConnectionInfo();
+	public boolean isConnected();
 	public void openConnection();
 	public void closeConnection();
-	public Statement getStatement(String statement);
+	public Statement getStatement();
 	public PreparedStatement preparedStatement(String statement);
 }

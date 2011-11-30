@@ -44,6 +44,9 @@ public abstract class AbstractDataManager implements IDataManager{
 		IDataSource<T> source;
 		try {
 			source = getDataSource(dataSourceName, value);
+			if (source == null) {
+				System.err.println("Source::" + dataSourceName + "NotFound;Returning invalid id = -1");
+			}
 			return source.insert(value);
 		} catch (UnmatchingClassException e) {
 			System.err.println("Returning invalid id = -1");

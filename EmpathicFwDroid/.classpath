@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Automind"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AutomindDroid"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EmpathicCore"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EmpathicFw"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DevLib"/>

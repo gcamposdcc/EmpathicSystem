@@ -21,6 +21,7 @@ import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
 import cl.automind.empathy.data.sql.Column;
+import cl.automind.empathy.data.sql.ISqlConnector;
 import cl.automind.empathy.data.sql.ISqlDataSource;
 import cl.automind.empathy.data.sql.Id;
 import cl.automind.empathy.data.sql.NamedQuery;
@@ -32,11 +33,13 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	private final Collection<IObserver<IDataSource<T>>> observers;
 	private final String name;
 	private final T template;
-	public AbstractSqlDataSource(T template){
+	private final ISqlConnector connector;
+	public AbstractSqlDataSource(T template, ISqlConnector connector){
 		// INIT GLOBALS
 		this.template = template;
 		this.queryMap = new ConcurrentHashMap<String, String>();
 		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
+		this.connector = connector;
 		Class<?> templateClass = template.getClass();
 		// METADATA
 		SqlMetadata metadata = getClass().getAnnotation(SqlMetadata.class);
@@ -85,6 +88,11 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
 			System.out.println("Query::" + entry.getKey() + "::" + entry.getValue());
 		}
+	}
+
+	@Override
+	public ISqlConnector getConnector() {
+		return connector;
 	}
 
 	@Override
@@ -177,9 +185,13 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 	@Override
 	public List<T> executeNamedQuery(String queryName, SqlNamedValuePair<?>... constrains) {
+		if (!getConnector().isConnected()){
+			System.out.println("SqlSourceNotConnected::Connecting");
+			getConnector().openConnection();
+		}
 		List<T> output = new ArrayList<T>();
 		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get(queryName));
-		int index = 0;
+		int index = 1;
 		for(SqlNamedValuePair<?> constrain: constrains){
 			constrain.set(query, index++);
 		}

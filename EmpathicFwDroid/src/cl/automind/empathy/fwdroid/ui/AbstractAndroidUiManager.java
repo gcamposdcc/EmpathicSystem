@@ -26,9 +26,9 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 	}
 	public void displayMessage(AbstractMessage message, Activity activity) {
 		if (getRandomGen().nextInt(100) < getAskUser()){
-			showEmpathicDialog(activity, "¿Que pasó?", message.getText());
+			showEmpathicDialog(activity, message);
 		} else {
-			showEmpathicToast(activity, message.getText());
+			showEmpathicToast(activity, message);
 		}
 	}
 	public abstract Activity getActivity();
@@ -38,7 +38,19 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 
 	}
 
-	private void showEmpathicToast(Activity activity, String message){
+	protected abstract String getUrl();
+
+	protected AbstractMessage.Context duplicateContext(AbstractMessage.Context context){
+		AbstractMessage.Context output =  new AbstractMessage.Context();
+		output.setCallingRuleName(context.getCallingRuleName());
+		for (Object data: context.getData()){
+			output.getData().add(data);
+		}
+		return output;
+	}
+
+	protected void showEmpathicToast(Activity activity, AbstractMessage message){
+		final AbstractMessage.Context context = duplicateContext(message.getContext());
 		LayoutInflater inflater = activity.getLayoutInflater();
 		View layout = inflater.inflate(R.layout.empathic_toast,
 				(ViewGroup) activity.findViewById(R.id.toast_layout_root));
@@ -46,7 +58,7 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 		ImageView image = (ImageView) layout.findViewById(R.id.emp_toast_image);
 		image.setImageResource(R.drawable.icon);
 		TextView text = (TextView) layout.findViewById(R.id.emp_toast_text);
-		text.setText(message);
+		text.setText(message.getText());
 
 		final Toast toast = new Toast(activity.getApplicationContext());
 		toast.setGravity(Gravity.BOTTOM, 0, 0);
@@ -60,10 +72,11 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 		    public void onFinish() {toast.show();}
 
 		}.start();
+		registerMessageOcurrence(context, false, false, false);
 	}
 
-	private void showEmpathicDialog(Activity activity, String title, String message){
-
+	protected void showEmpathicDialog(Activity activity, AbstractMessage message){
+		final AbstractMessage.Context context = duplicateContext(message.getContext());
 		AlertDialog.Builder builder;
 		AlertDialog alertDialog;
 
@@ -72,7 +85,7 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 		                               (ViewGroup) activity.findViewById(R.id.emp_dialog_layout_root));
 
 		TextView text = (TextView) layout.findViewById(R.id.emp_dialog_text);
-		text.setText(message);
+		text.setText(message.getText());
 		ImageView image = (ImageView) layout.findViewById(R.id.emp_dialog_image);
 		image.setImageResource(R.drawable.icon);
 
@@ -81,12 +94,14 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 		builder = builder.setCancelable(false)
 			       .setPositiveButton("Me gusta", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
-			                dialog.cancel();
+			        	   registerMessageOcurrence(context, true, true, true);
+			        	   dialog.cancel();
 			           }
 			       })
 			       .setNegativeButton("No me gusta", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
-			                dialog.cancel();
+			        	   registerMessageOcurrence(context, true, true, false);
+			        	   dialog.cancel();
 			           }
 			       });
 		alertDialog = builder.create();

@@ -2,13 +2,13 @@ package cl.automind.empathy.data;
 
 import util.NamedValuePair;
 
-public abstract class AbstractQueryCriterion<T> implements IQueryCriterion<T> {
+public class DefaultQueryCriterion<T> implements IQueryCriterion<T> {
 	private T target = null;
 	private NamedValuePair<?>[] params = {};
 
-	public AbstractQueryCriterion(){ }
+	public DefaultQueryCriterion(){ }
 
-	public AbstractQueryCriterion(T target, NamedValuePair<?>... params){
+	public DefaultQueryCriterion(T target, NamedValuePair<?>... params){
 		setTarget(target);
 		setParams(params);
 	}
@@ -21,6 +21,18 @@ public abstract class AbstractQueryCriterion<T> implements IQueryCriterion<T> {
 	public boolean apply(T target) {
 		return apply(target, getParams());
 	}
+//	@Override
+//	public boolean apply(T target, NamedValuePair<?> pair){
+//		return true;
+//	}
+//	@Override
+//	public boolean apply(T target, NamedValuePair<?> pair00, NamedValuePair<?> pair01){
+//		return true;
+//	}
+//	@Override
+//	public boolean apply(T target, NamedValuePair<?> pair00, NamedValuePair<?> pair01, NamedValuePair<?> pair02){
+//		return true;
+//	}
 	@Override
 	public boolean apply(T target, util.NamedValuePair<?>... params) {
 		return true;

@@ -147,6 +147,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	@Override
 	public void setMessage(AbstractMessage message){
 		this.message = message;
+		getMessage().getContext().setCallingRuleName(getName());
 	}
 
 	protected <T> List<T> getInSource(String dataSourceName, IQueryOption option, IQueryCriterion<T>... criteria){

@@ -1,18 +1,19 @@
 package cl.automind.empathy.fw.ui;
 
 import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.feedback.AbstractMessage.Context;
 
 public class DefaultUiManager extends AbstractUiManager{
 
 	private boolean showing;
 	private AbstractMessage currentMessage;
-	
-	
+
+
 	@Override
 	public void displayMessage(AbstractMessage message) {
 		doDisplay(message);
 	}
-	
+
 	private synchronized void doDisplay(AbstractMessage message){
 		System.out.println("= MessageRequest");
 		if (isShowing()){
@@ -36,12 +37,12 @@ public class DefaultUiManager extends AbstractUiManager{
 		setCurrentMessage(message);
 		t.start();
 	}
-	
+
 	@Override
 	public void hideCurrentMessage() {
 		doHide();
 	}
-	
+
 	private void hideMessage(AbstractMessage message){
 		doHide(message);
 	}
@@ -70,5 +71,11 @@ public class DefaultUiManager extends AbstractUiManager{
 
 	public AbstractMessage getCurrentMessage() {
 		return currentMessage;
+	}
+
+	@Override
+	public void registerMessageOcurrence(Context context, boolean evaluated, boolean answered, boolean liked) {
+		// TODO Auto-generated method stub
+
 	}
 }
