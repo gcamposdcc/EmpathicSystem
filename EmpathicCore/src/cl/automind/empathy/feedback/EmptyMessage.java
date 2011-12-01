@@ -14,7 +14,7 @@ public class EmptyMessage extends AbstractMessage{
 
 	@Override
 	public String getUnfilteredText() {
-		return "This is the default message, remember to override this message by assigning value to the preferredMessage in your rule";
+		return "This is the default message, remember to override this message by assigning value to the preferredMessage in your rule: "+ getContext().getCallingRuleName();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.fw.DefaultEmpathicPlugin;
 import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.IRule;
 
 public class TestPlugin extends DefaultEmpathicPlugin {
 	private AbstractRule[] rules = {
@@ -17,9 +18,9 @@ public class TestPlugin extends DefaultEmpathicPlugin {
 		return dataManager;
 	}
 	@Override
-	public Collection<AbstractRule> getRules() {
-		Collection<AbstractRule> newRules = super.getRules();
-		for(AbstractRule rule: rules){
+	public Collection<IRule> getRules() {
+		Collection<IRule> newRules = super.getRules();
+		for(IRule rule: rules){
 			newRules.add(rule);
 		}
 		return newRules;

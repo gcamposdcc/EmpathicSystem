@@ -139,6 +139,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	 */
 	@Override
 	public AbstractMessage getMessage(){
+		if (message != null) message.getContext().setCallingRuleName(getName());
 		return message;
 	}
 	/* (non-Javadoc)

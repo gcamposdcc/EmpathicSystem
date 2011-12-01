@@ -7,7 +7,6 @@ import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.feedback.AbstractMessage;
-import cl.automind.empathy.rule.AbstractRule;
 import cl.automind.empathy.rule.DataRuleMediator;
 import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
@@ -113,9 +112,9 @@ public abstract class EmpathicKernel {
 		if (plugin.getCriterion() != null) getArbiter().setCriterion(plugin.getCriterion());
 	}
 	private final void deployPluginContent(EmpathicPlugin plugin) {
-		Collection<AbstractRule> rules = plugin.getRules();
+		Collection<IRule> rules = plugin.getRules();
 		Collection<AbstractEmotion> emotions = plugin.getEmotions();
-		for (AbstractRule rule: rules){
+		for (IRule rule: rules){
 			System.out.println("Load::Rule::"+rule);
 			rule.setDataMediator(getDataRuleMediator());
 			getManagers().getRuleManager().registerRule(rule.getName(), rule);
@@ -137,6 +136,10 @@ public abstract class EmpathicKernel {
 	public <T> int pushValue(String dataSourceName, T value){
 		System.out.println("PushTo::"+dataSourceName+"::Value::"+value);
 		return getManagers().getDataManager().pushValue(dataSourceName, value);
+	}
+
+	public void registerRule(IRule rule){
+		getManagers().getRuleManager().registerRule(rule.getName(), rule);
 	}
 
 	public IRule getRule(String rulename){

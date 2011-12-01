@@ -3,9 +3,9 @@ package cl.automind.empathy.fw;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.EmpathicPlugin;
 import cl.automind.empathy.IArbiter;
+import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.feedback.AbstractEmotion;
@@ -14,7 +14,7 @@ import cl.automind.empathy.fw.arbiter.LessUsedCriterion;
 import cl.automind.empathy.fw.data.DefaultDataManager;
 import cl.automind.empathy.fw.rule.DefaultRuleManager;
 import cl.automind.empathy.fw.ui.DefaultUiManager;
-import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.IRule;
 import cl.automind.empathy.rule.IRuleManager;
 import cl.automind.empathy.ui.IUiManager;
 
@@ -52,8 +52,8 @@ public class DefaultEmpathicPlugin extends EmpathicPlugin {
 	}
 
 	@Override
-	public Collection<AbstractRule> getRules() {
-		return new ArrayList<AbstractRule>();
+	public Collection<IRule> getRules() {
+		return new ArrayList<IRule>();
 	}
 
 	@Override

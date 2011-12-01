@@ -5,7 +5,7 @@ import java.util.Collection;
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.feedback.AbstractEmotion;
-import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.IRule;
 import cl.automind.empathy.rule.IRuleManager;
 import cl.automind.empathy.ui.IUiManager;
 /**
@@ -29,7 +29,7 @@ public abstract class EmpathicPlugin {
 	public abstract IArbiter getArbiter();
 	public abstract IArbiterCriterion getCriterion();
 
-	public abstract Collection<AbstractRule> getRules();
+	public abstract Collection<IRule> getRules();
 	public abstract Collection<AbstractEmotion> getEmotions();
 
 	public abstract Collection<IDataSource<?>> getDataSources();
