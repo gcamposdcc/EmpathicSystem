@@ -1,11 +1,11 @@
 package cl.automind.empathy.data;
 
-import interfaces.structural.INamed;
+import gcampos.dev.interfaces.structural.INamed;
+import gcampos.dev.patterns.behavioral.IObservable;
 
 import java.util.Collection;
 import java.util.List;
 
-import patterns.behavioral.IObservable;
 
 public interface IDataSource<T> extends IObservable<IDataSource<T>>, INamed{
 

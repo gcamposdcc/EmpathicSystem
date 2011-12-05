@@ -1,8 +1,9 @@
 package cl.automind.empathy.fw.data.sql;
 
+import gcampos.dev.util.Property;
+
 import java.util.Properties;
 
-import util.Property;
 
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 
@@ -22,7 +23,6 @@ public abstract class AbstractSqlConnectionInfo implements ISqlConnectionInfo {
 		getProperties().setProperty(ISqlConnectionInfo.Fields.Port.toString(), getPort());
 		getProperties().setProperty(ISqlConnectionInfo.Fields.Driver.toString(), getDriver());
 		getProperties().setProperty(ISqlConnectionInfo.Fields.DriverClassname.toString(), getDriverClassname());
-		getProperties().setProperty(ISqlConnectionInfo.Fields.DatabaseUrl.toString(), getDatabaseUrl());
 		for (Property p: getAdditionalConfig()){
 			getProperties().setProperty(p.getKey(), p.getValue());
 		}

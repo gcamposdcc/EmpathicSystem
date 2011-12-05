@@ -1,12 +1,13 @@
 package cl.automind.empathy.rule;
 
+import gcampos.dev.patterns.creational.FlyweightNamedFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import patterns.creational.FlyweightNamedFactory;
 
 
 

@@ -1,9 +1,10 @@
 package cl.automind.empathy.data;
 
+import gcampos.dev.patterns.creational.FlyweightNamedFactory;
+
 import java.util.Hashtable;
 import java.util.Map;
 
-import patterns.creational.FlyweightNamedFactory;
 
 public class IndicatorCache extends FlyweightNamedFactory<IIndicator>{
 

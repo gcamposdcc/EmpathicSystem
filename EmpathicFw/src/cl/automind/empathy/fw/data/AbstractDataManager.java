@@ -1,11 +1,11 @@
 package cl.automind.empathy.fw.data;
 
-import interfaces.behavioral.IDisposable;
+import gcampos.dev.interfaces.behavioral.IDisposable;
+import gcampos.dev.patterns.behavioral.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import patterns.behavioral.IObserver;
 import cl.automind.empathy.data.DefaultQueryOptions;
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;

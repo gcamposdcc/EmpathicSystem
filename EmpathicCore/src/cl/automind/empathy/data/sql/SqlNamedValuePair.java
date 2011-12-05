@@ -1,8 +1,9 @@
 package cl.automind.empathy.data.sql;
 
+import gcampos.dev.util.NamedValuePair;
+
 import java.sql.PreparedStatement;
 
-import util.NamedValuePair;
 
 public abstract class SqlNamedValuePair<V> extends NamedValuePair<V> {
 

@@ -1,6 +1,9 @@
 package cl.automind.empathy.fw.data.web;
 
-import interfaces.behavioral.IDisposable;
+import gcampos.dev.interfaces.behavioral.IDisposable;
+import gcampos.dev.net.IHttpClient;
+import gcampos.dev.patterns.behavioral.IObserver;
+import gcampos.dev.util.NamedValuePair;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,9 +14,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import net.IHttpClient;
-import patterns.behavioral.IObserver;
-import util.NamedValuePair;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;

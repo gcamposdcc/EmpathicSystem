@@ -1,12 +1,13 @@
 package cl.automind.empathy.fw.ui;
 
+import gcampos.dev.patterns.creational.FlyweightNamedFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import patterns.creational.FlyweightNamedFactory;
 import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.feedback.AbstractMessage;
 import cl.automind.empathy.ui.IUiManager;

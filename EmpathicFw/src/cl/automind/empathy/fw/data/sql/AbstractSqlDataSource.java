@@ -1,6 +1,9 @@
 package cl.automind.empathy.fw.data.sql;
 
-import interfaces.behavioral.IDisposable;
+import gcampos.dev.interfaces.behavioral.IDisposable;
+import gcampos.dev.patterns.behavioral.IObserver;
+import gcampos.dev.util.NamedValuePair;
+import gcampos.dev.util.Strings;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
@@ -13,9 +16,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import patterns.behavioral.IObserver;
-import util.NamedValuePair;
-import util.Strings;
 import cl.automind.empathy.data.DefaultQueryOptions;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;

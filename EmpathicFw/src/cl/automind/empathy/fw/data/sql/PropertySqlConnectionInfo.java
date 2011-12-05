@@ -1,10 +1,11 @@
 package cl.automind.empathy.fw.data.sql;
 
+import gcampos.dev.util.Property;
+
 import java.util.Properties;
 
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 
-import util.Property;
 
 public class PropertySqlConnectionInfo extends AbstractSqlConnectionInfo{
 
@@ -49,12 +50,6 @@ public class PropertySqlConnectionInfo extends AbstractSqlConnectionInfo{
 	public String getDriverClassname() {
 		return getProperties()
 		.getProperty(ISqlConnectionInfo.Fields.DriverClassname.toString(), "");
-	}
-
-	@Override
-	public String getDatabaseUrl() {
-		return getProperties()
-		.getProperty(ISqlConnectionInfo.Fields.DatabaseUrl.toString(), "");
 	}
 
 	@Override

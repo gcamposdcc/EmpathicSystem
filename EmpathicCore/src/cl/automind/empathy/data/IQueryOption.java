@@ -1,6 +1,6 @@
 package cl.automind.empathy.data;
 
-import interfaces.structural.INamed;
+import gcampos.dev.interfaces.structural.INamed;
 
 public interface IQueryOption extends INamed{
 	public int getValue();

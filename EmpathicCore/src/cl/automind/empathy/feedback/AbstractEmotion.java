@@ -1,7 +1,7 @@
 package cl.automind.empathy.feedback;
 
-import interfaces.structural.INamed;
-import util.ArrayUtils;
+import gcampos.dev.interfaces.structural.INamed;
+import gcampos.dev.util.ArrayUtils;
 
 public abstract class AbstractEmotion implements INamed{
 	// <metadata-fields>

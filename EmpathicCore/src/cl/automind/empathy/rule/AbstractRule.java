@@ -1,12 +1,12 @@
 package cl.automind.empathy.rule;
 
-import interfaces.structural.INamed;
+import gcampos.dev.interfaces.structural.INamed;
+import gcampos.dev.util.ArrayUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import util.ArrayUtils;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
 import cl.automind.empathy.feedback.AbstractMessage;

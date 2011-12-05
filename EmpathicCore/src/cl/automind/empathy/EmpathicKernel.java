@@ -1,7 +1,10 @@
 package cl.automind.empathy;
 
+import gcampos.dev.net.IHttpClient;
+
 import java.util.Collection;
 import java.util.Set;
+
 
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
@@ -160,6 +163,10 @@ public abstract class EmpathicKernel {
 	public void putParams(String ruleName, Object... params){
 		IRule rule = getManagers().getRuleManager().getRule(ruleName);
 		if(rule != null) rule.setParams(params);
+	}
+
+	public static abstract class Context{
+		public abstract IHttpClient getHttpClient();
 	}
 
 }

@@ -1,5 +1,8 @@
 package cl.automind.empathy.fw.data.sql;
 
+import gcampos.dev.util.Property;
+import gcampos.dev.util.Strings;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -7,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import util.Property;
-import util.Strings;
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 import cl.automind.empathy.data.sql.ISqlConnector;
 

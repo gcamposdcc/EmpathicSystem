@@ -1,9 +1,10 @@
 package cl.automind.empathy.feedback;
 
+import gcampos.dev.patterns.creational.FlyweightNamedFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import patterns.creational.FlyweightNamedFactory;
 
 public class MessageFactory extends FlyweightNamedFactory<AbstractMessage> {
 

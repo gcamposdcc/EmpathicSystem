@@ -1,6 +1,6 @@
 package cl.automind.empathy.fwdesk.data.sql;
 
-import util.Property;
+import gcampos.dev.util.Property;
 import cl.automind.empathy.fw.data.sql.AbstractSqlConnectionInfo;
 
 public class HsqldbConnectionInfo extends AbstractSqlConnectionInfo{
@@ -35,11 +35,6 @@ public class HsqldbConnectionInfo extends AbstractSqlConnectionInfo{
 	@Override
 	public String getDriverClassname() {
 		return "org.hsqldb.jdbcDriver";
-	}
-
-	@Override
-	public String getDatabaseUrl() {
-		return "";
 	}
 
 	@Override

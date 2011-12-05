@@ -1,6 +1,6 @@
 package cl.automind.empathy.data;
 
-import util.NamedValuePair;
+import gcampos.dev.util.NamedValuePair;
 
 public class DefaultQueryCriterion<T> implements IQueryCriterion<T> {
 	private T target = null;
@@ -34,7 +34,7 @@ public class DefaultQueryCriterion<T> implements IQueryCriterion<T> {
 //		return true;
 //	}
 	@Override
-	public boolean apply(T target, util.NamedValuePair<?>... params) {
+	public boolean apply(T target, gcampos.dev.util.NamedValuePair<?>... params) {
 		return true;
 	}
 

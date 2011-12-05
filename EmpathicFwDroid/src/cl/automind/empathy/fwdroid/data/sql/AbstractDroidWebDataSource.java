@@ -1,6 +1,6 @@
 package cl.automind.empathy.fwdroid.data.sql;
 
-import net.IHttpClient;
+import gcampos.dev.net.IHttpClient;
 import cl.automind.android.net.AndroidHttpClient;
 import cl.automind.empathy.fw.data.web.AbstractWebDataSource;
 

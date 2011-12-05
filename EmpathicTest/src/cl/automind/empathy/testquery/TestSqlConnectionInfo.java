@@ -1,6 +1,6 @@
 package cl.automind.empathy.testquery;
 
-import util.Property;
+import gcampos.dev.util.Property;
 import cl.automind.empathy.fw.data.sql.AbstractSqlConnectionInfo;
 
 public class TestSqlConnectionInfo extends AbstractSqlConnectionInfo {
@@ -35,10 +35,6 @@ public class TestSqlConnectionInfo extends AbstractSqlConnectionInfo {
 	@Override
 	public String getDriverClassname() {
 		return "org.hsqldb.jdbcDriver";
-	}
-	@Override
-	public String getDatabaseUrl() {
-		return "url";
 	}
 
 	@Override

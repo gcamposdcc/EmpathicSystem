@@ -1,6 +1,6 @@
 package cl.automind.empathy.feedback;
 
-import interfaces.structural.INamed;
+import gcampos.dev.interfaces.structural.INamed;
 
 public abstract class EmotionArgs implements INamed{
 }

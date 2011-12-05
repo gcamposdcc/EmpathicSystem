@@ -1,8 +1,9 @@
 package cl.automind.empathy.data.web;
 
+import gcampos.dev.net.IHttpClient;
+
 import java.util.List;
 
-import net.IHttpClient;
 
 import cl.automind.empathy.data.IQueryableDataSource;
 

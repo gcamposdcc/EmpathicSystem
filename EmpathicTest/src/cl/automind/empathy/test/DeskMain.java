@@ -66,7 +66,6 @@ public class DeskMain {
 					psql_props.setProperty(ISqlConnectionInfo.Fields.Driver.toString(), "postgresql");
 					psql_props.setProperty(ISqlConnectionInfo.Fields.DriverClassname.toString(), "org.postgresql.Driver");
 					// En vías de quedar obsoleto
-					psql_props.setProperty(ISqlConnectionInfo.Fields.DatabaseUrl.toString(), "");
 					PropertySqlConnectionInfo psql = new PropertySqlConnectionInfo(psql_props);
 
 					final ISqlConnector psql_connector = new DefaultSqlConnector(psql);

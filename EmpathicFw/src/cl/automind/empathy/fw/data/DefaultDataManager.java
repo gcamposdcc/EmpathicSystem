@@ -1,11 +1,12 @@
 package cl.automind.empathy.fw.data;
 
+import gcampos.dev.patterns.creational.FlyweightNamedFactory;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import patterns.creational.FlyweightNamedFactory;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.UnmatchingClassException;
 
