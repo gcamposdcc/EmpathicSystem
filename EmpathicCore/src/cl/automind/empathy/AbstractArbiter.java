@@ -128,11 +128,15 @@ public abstract class AbstractArbiter implements IArbiter{
 		IRule rule;
 		for(String rulename: getAllRuleNames()){
 			rule = getRule(rulename);
-			if (rule.canEvaluate(rule.getParams())){
-				list.add(rulename);
-				System.out.println("Rule::"+rulename+"::Evaluable?:YES");
-			} else {
-				System.out.println("Rule::"+rulename+"::Evaluable?:NOT");
+			try{
+				if (rule.canEvaluate(rule.getParams())){
+					list.add(rulename);
+					System.out.println("Rule::"+rulename+"::Evaluable?:YES");
+				} else {
+					System.out.println("Rule::"+rulename+"::Evaluable?:NOT");
+				}
+			} catch (Exception e){
+				e.printStackTrace();
 			}
 		}
 		if(list.size() == 0) list.add(EmptyRule.instance.getName());
@@ -144,9 +148,13 @@ public abstract class AbstractArbiter implements IArbiter{
 		List<String> list = new ArrayList<String>();
 		IRule rule;
 		for (String rulename: getEvaluableRules()){
-			rule = getRule(rulename);
-			rule.evaluate(rule.getParams());
-			if (rule.isSelectable()) list.add(rulename);
+			try{
+				rule = getRule(rulename);
+				rule.evaluate(rule.getParams());
+				if (rule.isSelectable()) list.add(rulename);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		return list;
 	}

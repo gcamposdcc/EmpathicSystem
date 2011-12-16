@@ -1,0 +1,6 @@
+package cl.automind.empathy.data;
+
+public class QueryOption implements IQueryOption{
+	private IQueryOption.Type type;
+	private int value;
+}

@@ -1,0 +1,20 @@
+package cl.automind.empathy.fw.data.sql;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class SqlDescriptor {
+	private Map<String, Map<String, Collection<Integer>>> queryPositionsMap;
+	public SqlDescriptor(){
+		setQueryPositionsMap(new HashMap<String, Map<String,Collection<Integer>>>());
+	}
+	private void setQueryPositionsMap(Map<String, Map<String, Collection<Integer>>> queryPositionsMap) {
+		this.queryPositionsMap = queryPositionsMap;
+	}
+
+	private Map<String, Map<String, Collection<Integer>>> getQueryPositionsMap() {
+		return queryPositionsMap;
+	}
+
+}

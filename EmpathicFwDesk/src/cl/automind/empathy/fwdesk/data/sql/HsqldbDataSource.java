@@ -6,7 +6,7 @@ import java.util.List;
 import cl.automind.empathy.data.sql.ISqlConnector;
 import cl.automind.empathy.fw.data.sql.AbstractSqlDataSource;
 
-public class HsqldbDataSource<T> extends AbstractSqlDataSource<T> {
+public abstract class HsqldbDataSource<T> extends AbstractSqlDataSource<T> {
 
 	public HsqldbDataSource(T template) {
 		super(template, new HsqldbConnector());

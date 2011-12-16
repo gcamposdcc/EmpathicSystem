@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=EmpathicCore/C:\/Program Files\/Java\/jre6\/lib\/rt.jar&lt;com.sun.corba.se.spi.ior(IdentifiableFactory.class[IdentifiableFactory" modifiers="1537" timestamp="1317628638000"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy{EmpathicKernel.java[EmpathicKernel" modifiers="1025" timestamp="1323564544045"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.rule{AbstractRule.java[AbstractRule" modifiers="1025" timestamp="1323569493265"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy{EmpathicPlugin.java[EmpathicPlugin" modifiers="1025" timestamp="1322755389719"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.rule{AbstractRuleManager.java[AbstractRuleManager" modifiers="1" timestamp="1323093546359"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{IDataSource.java[IDataSource" modifiers="513" timestamp="1323093538686"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data.sql{ISqlDataSource.java[ISqlDataSource" modifiers="513" timestamp="1323700682741"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data.sql{ISqlConnectionInfo.java[ISqlConnectionInfo" modifiers="513" timestamp="1323093482337"/>
+<typeInfo handle="=EmpathicCore/C:\/Program Files\/Java\/jre6\/lib\/rt.jar&lt;java.lang(Exception.class[Exception" modifiers="1" timestamp="1317628638000"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data.web{IWebDataSource.java[IWebDataSource" modifiers="513" timestamp="1323571286849"/>
+<typeInfo handle="=EmpathicFw/src&lt;cl.automind.empathy.fw.data.web{AbstractWebDataSource.java[AbstractWebDataSource" modifiers="1025" timestamp="1323565979943"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{IQueryCriterion.java[IQueryCriterion" modifiers="513" timestamp="1323093482267"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{IQueryable.java[IQueryable" modifiers="513" timestamp="1323093482286"/>
+</typeInfoHistroy>

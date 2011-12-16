@@ -1,0 +1,7 @@
+package cl.automind.empathy.testquery;
+
+import cl.automind.empathy.data.sql.ISqlDataSource;
+
+public class EmpathySqlDataSource implements ISqlDataSource<EmpathyMetadata> {
+
+}

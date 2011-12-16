@@ -1,0 +1,59 @@
+1315941542892	Rename type 'EmotionMetadata'
+1315973302357	Rename local variable 'indicator_name'
+1316121392944	Rename type 'LocalDataSpace'
+1316121965233	Move compilation unit
+1316121968322	Move compilation unit
+1316122496811	Rename local variable 'list'
+1316122503287	Rename local variable 'value'
+1316122929200	Delete element
+1316124126637	Delete element
+1316124266603	Encapsulate field 'observers'
+1316126671452	Encapsulate field 'backup'
+1316126949731	Encapsulate field 'backup'
+1316127541011	Move compilation unit
+1316128342785	Rename type 'InternalDataSpace'
+1316128354082	Rename type 'InternalMemoryDataSpace'
+1316198921926	Rename package 'cl.automind.empathy.core'
+1316198928250	Rename package 'cl.automind.empathy.core.data'
+1316198934740	Rename package 'cl.automind.empathy.core.data.internal'
+1316198940101	Rename package 'cl.automind.empathy.core.dataquery'
+1316198949432	Rename package 'cl.automind.empathy.core.emotion'
+1316198955010	Rename package 'cl.automind.empathy.core.lang'
+1316198959162	Rename package 'cl.automind.empathy.core.message'
+1316198964161	Rename package 'cl.automind.empathy.core.strategy'
+1316198975228	Rename package 'cl.automind.empathy.core.ui'
+1316199050384	Move compilation units
+1316199056024	Rename package 'cl.automind.empathy.emotion'
+1316199062488	Delete element
+1316199065454	Delete element
+1316199080091	Delete element
+1316199169127	Rename type 'EmpathicEngine'
+1316199177597	Rename type 'AArbiter'
+1316199183878	Rename type 'ArbiterCriterion'
+1316199203292	Rename type 'EmpathicRuleState'
+1316199212629	Rename type 'EmpathicRuleMetadata'
+1316199217331	Rename type 'EmpathicRuleManager'
+1316199226737	Rename type 'EmpathicArbiterCriterion'
+1316199234536	Rename type 'AEmpathicRule'
+1316199241810	Rename type 'AEmpathicArbiter'
+1316199318473	Rename type 'AEmpathicEmotion'
+1316199323306	Rename type 'AEmpathicMessage'
+1316199327304	Rename type 'EmpathicEmotionArgs'
+1316199332549	Rename type 'EmpathicEmotionFactory'
+1316199337786	Rename type 'EmpathicEmotionMetadata'
+1316199341564	Rename type 'EmpathicMessageArgs'
+1316199349247	Rename type 'EmpathicMessageFactory'
+1316199391897	Delete element
+1316199615272	Rename type 'ManagerContainer'
+1316199641134	Rename type 'AUIManager'
+1316199776124	Copy compilation units
+1316199781211	Delete element
+1316199810406	Rename type 'SubmanagerContainer'
+1316199878934	Move compilation units
+1316199900599	Rename type 'EmpathicManager'
+1316199907907	Rename type 'Submanagers'
+1316200147342	Encapsulate field 'ruleManager'
+1316200155604	Rename type 'RuleManager'
+1316200170154	Rename type 'ADataSpaceManager'
+1316202477688	Delete element
+1316204698656	Rename method 'printContent'

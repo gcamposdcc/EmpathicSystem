@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;DeskHttpClient.java&apos; to &apos;EmpathicFw/src/cl.automind.empathy.fw.net&apos;&#x0D;&#x0A;- Original project: &apos;EmpathicFwDesk&apos;&#x0D;&#x0A;- Destination element: &apos;EmpathicFw/src/cl.automind.empathy.fw.net&apos;&#x0D;&#x0A;- Original element: &apos;cl.automind.empathy.fwdesk.net.DeskHttpClient.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="=EmpathicFw/src&lt;cl.automind.empathy.fw.net" element1="/src&lt;cl.automind.empathy.fwdesk.net{DeskHttpClient.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1323093337300" units="1" version="1.0"/>
+</session>

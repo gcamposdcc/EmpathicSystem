@@ -1,0 +1,8 @@
+package cl.automind.vote.empathy;
+
+import cl.automind.empathy.rule.RuleMetadata;
+
+@RuleMetadata(name = EmpathicConstants.R_ABOVE_AVERAGE + "")
+class AboveAverageRules {
+
+}

@@ -3,6 +3,7 @@ package cl.automind.empathy.fw.data;
 
 import gcampos.dev.interfaces.behavioral.IDisposable;
 import gcampos.dev.patterns.behavioral.IObserver;
+import gcampos.dev.util.Strings;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,6 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import cl.automind.empathy.data.DataEntry;
-import cl.automind.empathy.data.DefaultQueryOptions;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
@@ -32,7 +32,15 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 		this.template = template;
 		this.data = initiateMap();
 		setObservers(new CopyOnWriteArrayList<IObserver<IDataSource<T>>>());
-		this.name = "" + (code++);
+		this.name = "genname" + (code++);
+		this.useBackup = useBackup;
+	}
+
+	public MemoryDataSource(String name, boolean useBackup, T template){
+		this.template = template;
+		this.data = initiateMap();
+		setObservers(new CopyOnWriteArrayList<IObserver<IDataSource<T>>>());
+		this.name = !Strings.isNullOrEmpty(name)? name : "genname" + (code++);
 		this.useBackup = useBackup;
 	}
 	private Map<Integer, DataEntry<T>> initiateMap(){
@@ -125,21 +133,19 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	}
 	@Override
 	public List<T> select(IQueryOption option, IQueryCriterion<T>... criteria) {
-		if (option.getName().equals(DefaultQueryOptions.Id.getName())){
+		if (option.getType() == IQueryOption.Type.Id){
 			List<T> result = new ArrayList<T>();
 			DataEntry<T> item = getData().get(option.getValue());
 			if (item != null) result.add(item.getValue());
 			return result;
-		} else if (option.getName().equals(DefaultQueryOptions.All.getName())){
+		} else if (option.getType() == IQueryOption.Type.All){
 			return selectAll();
-		} else if (option.getName().equals(DefaultQueryOptions.Filter.getName())){
+		} else if (option.getType() == IQueryOption.Type.Filter){
 			List<T> result = new ArrayList<T>();
 			for (IQueryCriterion<T> criterion : criteria){
 				for(DataEntry<T> t : getData().values()){
 					if (criterion.apply(t.getValue())) result.add(t.getValue());
-//					if (result.size() == option.getValue()) return result;
 				}
-//				if (result.size() == option.getValue()) return result;
 			}
 			return result;
 		} else {
@@ -161,7 +167,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 		for(DataEntry<T> t : getEntriesOrderedById()){
 			list.add(t.getValue());
 		}
-		return list;
+		return Collections.unmodifiableList(list);
 	}
 	public int update(int id, T value) {
 		DataEntry<T> item = getData().get(id);
@@ -169,27 +175,50 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	}
 	@Override
 	public int update(T value, IQueryOption option, IQueryCriterion<T>... criteria) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (option.getType() == IQueryOption.Type.Id){
+			DataEntry<T> item = getData().get(option.getValue());
+			if (item != null) {
+				item.setValue(value);
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			List<Integer> ids = new ArrayList<Integer>();
+			for (IQueryCriterion<T> criterion : criteria){
+				for(DataEntry<T> t : getData().values()){
+					if (criterion.apply(t.getValue())) {
+						t.setValue(value);
+						ids.add(t.getId());
+						if (option.getValue() > 0 && ids.size() == option.getValue()) {
+							//FIXME return type
+							return ids.size();
+						}
+					}
+				}
+			}
+			//FIXME return type
+			return ids.size();
+		}
 	}
 	@Override
 	public boolean delete(IQueryOption option, IQueryCriterion<T>... criteria) {
-		if (option.getName().equals(DefaultQueryOptions.Id.getName())){
+		if (option.getType() == IQueryOption.Type.Id){
 			return getData().remove(option.getValue()) == null;
-		} else if (option.getName().equals(DefaultQueryOptions.All.getName())){
+		} else if (option.getType() == IQueryOption.Type.All){
 			boolean nonEmpty = getData().size() > 0;
 			clear();
 			return nonEmpty;
-		} else if (option.getName().equals(DefaultQueryOptions.Filter.getName())){
+		} else if (option.getType() == IQueryOption.Type.Filter){
 			Set<Integer> ids = new HashSet<Integer>();
 			for (IQueryCriterion<T> criterion : criteria){
 				for(DataEntry<T> t : getData().values()){
 					if (criterion.apply(t.getValue())) {
 						ids.add(t.getId());
 					}
-					if (ids.size() == option.getValue()) break;
+					if (option.getValue() > 0 && ids.size() == option.getValue()) break;
 				}
-				if (ids.size() == option.getValue()) break;
+				if (option.getValue() > 0 && ids.size() == option.getValue()) break;
 			}
 			for (int id : ids){
 				getData().remove(id);

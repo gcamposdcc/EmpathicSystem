@@ -1,0 +1,9 @@
+package cl.automind.vote.model;
+
+public class UserInfo {
+	private int idEstablishment;
+	private int idCourse;
+	private int idUser;
+	private String firstName;
+	private String secondeName;
+}

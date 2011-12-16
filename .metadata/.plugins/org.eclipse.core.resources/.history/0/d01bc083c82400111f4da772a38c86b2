@@ -1,0 +1,19 @@
+package cl.automind.empathy.data;
+
+import gcampos.dev.interfaces.structural.INamed;
+
+public interface IQueryOption extends INamed{
+	public int getValue();
+	public void setValue(int value);
+	public Type getType();
+	public void setType(Type t);
+	public enum Type{
+		/**
+		 * Limits the number of elements
+		 */
+		Id,
+		None,
+		Filter,
+		All;
+	}
+}

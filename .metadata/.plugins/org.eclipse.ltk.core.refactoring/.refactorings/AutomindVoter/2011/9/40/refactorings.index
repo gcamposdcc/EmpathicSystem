@@ -1,0 +1,23 @@
+1317304554497	Delete element
+1317304556956	Delete element
+1317343558442	Delete element
+1317345766925	Delete element
+1317346733088	Rename method 'fixKeyCode'
+1317349677242	Rename local variable 'new_mess'
+1317353624360	Encapsulate field 'askUser'
+1317353632456	Encapsulate field 'randomGen'
+1317357148737	Rename package 'cl.automind.android.application'
+1317357162721	Rename package 'cl.automind.android.empathy.rule'
+1317357167115	Rename package 'cl.automind.android.utils'
+1317357171771	Rename package 'cl.automind.android.view'
+1317357178338	Rename package 'cl.automind.android.empathy'
+1317387185699	Move compilation units
+1317387189933	Delete element
+1317388957953	Rename type 'FirstScoreRule'
+1317396717052	Move package
+1317396775256	Move compilation units
+1317397975229	Rename type 'VoteUiManager'
+1317401207394	Encapsulate field 'activity'
+1317401331230	Rename method 'markThisActivity'
+1317402064649	Encapsulate field 'empathy'
+1317404257705	Delete element

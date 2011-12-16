@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;cl.automind.empathy.feedback.AbstractMessage.Context.data&apos; in &apos;cl.automind.empathy.feedback.AbstractMessage.Context&apos;&#x0D;&#x0A;- Original project: &apos;EmpathicCore&apos;&#x0D;&#x0A;- Original element: &apos;cl.automind.empathy.feedback.AbstractMessage.Context.data&apos;&#x0D;&#x0A;- Getter method name: &apos;getData&apos;&#x0D;&#x0A;- Setter method name: &apos;setData&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;data&apos;" flags="589830" getter="getData" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;cl.automind.empathy.feedback{AbstractMessage.java[AbstractMessage[Context^data" insertion="0" setter="setData" stamp="1322234186969" version="1.0" visibility="1"/>
+</session>

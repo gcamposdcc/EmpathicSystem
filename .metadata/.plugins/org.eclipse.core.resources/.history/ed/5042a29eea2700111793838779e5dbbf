@@ -1,0 +1,77 @@
+package cl.automind.vote.empathy;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import cl.automind.empathy.EmpathicPlugin;
+import cl.automind.empathy.IArbiter;
+import cl.automind.empathy.IArbiterCriterion;
+import cl.automind.empathy.data.IDataManager;
+import cl.automind.empathy.data.IDataSource;
+import cl.automind.empathy.feedback.AbstractEmotion;
+import cl.automind.empathy.fw.arbiter.DefaultArbiter;
+import cl.automind.empathy.fw.arbiter.LessUsedCriterion;
+import cl.automind.empathy.fw.data.DefaultDataManager;
+import cl.automind.empathy.fw.data.MemoryDataSource;
+import cl.automind.empathy.fw.rule.DefaultRuleManager;
+import cl.automind.empathy.fw.ui.DefaultUiManager;
+import cl.automind.empathy.rule.IRule;
+import cl.automind.empathy.rule.IRuleManager;
+import cl.automind.empathy.ui.IUiManager;
+import cl.automind.vote.model.Score;
+import cl.automind.vote.model.UserInfo;
+
+public class VoteEmpathicPlugin extends EmpathicPlugin{
+
+	@Override
+	public IRuleManager getRuleManager() {
+		return new DefaultRuleManager();
+	}
+
+	@Override
+	public IDataManager getDataManager() {
+		return new DefaultDataManager();
+	}
+
+	@Override
+	public IUiManager getUiManager() {
+		return new DefaultUiManager();
+	}
+
+	@Override
+	public IArbiter getArbiter() {
+		return new DefaultArbiter();
+	}
+
+	@Override
+	public IArbiterCriterion getCriterion() {
+		return new LessUsedCriterion();
+	}
+
+	@Override
+	public Collection<IRule> getRules() {
+		List<IRule> rules = new ArrayList<IRule>();
+		rules.add(new FirstPollScoreRule());
+		rules.add(new ScoreStreakRule());
+		rules.add(new TotalScoreRule());
+		rules.add(new SuccessPercentRule());
+		rules.add(new CmoPerformanceRule());
+		rules.add(new CmoPerformanceIncreaseRule());
+		return rules;
+	}
+
+	@Override
+	public Collection<AbstractEmotion> getEmotions() {
+		return new ArrayList<AbstractEmotion>();
+	}
+
+	@Override
+	public Collection<IDataSource<?>> getDataSources() {
+		Collection <IDataSource<?>> sources = new ArrayList<IDataSource<?>>();
+		sources.add(new MemoryDataSource<Score>(EmpathicConstants.DS_SCORES, false, EmpathicConstants.TP_SCORE));
+		sources.add(new MemoryDataSource<UserInfo>(EmpathicConstants.DS_USER_INFO, false, EmpathicConstants.TP_USER_INFO)));
+		return sources;
+	}
+
+}

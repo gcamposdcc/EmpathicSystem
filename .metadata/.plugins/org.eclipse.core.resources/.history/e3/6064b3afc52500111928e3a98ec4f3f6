@@ -1,0 +1,20 @@
+package cl.automind.empathy.testquery;
+
+import cl.automind.empathy.data.sql.Column;
+import cl.automind.empathy.data.sql.Id;
+
+public class EmpathyMetadata {
+	@Id
+	public int id;
+//	created_at timestamp without time zone NOT NULL,
+	@Column
+	public int idsource;
+	@Column
+	public int idtype;
+	@Column
+	public boolean evaluated;
+	@Column
+	public boolean answered;
+	@Column
+	public boolean liked;
+}

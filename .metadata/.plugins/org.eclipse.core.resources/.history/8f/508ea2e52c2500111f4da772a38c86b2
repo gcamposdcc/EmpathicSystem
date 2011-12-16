@@ -1,0 +1,31 @@
+package cl.automind.empathy.fw.data.sql;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import gcampos.dev.interfaces.structural.INamed;
+
+public class QueryDescriptor implements INamed{
+	private Map<String,Collection<Integer>> paramPositions;
+	private String name;
+
+	public QueryDescriptor(String name){
+		setName(name);
+		setParamPositions(new HashMap<String, Collection<Integer>>());
+	}
+	private void setName(String name){
+		this.name = name;
+	}
+	@Override
+	public String getName() {
+		return name;
+	}
+	public void setParamPositions(Map<String,Collection<Integer>> paramPositions) {
+		this.paramPositions = paramPositions;
+	}
+	public Map<String,Collection<Integer>> getParamPositions() {
+		return paramPositions;
+	}
+
+}

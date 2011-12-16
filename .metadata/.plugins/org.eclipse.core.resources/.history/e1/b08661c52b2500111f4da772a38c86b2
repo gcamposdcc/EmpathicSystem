@@ -1,0 +1,5 @@
+package cl.automind.empathy.fw.data.sql;
+
+public class QueryDescriptor {
+
+}

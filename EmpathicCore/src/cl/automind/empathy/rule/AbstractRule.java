@@ -35,13 +35,19 @@ public abstract class AbstractRule implements INamed, IRule{
 	private double value;
 
 	public AbstractRule(){
-		RuleMetadata metadata = getClass().getAnnotation(RuleMetadata.class);
+
+		Class<?> thisClass = getClass();
+		if (thisClass.isAnonymousClass()){
+			thisClass = thisClass.getSuperclass();
+			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+		}
+		RuleMetadata metadata = thisClass.getAnnotation(RuleMetadata.class);
 		// <metadata-fields-init>
 		//TODO: Implement metadata corrections
 		if (metadata != null){
-			name = metadata.name().trim().equals("") ? getClass().getSimpleName().replaceAll("Rule", "") : metadata.name().trim();
+			name = metadata.name().trim().equals("") ? thisClass.getSimpleName().replaceAll("Rule", "") : metadata.name().trim();
 		} else {
-			name = getClass().getSimpleName().replaceAll("Rule", "");
+			name = thisClass.getSimpleName().replaceAll("Rule", "");
 		}
 		strategies = metadata != null ? metadata.strategies() : RuleMetadata.STRATEGIES;
 		minValue = metadata != null ? metadata.minVal() : RuleMetadata.MIN_VALUE;

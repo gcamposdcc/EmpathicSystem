@@ -1,0 +1,53 @@
+package cl.automind.vote.empathy;
+
+import gcampos.dev.net.IHttpClient;
+
+import java.util.Collection;
+
+import cl.automind.android.net.AndroidHttpClient;
+import cl.automind.empathy.data.IDataSource;
+import cl.automind.empathy.ui.IUiManager;
+import cl.automind.vote.android.application.AppContext;
+import cl.automind.vote.utils.HostFixer;
+import cl.automind.vote.utils.IpFetcher;
+
+public class AndroidVoteEmpathicPlugin extends VoteEmpathicPlugin {
+	@Override
+	public IUiManager getUiManager() {
+		return new AndroidVoteUiManager();
+	}
+
+	@Override
+	public Collection<IDataSource<?>> getDataSources() {
+		Collection<IDataSource<?>> sources = super.getDataSources();
+		IDataSource<Integer> cmoPerformance = new CmoPerformanceDataSource(0){
+			@Override
+			public IHttpClient getHttpClient() {
+				return new AndroidHttpClient();
+			}
+			@Override
+			public String getDefaultUrl() {
+				System.out.println("http://"+HostFixer.fixHost(IpFetcher.fetchIp(), AppContext.getInstance().getKeyCode())+":8080/" +
+				"TestWebService/CmoPerformance");
+				return "http://"+HostFixer.fixHost(IpFetcher.fetchIp(), AppContext.getInstance().getKeyCode())+":8080/" +
+						"TestWebService/CmoPerformance";
+			}
+		};
+		IDataSource<?> aboveAverage = new AboveAverageDataSource(0){
+			@Override
+			public IHttpClient getHttpClient() {
+				return new AndroidHttpClient();
+			}
+			@Override
+			public String getDefaultUrl() {
+				System.out.println("http://"+HostFixer.fixHost(IpFetcher.fetchIp(), AppContext.getInstance().getKeyCode())+":8080/" +
+						"TestWebService/CmoPerformance");
+				return "http://"+HostFixer.fixHost(IpFetcher.fetchIp(), AppContext.getInstance().getKeyCode())+":8080/" +
+						"TestWebService/CmoPerformance";
+			}
+		};
+		sources.add(cmoPerformance);
+		sources.add(aboveAverage);
+		return sources;
+	}
+}

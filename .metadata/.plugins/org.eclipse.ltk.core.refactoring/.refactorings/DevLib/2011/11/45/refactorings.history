@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;util.Property.value&apos; in &apos;util.Property&apos;&#x0D;&#x0A;- Original project: &apos;DevLib&apos;&#x0D;&#x0A;- Original element: &apos;util.Property.value&apos;&#x0D;&#x0A;- Getter method name: &apos;getValue&apos;&#x0D;&#x0A;- Setter method name: &apos;setValue&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;value&apos;" flags="589830" getter="getValue" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;util{Property.java[Property^value" insertion="1" setter="setValue" stamp="1320357850520" version="1.0" visibility="1"/>
+</session>

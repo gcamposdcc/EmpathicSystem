@@ -1,0 +1,9 @@
+1323653565244	Rename type 'Compare'
+1323653606322	Rename type 'Comparer'
+1323653615678	Encapsulate field 'comparison'
+1323697624337	Delete element
+1323697769004	Encapsulate field 'type'
+1323697779086	Encapsulate field 'value'
+1323698012614	Rename method 'defaultValue'
+1323700682751	Rename method 'toSqlValuePair'
+1323742746906	Rename type 'SqlTypes'

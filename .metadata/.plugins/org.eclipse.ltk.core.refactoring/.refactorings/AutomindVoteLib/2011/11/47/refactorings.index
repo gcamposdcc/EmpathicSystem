@@ -1,0 +1,9 @@
+1321594995217	Encapsulate field 'cmoId'
+1321594999396	Encapsulate field 'cmoName'
+1321627256359	Rename method 'getCmoId'
+1321627309915	Rename type 'FilterCmoCriterion'
+1321627317981	Rename type 'FilterScoreByCmoCriterion'
+1321627331207	Copy compilation unit
+1321627693012	Infer generic type arguments
+1321628280370	Rename type 'ScoreStreakRuleMessage'
+1321639185931	Rename field 'STREAK'

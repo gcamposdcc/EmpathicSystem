@@ -1,0 +1,53 @@
+package cl.automind.empathy.fw.data.sql;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class SqlDescriptor {
+	private Map<String, Map<String, Collection<Integer>>> queryPositionsMap;
+	public SqlDescriptor(){
+		setQueryPositionsMap(new HashMap<String, Map<String,Collection<Integer>>>());
+	}
+	public void addQuery(String queryName){
+		if (getQueryPositionsMap().containsKey(queryName)) return;
+		getQueryPositionsMap().put(queryName, new HashMap<String, Collection<Integer>>());
+	}
+	public void addParamToQuery(String queryName, String param){
+		addQuery(queryName);
+		Map<String, Collection<Integer>> varPositionMap = getQueryPositionsMap().get(queryName);
+		if (!varPositionMap.containsKey(param)) {
+			varPositionMap.put(param, new ArrayList<Integer>());
+		}
+	}
+	public void addParamToQuery(String queryName, String param, int position){
+		Map<String, Collection<Integer>> varPositionMap = getQueryPositionsMap().get(queryName);
+		if (varPositionMap != null){
+			if (!varPositionMap.containsKey(param)) {
+				varPositionMap.put(param, new ArrayList<Integer>());
+			}
+			Collection<Integer> positions =  varPositionMap.get(param);
+			if(positions.contains(position)) return;
+			positions.add(position);
+		}
+	}
+	public Collection<Integer> getParamPosition(String queryName, String param){
+		Map<String, Collection<Integer>> varPositionMap = getQueryPositionsMap().get(queryName);
+		if (varPositionMap != null){
+			if (varPositionMap.containsKey(param)) {
+				return varPositionMap.get(param);
+			}
+		}
+		Collections.emptyList();
+	}
+	private void setQueryPositionsMap(Map<String, Map<String, Collection<Integer>>> queryPositionsMap) {
+		this.queryPositionsMap = queryPositionsMap;
+	}
+
+	private Map<String, Map<String, Collection<Integer>>> getQueryPositionsMap() {
+		return queryPositionsMap;
+	}
+
+}

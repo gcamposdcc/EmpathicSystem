@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;interfaces.structural.ClassProperty&apos; to &apos;IClassProperty&apos;&#x0D;&#x0A;- Original project: &apos;DevelopmentLib&apos;&#x0D;&#x0A;- Original element: &apos;interfaces.structural.ClassProperty&apos;&#x0D;&#x0A;- Renamed element: &apos;interfaces.structural.IClassProperty&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ClassProperty&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;interfaces.structural{ClassProperty.java[ClassProperty" matchStrategy="1" name="IClassProperty" qualified="false" references="true" similarDeclarations="false" stamp="1318394896572" textual="false" version="1.0"/>
+</session>

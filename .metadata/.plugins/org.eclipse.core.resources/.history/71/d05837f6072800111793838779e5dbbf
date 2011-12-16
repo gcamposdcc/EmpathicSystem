@@ -1,0 +1,15 @@
+package cl.automind.vote.empathy;
+
+import cl.automind.empathy.rule.RuleMetadata;
+
+@RuleMetadata(name = EmpathicConstants.R_ABOVE_AVERAGE + "")
+public class AboveAverageSessionRule extends AboveAverageRule{
+	@Override
+	protected Mode getMode() {
+		return Mode.Session;
+	}
+	@Override
+	protected Compare getCompare() {
+		return Compare.Establishment;
+	}
+}

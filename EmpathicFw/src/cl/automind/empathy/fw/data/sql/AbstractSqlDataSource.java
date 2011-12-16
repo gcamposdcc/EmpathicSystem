@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import cl.automind.empathy.data.DefaultQueryOptions;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
@@ -27,6 +26,7 @@ import cl.automind.empathy.data.sql.Id;
 import cl.automind.empathy.data.sql.NamedQuery;
 import cl.automind.empathy.data.sql.SqlMetadata;
 import cl.automind.empathy.data.sql.SqlNamedValuePair;
+import cl.automind.empathy.data.sql.Sql;
 
 public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	private final Map<String, String> queryMap;
@@ -34,15 +34,24 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	private final String name;
 	private final T template;
 	private final ISqlConnector connector;
+	private final SqlDescriptor descriptor;
+
 	public AbstractSqlDataSource(T template, ISqlConnector connector){
 		// INIT GLOBALS
 		this.template = template;
 		this.queryMap = new ConcurrentHashMap<String, String>();
 		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
 		this.connector = connector;
+		this.descriptor = new SqlDescriptor();
 		Class<?> templateClass = template.getClass();
+
 		// METADATA
-		SqlMetadata metadata = getClass().getAnnotation(SqlMetadata.class);
+		Class<?> thisClass = getClass();
+		if (thisClass.isAnonymousClass()){
+			thisClass = thisClass.getSuperclass();
+			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+		}
+		SqlMetadata metadata = thisClass.getAnnotation(SqlMetadata.class);
 		if (metadata != null){
 			this.name = metadata.name().trim().equals("") ? Strings.englishPlural(templateClass.getSimpleName()) : metadata.name().trim();
 			if(metadata.queries() != null){
@@ -53,38 +62,91 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		} else {
 			this.name = Strings.englishPlural(templateClass.getSimpleName()).toLowerCase();
 		}
-		String insert = "INSERT INTO "+ getName() + " ";
-		String field_name = "";
-		int field_count = 0;
+		String tempFieldName = "";
+		String idName = "id";
+		boolean hasId = false;
+		List<String> fieldNames = new ArrayList<String>();
 		if (template != null){
 			Column columnMetadata = null;
 			Id idMetadata = null;
 			for(Field field: templateClass.getDeclaredFields()){
 				columnMetadata = field.getAnnotation(Column.class);
 				if (columnMetadata != null){
-					field_name = columnMetadata.name().trim().equals("") ? field.getName() : columnMetadata.name().trim();
-					insert += (field_count == 0 ? "(" : ", ") + field_name;
-					field_count++;
+					tempFieldName = columnMetadata.name().trim().equals("") ? field.getName() : columnMetadata.name().trim();
+					if (fieldNames.contains(tempFieldName)) continue;
+					fieldNames.add(tempFieldName);
 				} else {
 					idMetadata = field.getAnnotation(Id.class);
 					if (idMetadata != null){
-						field_name = idMetadata.name().trim().equals("") ? field.getName() : idMetadata.name().trim();
-						getQueryMap().put("selectById", "SELECT * FROM " + getName() + " WHERE "+ field_name +" = ?;");
-						getQueryMap().put("deleteById", "DELETE FROM " + getName() + " WHERE "+ field_name +" = ?;");
+						idName = idMetadata.name().trim().equals("") ? field.getName() : idMetadata.name().trim();
+						hasId = true;
 					}
 				}
 			}
-			if (field_count > 0) {
-				insert += ") VALUES (";
-				for (int i = 0; i < field_count; i++){
-					insert += i == field_count - 1 ? "?" : "?, ";
+			getDescriptor().setIdName(idName);
+			getDescriptor().getFieldNames().addAll(fieldNames);
+			// BUILD QUERIES
+
+			int fieldCount = fieldNames.size();
+			// BY ID
+			String updateById = "UPDATE " + getName() + " SET ";
+			if (fieldCount > 0) {
+				for (int i = 0; i < fieldCount; i++){
+					updateById += fieldNames.get(i) + ((i == fieldCount - 1) ? " ? " : " ?, ");
+					getDescriptor().addParamToQuery("updateById", fieldNames.get(i), i + 1);
 				}
-				insert += ");";
+				updateById += " WHERE " + idName + " = ?;";
+				getDescriptor().addParamToQuery("updateById", idName, fieldCount + 1);
 			}
+			getQueryMap().put("selectById", "SELECT * FROM " + getName() + " WHERE "+ idName + " = ?;");
+			getDescriptor().addParamToQuery("selectById", idName, 1);
+			getQueryMap().put("deleteById", "DELETE FROM " + getName() + " WHERE "+ idName + " = ?;");
+			getDescriptor().addParamToQuery("deleteById", idName, 1);
+			getQueryMap().put("updataById", updateById);
+			// NORMAL
+			// INSERT
+			String insert = "INSERT INTO "+ getName() + " ";
+			if (fieldCount > 0 ) {
+				for (int i = 0; i < fieldCount; i++){
+					insert += (i == 0 ? "(" : ", ") + fieldNames.get(i);
+					getDescriptor().addParamToQuery("insert", fieldNames.get(i), i + 1);
+				}
+				insert += ") VALUES (";
+				for (int i = 0; i < fieldCount; i++){
+					insert += (i == fieldCount - 1) ? "?" : "?, ";
+				}
+				insert += ")";
+				if (hasId) insert += " RETURNING " + idName;
+				insert += ";";
+			}
+			// UPDATE
+			String update = "UPDATE " + getName() + " SET ";
+			if (fieldCount > 0) {
+				for (int i = 0; i < fieldCount; i++){
+					update += fieldNames.get(i) + " = " + ((i == fieldCount - 1) ? " ? " : " ?, ");
+					getDescriptor().addParamToQuery("update", fieldNames.get(i), i + 1);
+				}
+//				update += " WHERE ";
+			}
+			// DELETE
+//			String delete = "DELETE FROM " + getName() + " WHERE ";
+			String delete = "DELETE FROM " + getName();
+			// SELECT
+//			String select = "SELECT * FROM " + getName() + " WHERE ";
+			String select = "SELECT * FROM " + getName();
+			if (fieldCount > 0) {
+				for (int i = 0; i < fieldCount; i++){
+					select += fieldNames.get(i) + ((i == fieldCount - 1) ? " ? " : " ?, ");
+					getDescriptor().addParamToQuery("update", fieldNames.get(i), i + 1);
+				}
+			}
+			getQueryMap().put("insert", insert);
+			getQueryMap().put("update", update);
+			getQueryMap().put("delete", delete);
+			getQueryMap().put("select", select);
+			getQueryMap().put("count", "SELECT count(*) FROM " + getName() + ";");
+			getQueryMap().put("selectAll", "SELECT * FROM " + getName() + ";");
 		}
-		getQueryMap().put("count", "SELECT count(*) FROM " + getName() + ";");
-		getQueryMap().put("selectAll", "SELECT * FROM " + getName() + ";");
-		getQueryMap().put("insert", insert);
 		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
 			System.out.println("Query::" + entry.getKey() + "::" + entry.getValue());
 		}
@@ -94,14 +156,28 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	public ISqlConnector getConnector() {
 		return connector;
 	}
-
+	protected void putInPreparedStatement(final PreparedStatement query, String queryName, T value){
+		try {
+			Collection<SqlNamedValuePair<?>> pairs = toPairs(value);
+			for (SqlNamedValuePair<?> pair : pairs){
+				for (Integer index : getDescriptor().getParamPosition(queryName, pair.getKey())){
+					pair.set(query, index);
+				}
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public int insert(T value) {
 		int id = -1;
 		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("insert"));
 		ResultSet rs;
 		try {
+			putInPreparedStatement(query, "insert", value);
+			System.out.println(getQueryMap().get("insert"));
 			rs = query.executeQuery();
+			rs.next();
 			id = rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,7 +192,9 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		ResultSet rs;
 		for(T value: values){
 			try {
+				putInPreparedStatement(query, "insert", value);
 				rs = query.executeQuery();
+				rs.next();
 				ids.add(rs.getInt(1));
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -127,14 +205,12 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		//NOTHING TO DO HERE
 	}
 
 	@Override
 	public boolean validId(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -144,6 +220,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		int total = 0;
 		try {
 			rs = count.executeQuery();
+			rs.next();
 			total = rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -217,33 +294,38 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 	@Override
 	public List<T> select(IQueryOption option, IQueryCriterion<T>... criteria) {
-		if (option.getName().equals(DefaultQueryOptions.All.getName())){
+		if (option.getType() == IQueryOption.Type.All){
 			return selectAll();
-		} else {
-			//TODO build query
-			String query = "SELECT * FROM " + getName() + " WHERE ";
-			for (IQueryCriterion<T> criterion : criteria){
-				for (NamedValuePair<?> pair: criterion.getParams()){
-					query += pair;
-				}
+		} if (option.getType() == IQueryOption.Type.Id){
+			List<T> list = new ArrayList<T>();
+			T t = null;
+			try{
+				t = selectById((Integer) criteria[0].getParams()[0].getValue());
+			} catch (Exception e){
+				e.printStackTrace();
 			}
-			query += "LIMIT " + option.getValue() +";";
+			if (t!=null) list.add(t);
+			return list;
+		} else {
+			String queryName = "insert";
+			String queryString = buildQuery(getQueryMap().get(queryName), criteria);
+			System.out.println("ExecutingQuery::" + queryName + "::" + queryString);
 			ResultSet rs = null;
 			try {
-				rs = getConnector().preparedStatement(query).executeQuery();
+				rs = getConnector().preparedStatement(queryString).executeQuery();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return parse(rs);
 		}
 	}
 
-	public T select(int id) {
+	public T selectById(int id) {
 		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectById"));
 		ResultSet rs;
 		List<T> result = new ArrayList<T>();
 		try {
+			query.setInt(0, id);
 			rs = query.executeQuery();
 			result = parse(rs);
 		} catch (SQLException e) {
@@ -266,31 +348,92 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	}
 	@Override
 	public int update(T value, IQueryOption option, IQueryCriterion<T>... criteria) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (option.getType() == IQueryOption.Type.Id){
+			String queryName = "updateById";
+			String queryString = getQueryMap().get(queryName);
+			System.out.println("ExecutingQuery::" + queryName + "::" + queryString);
+			PreparedStatement query = getConnector().preparedStatement(queryString);
+			try {
+				SqlNamedValuePair<Integer> idPair = Sql.pair(getDescriptor().getIdName(), option.getValue());
+				for (Integer index : getDescriptor().getParamPosition(queryName, idPair.getKey())){
+					idPair.set(query, index);
+				}
+				putInPreparedStatement(query, queryName, value);
+				query.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return 1;
+		} else {
+			String queryName = "update";
+			String queryString = buildQuery(getQueryMap().get(queryName), criteria);
+			PreparedStatement query = getConnector().preparedStatement(queryString);
+			System.out.println("ExecutingQuery::" + queryName + "::" + queryString);
+			try {
+				putInPreparedStatement(query, queryName, value);
+				query.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return 1;
+		}
 	}
 
 	@Override
 	public boolean delete(IQueryOption option, IQueryCriterion<T>... criteria) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public int update(int id, T value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public boolean delete(int id) {
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("deleteById"));
-		try {
-			query.setInt(0, id);
-			query.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (option.getType() == IQueryOption.Type.Id){
+			return deleteById((Integer) criteria[0].getParams()[0].getValue());
+		} else {
+			String queryName = "delete";
+			String queryString = buildQuery(getQueryMap().get(queryName), criteria);
+			System.out.println("ExecutingQuery::" + queryName + "::" + queryString);
+			PreparedStatement query = getConnector().preparedStatement(queryString);
+			try {
+				query.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		//FIXME result
 		return true;
+	}
+	private boolean deleteById(int id){
+		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("deleteById"));
+		try {
+			query.setInt(0, id);
+			query.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public SqlDescriptor getDescriptor() {
+		return descriptor;
+	}
+
+	private String buildQuery(String queryString, IQueryCriterion<T>... criteria){
+		if (criteria == null) return queryString + ";";
+		if (criteria.length == 0) return queryString + ";";
+		queryString += " WHERE ";
+		for (IQueryCriterion<T> criterion : criteria){
+			NamedValuePair<?>[] pairs = criterion.getParams();
+			if (pairs!= null){
+				for (int i = 0; i < pairs.length ; i++){
+					if (pairs[i] == null) continue;
+					if (SqlNamedValuePair.class.isAssignableFrom(pairs[i].getClass())){
+						SqlNamedValuePair<?> sqlpair = (SqlNamedValuePair<?>) pairs[i];
+						queryString += " " + sqlpair + " ";
+					} else {
+						queryString += " " + pairs[i].getKey() + " = " + pairs[i].getValue() + " ";
+					}
+					queryString += (i < pairs.length - 1 ? " AND " : "");
+				}
+			}
+		}
+		queryString += ";";
+		System.out.println("QueryBuilt::" + queryString);
+		return queryString;
 	}
 }

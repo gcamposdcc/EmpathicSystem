@@ -1,0 +1,9 @@
+package cl.automind.empathy.fw.data.sql;
+
+import java.util.Collection;
+import java.util.Map;
+
+public class SqlDescriptor {
+	private Map<String, Map<String, Collection<Integer>> positions;
+
+}

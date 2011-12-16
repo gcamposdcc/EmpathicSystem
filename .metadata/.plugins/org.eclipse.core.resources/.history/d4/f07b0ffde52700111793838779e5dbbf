@@ -1,0 +1,5 @@
+package cl.automind.vote.model;
+
+public class UserInfo {
+
+}

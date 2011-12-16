@@ -1,0 +1,9 @@
+package cl.automind.empathy.data.sql;
+
+public enum Compare {
+	Equal,
+	Greater,
+	Lesser,
+	ContainedIn,
+	Contains
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;cl.automind.empathy.fw.data.sql.AbstractSqlConnector&apos; to &apos;DefaultSqlConnector&apos;&#x0D;&#x0A;- Original project: &apos;EmpathicFw&apos;&#x0D;&#x0A;- Original element: &apos;cl.automind.empathy.fw.data.sql.AbstractSqlConnector&apos;&#x0D;&#x0A;- Renamed element: &apos;cl.automind.empathy.fw.data.sql.DefaultSqlConnector&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;AbstractSqlConnector&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;cl.automind.empathy.fw.data.sql{AbstractSqlConnector.java[AbstractSqlConnector" matchStrategy="1" name="DefaultSqlConnector" qualified="false" references="true" similarDeclarations="false" stamp="1322650649277" textual="false" version="1.0"/>
+</session>

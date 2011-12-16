@@ -6,11 +6,11 @@ import gcampos.dev.patterns.behavioral.IObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-import cl.automind.empathy.data.DefaultQueryOptions;
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
+import cl.automind.empathy.data.QueryOption;
 import cl.automind.empathy.data.UnmatchingClassException;
 
 
@@ -75,13 +75,12 @@ public abstract class AbstractDataManager implements IDataManager{
 		IDataSource<T> source;
 		try {
 			source = getDataSource(dataSourceName, template);
-			return source.select(DefaultQueryOptions.All);
+			return source.select(QueryOption.All);
 		} catch (UnmatchingClassException e) {
 			System.err.println("Returning empty list");
 		}
 		return new ArrayList<T>();
 	}
-
 	@Override
 	public int countElements(String dataSourceName){
 		IDataSource<?> datasource = getDataSource(dataSourceName);

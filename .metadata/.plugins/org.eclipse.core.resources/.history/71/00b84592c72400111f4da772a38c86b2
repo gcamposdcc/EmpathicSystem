@@ -1,0 +1,13 @@
+package cl.automind.empathy.data;
+
+public enum DefaultQueryOptions{
+	/**
+	 * Limits the number of elements
+	 */
+	Id,
+	None,
+	Filter,
+	All;
+	private DefaultQueryOptions(){
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;pairs&apos; in &apos;cl.automind.vote.android.view.Vote.CastVoteThread.onNew(...)&apos; to &apos;cmoPerformancePairs&apos;&#x0D;&#x0A;- Original project: &apos;AutomindVoter&apos;&#x0D;&#x0A;- Original element: &apos;cl.automind.vote.android.view.Vote.CastVoteThread.onNew(NetMessage).pairs&apos;&#x0D;&#x0A;- Renamed element: &apos;pairs&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;pairs&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;cl.automind.vote.android.view{Vote.java[Vote[CastVoteThread~onNew~QNetMessage;@pairs!6930!6960!6939!6943!\[QObject;" name="cmoPerformancePairs" references="true" stamp="1324006900658" version="1.0"/>
+</session>

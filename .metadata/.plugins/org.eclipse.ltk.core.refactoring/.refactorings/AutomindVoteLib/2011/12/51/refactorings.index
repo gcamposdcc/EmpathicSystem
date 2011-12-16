@@ -1,0 +1,31 @@
+1323995937552	Rename type 'CmoPerformanceRule'
+1323996090209	Rename field 'DS_CMOPERFORMANCE'
+1323996119907	Rename field 'DS_CMOPERFORMANCES'
+1323996126955	Rename field 'R_CMO_PERFORMANCE'
+1323996132253	Rename field 'R_CMOPERFORMANCES'
+1323996492676	Copy compilation unit
+1323996649236	Rename field 'INCREASE'
+1324006226868	Copy compilation unit
+1324008673427	Rename type 'TotalScoreRuleMessage'
+1324040992082	Encapsulate field 'idEstablishment'
+1324040995172	Encapsulate field 'idCourse'
+1324040999538	Encapsulate field 'idUser'
+1324041002931	Encapsulate field 'firstName'
+1324041006073	Encapsulate field 'secondName'
+1324041009388	Encapsulate field 'firstLastName'
+1324041013865	Encapsulate field 'secondLastName'
+1324045057696	Rename type 'AboveAveragePerformanceDataSource'
+1324045064186	Rename type 'AboveAveragePerformanceRule'
+1324045304713	Rename field 'DS_ABOVE_AVERAGE_PERFORMANCE'
+1324045316639	Rename field 'R_ABOVE_AVERAGE_PERFORMANCE'
+1324045725748	Rename enum constant 'QuestionOnly'
+1324045731116	Rename enum constant 'CmoOnly'
+1324045736029	Rename enum constant 'CourseOnly'
+1324045741203	Rename enum constant 'EstablishmentOnly'
+1324047544707	Rename local variable 'total'
+1324048611673	Encapsulate field 'user'
+1324054508993	Delete element
+1324054523082	Copy compilation unit
+1324054914841	Rename type 'AboveAverageRules'
+1324055000835	Copy compilation unit
+1324055021280	Copy compilation unit

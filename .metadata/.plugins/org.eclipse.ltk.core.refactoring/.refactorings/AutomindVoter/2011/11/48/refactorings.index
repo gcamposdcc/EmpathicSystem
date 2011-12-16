@@ -1,0 +1,8 @@
+1322220909484	Copy compilation unit
+1322225567648	Rename local variable 'ints'
+1322225586448	Rename local variable 'i'
+1322230513978	Rename local variable 'id'
+1322230518762	Rename local variable 'name'
+1322240211501	Rename local variable 'id'
+1322240268033	Encapsulate field 'courseId'
+1322240271018	Encapsulate field 'userId'

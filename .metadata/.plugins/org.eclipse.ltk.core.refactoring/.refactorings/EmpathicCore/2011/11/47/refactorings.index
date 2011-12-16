@@ -1,0 +1,27 @@
+1321369758565	Delete element
+1321369761964	Delete element
+1321399875770	Rename type 'MemoryDataSource'
+1321399976314	Rename type 'InternalMemoryDataSource'
+1321399984770	Rename type 'InternalDataSource'
+1321400236743	Rename type 'ExternalDataSource'
+1321400244196	Rename type 'QueryableDat'
+1321407709645	Extract interface 'IDataManager'
+1321407727013	Move compilation unit
+1321496771253	Rename type 'QueryableDataSource'
+1321498901048	Rename type 'ICriteria'
+1321498939088	Move compilation unit
+1321498964933	Rename type 'QueryCriteria'
+1321499351575	Rename method 'selectById'
+1321499421189	Rename type 'IQueryCriteria'
+1321499536795	Rename method 'updateById'
+1321499554169	Rename method 'deleteById'
+1321499989793	Encapsulate field 'value'
+1321500028692	Move compilation unit
+1321555239056	Rename method 'getTargetUrl'
+1321555245033	Rename method 'setTargetUrl'
+1321579462413	Rename type 'Urls'
+1321579647150	Rename type 'WebConfig'
+1321627396214	Rename method 'getValueByIdInSource'
+1321627401845	Rename method 'getValueInSource'
+1321630621269	Encapsulate field 'params'
+1321639889105	Rename enum constant 'Limit'

@@ -1,0 +1,162 @@
+package cl.automind.vote.empathy;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cl.automind.empathy.data.DefaultQueryCriterion;
+import cl.automind.empathy.data.IQueryCriterion;
+import cl.automind.empathy.data.QueryOption;
+import cl.automind.empathy.data.sql.Sql;
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.RuleMetadata;
+import cl.automind.sagde.model.SagdeMetadata;
+import cl.automind.vote.model.Score;
+import cl.automind.vote.model.UserInfo;
+
+@RuleMetadata(name = EmpathicConstants.R_ABOVE_AVERAGE)
+public class AboveAverageRule extends AbstractRule {
+	private final static IQueryCriterion<Score> filterByCmo = new ScoreByIdCmoCriterion();
+	public AboveAverageRule(){
+		super();
+		setMessage(new Message());
+	}
+	@Override
+	public boolean canEvaluate(Object... params) {
+		return countAllInSource(EmpathicConstants.DS_SCORES) > 1;
+	}
+
+	@Override
+	public double evaluateImpl(Object... params) {
+		int scoreSum = 0;
+		int total = 0;
+		List<Score> allScores = getAllInSource(EmpathicConstants.DS_SCORES, EmpathicConstants.TP_SCORE);
+		Score lastScore = allScores.get(allScores.size() - 1);
+		List<Score> scores = null;
+		switch (getMode()){
+		case Question:
+			scores = new ArrayList<Score>();
+			scores.add(lastScore);
+			break;
+		case Session:
+			scores = allScores;
+			break;
+		case Cmo:
+			scores = getInSource(EmpathicConstants.DS_SCORES, QueryOption.Filter, filterByCmo);
+			break;
+		default:
+			scores = allScores;
+			break;
+		}
+
+		total = scores.size();
+		List<UserInfo> users = getAllInSource(EmpathicConstants.DS_USER_INFO, EmpathicConstants.TP_USER_INFO);
+		UserInfo user = users.get(0);
+
+		SagdeMetadata metadata = new SagdeMetadata();
+		for (Score score: scores){
+			scoreSum += score.getValue();
+			metadata = score.getSagdeMetadata();
+		}
+
+		IQueryCriterion<Boolean> filterUser = new DefaultQueryCriterion<Boolean>(true);
+		switch (getMode()){
+		case Question:
+			if (getCompare() == Compare.Course) {
+				filterUser.setParams(
+					Sql.pair("idestablishment", user.getIdEstablishment()),
+					Sql.pair("idcourse", user.getIdCourse()),
+					Sql.pair("user", user.getUser()),
+					Sql.pair("idinstance", lastScore.getIdInstance()),
+					Sql.pair("idquestion", lastScore.getIdQuestion())
+				);
+				break;
+			} else {
+				filterUser.setParams(
+					Sql.pair("idestablishment", user.getIdEstablishment()),
+//					Sql.pair("idcourse", user.getIdCourse()),
+					Sql.pair("user", user.getUser()),
+					Sql.pair("idinstance", lastScore.getIdInstance()),
+					Sql.pair("idquestion", lastScore.getIdQuestion())
+				);
+				break;
+			}
+		case Session:
+			if (getCompare() == Compare.Course) {
+				filterUser.setParams(
+					Sql.pair("idestablishment", user.getIdEstablishment()),
+					Sql.pair("idcourse", user.getIdCourse()),
+					Sql.pair("user", user.getUser()),
+					Sql.pair("idinstance", lastScore.getIdInstance()),
+					Sql.pair("idquestion", lastScore.getIdQuestion())
+				);
+				break;
+			} else {
+				filterUser.setParams(
+					Sql.pair("idestablishment", user.getIdEstablishment()),
+//					Sql.pair("idcourse", user.getIdCourse()),
+					Sql.pair("user", user.getUser()),
+					Sql.pair("idinstance", lastScore.getIdInstance()),
+					Sql.pair("idquestion", lastScore.getIdQuestion())
+				);
+				break;
+			}
+		case Cmo:
+			if (getCompare() == Compare.Course) scores = null;
+			scores = null;
+		default:
+			scores = getAllInSource(EmpathicConstants.DS_SCORES, EmpathicConstants.TP_SCORE);
+		}
+
+		List<Boolean> aboveAverage = getInSource(EmpathicConstants.DS_ABOVE_AVERAGE, QueryOption.Filter, filterUser);
+
+		boolean above = true;
+		putValue("score", scoreSum);
+		getMessage().getContext().getData().clear();
+		getMessage().getContext().getData().add(metadata);
+		return above ? RuleMetadata.MAX_VALUE : RuleMetadata.MIN_VALUE;
+	}
+
+	@Override
+	public AbstractMessage getMessage() {
+		return super.getMessage();
+	}
+	protected Compare getCompare(){
+		return Compare.Course;
+	}
+	protected Mode getMode(){
+		return Mode.Question;
+	}
+	private enum Compare { Course, Establishment }
+	private enum Mode { Question, Session, Cmo }
+	public class Message extends AbstractMessage{
+
+		@Override
+		public String getName() {
+			return "mAboveAverage00";
+		}
+
+		@Override
+		public String getEmotionName() {
+			return "happiness";
+		}
+
+		@Override
+		public String getUnfilteredText() {
+			String base = "Muy bien!!! Sabías que vas mejor que tus demás compañeros de ";
+			switch (getMode()){
+			case Question:
+				if (getCompare() == Compare.Course) return base;
+				return base;
+			case Session:
+				if (getCompare() == Compare.Course) return base;
+				return base;
+			case Cmo:
+				if (getCompare() == Compare.Course) return base;
+				return base;
+			default:
+				return base;
+			}
+		}
+	}
+}

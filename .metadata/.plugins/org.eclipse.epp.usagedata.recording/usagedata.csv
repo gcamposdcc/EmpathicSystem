@@ -1,0 +1,95 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.gef,3.6.1.v20100712-1224,"org.eclipse.gef",1311696968648
+started,bundle,org.eclipse.egit.core,0.12.1,"org.eclipse.egit.core",1311696968649
+started,bundle,org.eclipse.egit.ui,0.12.1,"org.eclipse.egit.ui",1311696968695
+started,bundle,org.eclipse.jgit,0.12.1,"org.eclipse.jgit",1311696968698
+started,bundle,com.google.gdt.eclipse.designer,2.3.1.r36x201105061255,"com.google.gdt.eclipse.designer",1311696968709
+started,bundle,com.google.gdt.eclipse.designer.GXT,2.3.1.r36x201105061304,"com.google.gdt.eclipse.designer.GXT",1311696968733
+started,bundle,com.google.gdt.eclipse.designer.SmartGWT,2.3.1.r36x201105061304,"com.google.gdt.eclipse.designer.SmartGWT",1311696968744
+started,bundle,com.google.gdt.eclipse.designer.UiBinder,2.3.1.r36x201105061255,"com.google.gdt.eclipse.designer.UiBinder",1311696968793
+started,bundle,com.google.gdt.eclipse.designer.hosted,2.3.1.r36x201105061248,"com.google.gdt.eclipse.designer.hosted",1311696968794
+started,bundle,com.google.gdt.eclipse.designer.usageprofiler,2.3.1.r36x201105061304,"com.google.gdt.eclipse.designer.usageprofiler",1311696968796
+started,bundle,com.google.gdt.eclipse.designer.usageprofiler.ui,2.3.1.r36x201105061304,"com.google.gdt.eclipse.designer.usageprofiler.ui",1311696968798
+started,bundle,org.eclipse.epp.usagedata.gathering,1.3.1.R201102081640,"org.eclipse.epp.usagedata.gathering",1311696968800
+started,bundle,org.eclipse.epp.usagedata.recording,1.3.1.R201102081640,"org.eclipse.epp.usagedata.recording",1311696968802
+started,bundle,org.eclipse.pde.launching,3.6.0.v20100601,"org.eclipse.pde.launching",1311696968804
+started,bundle,org.eclipse.pde.ui,3.6.1.v20110210_r362,"org.eclipse.pde.ui",1311696968848
+started,bundle,org.eclipse.ui.views.log,1.0.100.v20110210_r362,"org.eclipse.ui.views.log",1311696968850
+started,bundle,org.eclipse.wb.core,0.9.0.r36x201105061148,"org.eclipse.wb.core",1311696968874
+started,bundle,org.eclipse.wb.core.lib,0.9.0.r36x201105061148,"org.eclipse.wb.core.lib",1311696968883
+started,bundle,org.eclipse.wb.core.xml,0.9.0.r36x201105061154,"org.eclipse.wb.core.xml",1311696968900
+started,bundle,org.eclipse.wb.discovery.core,0.9.0.r36x201105061153,"org.eclipse.wb.discovery.core",1311696968902
+started,bundle,org.eclipse.wb.discovery.ui,0.9.0.r36x201105061153,"org.eclipse.wb.discovery.ui",1311696968903
+started,bundle,org.eclipse.wb.rcp,0.9.0.r36x201105051045,"org.eclipse.wb.rcp",1311696968910
+started,bundle,org.eclipse.wb.swing,0.9.0.r36x201105061217,"org.eclipse.wb.swing",1311696968917
+started,bundle,org.eclipse.wb.swt,0.9.0.r36x201105061245,"org.eclipse.wb.swt",1311696968929
+os,sysinfo,,,"win32",1311696968936
+arch,sysinfo,,,"x86",1311696968936
+ws,sysinfo,,,"win32",1311696968936
+locale,sysinfo,,,"es_CL",1311696968936
+processors,sysinfo,,,"4",1311696968936
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1311696968936
+java.runtime.version,sysinfo,,,"1.6.0_26-b03",1311696968936
+java.specification.name,sysinfo,,,"Java Platform API Specification",1311696968936
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1311696968936
+java.specification.version,sysinfo,,,"1.6",1311696968936
+java.vendor,sysinfo,,,"Sun Microsystems Inc.",1311696968936
+java.version,sysinfo,,,"1.6.0_26",1311696968936
+java.vm.info,sysinfo,,,"mixed mode, sharing",1311696968936
+java.vm.name,sysinfo,,,"Java HotSpot(TM) Client VM",1311696968936
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1311696968936
+java.vm.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1311696968936
+java.vm.specification.version,sysinfo,,,"1.0",1311696968936
+java.vm.vendor,sysinfo,,,"Sun Microsystems Inc.",1311696968936
+java.vm.version,sysinfo,,,"20.1-b02",1311696968936
+started,bundle,com.android.ide.eclipse.ddms,8.0.1.v201012062107-82219,"com.android.ide.eclipse.ddms",1311704433133
+started,bundle,com.android.ide.eclipse.adt,8.0.1.v201012062107-82219,"com.android.ide.eclipse.adt",1311704433175
+started,bundle,org.eclipse.ltk.core.refactoring,3.5.100.v20100526-0800,"org.eclipse.ltk.core.refactoring",1311704433190
+started,bundle,org.eclipse.ltk.ui.refactoring,3.5.0.v20100526-0800,"org.eclipse.ltk.ui.refactoring",1311704433192
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704461469
+started,bundle,org.eclipse.jdt.debug,3.6.0.v20100526,"org.eclipse.jdt.debug",1311704466023
+started,bundle,org.eclipse.debug.ui,3.6.0.v20100601-1530,"org.eclipse.debug.ui",1311704466104
+started,bundle,org.eclipse.jdt.debug.ui,3.5.0.v20100602-0830,"org.eclipse.jdt.debug.ui",1311704466185
+started,bundle,com.objectaid.uml.cls.java,0.9.86,"com.objectaid.uml.cls.java",1311704466354
+started,bundle,com.objectaid.uml.java,0.9.86,"com.objectaid.uml.java",1311704466390
+started,bundle,org.eclipse.ant.ui,3.5.0.v20100427,"org.eclipse.ant.ui",1311704466430
+started,bundle,org.eclipse.pde.core,3.6.2.v20110210_r362,"org.eclipse.pde.core",1311704466600
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704467186
+executed,command,org.eclipse.ui,3.6.0.I20100603-1100,"org.eclipse.ui.edit.rename",1311704467201
+started,bundle,org.eclipse.jdt.apt.core,3.3.400.v20100513-0845,"org.eclipse.jdt.apt.core",1311704467406
+started,bundle,org.eclipse.jdt.apt.pluggable.core,1.0.300.v20100513-0845,"org.eclipse.jdt.apt.pluggable.core",1311704467412
+started,bundle,com.google.gdt.eclipse.designer.wizards,2.3.1.r36x201105061304,"com.google.gdt.eclipse.designer.wizards",1311704472189
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704476248
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704481626
+executed,command,org.eclipse.ui,3.6.0.I20100603-1100,"org.eclipse.ui.edit.rename",1311704481635
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704496179
+started,bundle,org.eclipse.mylyn.ide.ui,3.4.0.v20100608-0100-e3x,"org.eclipse.mylyn.ide.ui",1311704505926
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704506680
+started,bundle,org.eclipse.compare.core,3.5.100.I20100526-0800,"org.eclipse.compare.core",1311704507774
+opened,editor,org.eclipse.jdt.ui,3.6.0.v20100602-1600,"org.eclipse.jdt.ui.CompilationUnitEditor",1311704507819
+started,bundle,org.eclipse.wb.xwt,0.9.0.r36x201105061208,"org.eclipse.wb.xwt",1311704508001
+activated,editor,org.eclipse.jdt.ui,3.6.0.v20100602-1600,"org.eclipse.jdt.ui.CompilationUnitEditor",1311704508041
+started,bundle,org.eclipse.core.variables,3.2.400.v20100505,"org.eclipse.core.variables",1311704508351
+activated,view,org.eclipse.jdt.ui,3.6.0.v20100602-1600,"org.eclipse.jdt.ui.PackageExplorer",1311704514751
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704522990
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311704541312
+executed,command,org.eclipse.ui,3.6.0.I20100603-1100,"org.eclipse.ui.edit.rename",1311704541328
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311707064710
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311711593777
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311711594665
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311712543675
+started,bundle,org.python.pydev.core,1.6.0.2010071813,"org.python.pydev.core",1311712544359
+started,bundle,org.python.pydev.debug,1.6.0.2010071813,"org.python.pydev.debug",1311712544408
+started,bundle,org.python.pydev.customizations,1.6.0.2010071813,"org.python.pydev.customizations",1311712544431
+started,bundle,com.python.pydev.analysis,1.6.0.2010071813,"com.python.pydev.analysis",1311712544473
+started,bundle,org.python.pydev,1.6.0.2010071813,"org.python.pydev",1311712544500
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311712545103
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311713305514
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311713306390
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311713307187
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311713309365
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311714882363
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311714915427
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311730574132
+started,bundle,org.eclipse.epp.usagedata.ui,1.3.1.R201102081640,"org.eclipse.epp.usagedata.ui",1311730574345
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1311730576270

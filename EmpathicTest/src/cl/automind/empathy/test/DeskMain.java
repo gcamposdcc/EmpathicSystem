@@ -3,11 +3,10 @@ package cl.automind.empathy.test;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,21 +18,23 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
+import cl.automind.empathy.data.DefaultQueryCriterion;
 import cl.automind.empathy.data.IDataSource;
+import cl.automind.empathy.data.IQueryOption;
+import cl.automind.empathy.data.QueryOption;
+import cl.automind.empathy.data.sql.ComparisonType;
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 import cl.automind.empathy.data.sql.ISqlConnector;
 import cl.automind.empathy.data.sql.ISqlDataSource;
-import cl.automind.empathy.data.sql.NamedQueries;
-import cl.automind.empathy.data.sql.NamedQuery;
-import cl.automind.empathy.data.sql.SqlMetadata;
+import cl.automind.empathy.data.sql.Sql;
 import cl.automind.empathy.data.sql.SqlNamedValuePair;
-import cl.automind.empathy.data.sql.SqlTypes;
 import cl.automind.empathy.fw.data.sql.DefaultSqlConnector;
-import cl.automind.empathy.fw.data.sql.AbstractSqlDataSource;
 import cl.automind.empathy.fw.data.sql.PropertySqlConnectionInfo;
 import cl.automind.empathy.test.t00.Choice;
 import cl.automind.empathy.test.t00.Score;
 import cl.automind.empathy.test.t00.TestDataManager;
+import cl.automind.empathy.testquery.EmpathyMetadata;
+import cl.automind.empathy.testquery.EmpathySqlDataSource;
 import cl.automind.empathy.testquery.SagdeMetadata;
 import cl.automind.empathy.testquery.SagdeSqlDataSource;
 
@@ -70,13 +71,67 @@ public class DeskMain {
 
 					final ISqlConnector psql_connector = new DefaultSqlConnector(psql);
 					IDataSource<SagdeMetadata> meta = new SagdeSqlDataSource(new SagdeMetadata(), psql_connector);
-					List<SagdeMetadata> test = ((ISqlDataSource) meta).executeNamedQuery("byIdEmpathy", SqlTypes.pair("idempathy",6));
+					List<SagdeMetadata> sagdeMetadatas = ((ISqlDataSource<SagdeMetadata>) meta).executeNamedQuery("byIdEmpathy", Sql.pair("idempathy",6));
 					System.out.println("ShowList:Begin");
-					for (SagdeMetadata sagde: test){
-						System.out.println(sagde);
+					for (SagdeMetadata sagdeMetadata: sagdeMetadatas){
+						System.out.println("ShowList:Pair:Begin");
+						System.out.println(sagdeMetadata);
+						Collection<SqlNamedValuePair<?>> pairs = ((ISqlDataSource<SagdeMetadata>) meta).toPairs(sagdeMetadata);
+						for (SqlNamedValuePair<?> pair: pairs){
+							System.out.println("Pair::" + pair);
+						}
+						System.out.println("ShowList:Pair:End");
 					}
 					System.out.println("ShowList:End");
+//					for (SagdeMetadata sagdeMetadata: sagdeMetadatas){
+//						System.out.println("Inserting::" + meta.insert(sagdeMetadata));
+//					}
 
+//					List<SagdeMetadata> metadatas = meta.select(QueryOption.All);
+//					for (SagdeMetadata sagdeMetadata: metadatas){
+//						System.out.println("ShowList:Pair:Begin");
+//						System.out.println(sagdeMetadata);
+//						Collection<SqlNamedValuePair<?>> pairs = ((ISqlDataSource<SagdeMetadata>) meta).toPairs(sagdeMetadata);
+//						for (SqlNamedValuePair<?> pair: pairs){
+//							System.out.println("Pair::" + pair);
+//						}
+//						System.out.println("ShowList:Pair:End");
+//					}
+
+					IDataSource<EmpathyMetadata> empathySource = new EmpathySqlDataSource(new EmpathyMetadata(), psql_connector);
+
+					List<EmpathyMetadata> empathyMetadatas = empathySource.select(QueryOption.All);
+
+					for (EmpathyMetadata empathyMetadata: empathyMetadatas){
+						System.out.println("ShowList:Pair:Begin");
+						System.out.println(empathyMetadata);
+						Collection<SqlNamedValuePair<?>> pairs
+							= ((ISqlDataSource<EmpathyMetadata>) empathySource).toPairs(empathyMetadata);
+						for (SqlNamedValuePair<?> pair: pairs){
+							System.out.println("Pair::" + pair);
+						}
+						System.out.println("ShowList:Pair:End");
+					}
+					Date now = new Date(Calendar.getInstance().getTimeInMillis());
+					EmpathyMetadata empathy = new EmpathyMetadata();
+					empathy.setCreatedAt(now);
+					Collection<EmpathyMetadata> inserts = new ArrayList<EmpathyMetadata>();
+					for (int i = 0; i < 10; i++){
+						EmpathyMetadata dummy = new EmpathyMetadata();
+						dummy.setCreatedAt(now);
+						dummy.setEvaluated(i%2 == 1);
+						inserts.add(dummy);
+					}
+					System.out.println("Inserting:Empathy:" + empathySource.insert(inserts));
+					System.out.println("Inserting:Empathy:" + empathySource.insert(empathy));
+					empathySource.delete(new QueryOption(IQueryOption.Type.Filter),
+							new DefaultQueryCriterion<EmpathyMetadata>(null ,Sql.pair("id", 33, ComparisonType.GreaterOrEqual)));
+					EmpathyMetadata emp = new EmpathyMetadata();
+					emp.setEvaluated(true);
+					emp.setAnswered(true);
+					emp.setLiked(true);
+					emp.setCreatedAt(now);
+					empathySource.update(emp, QueryOption.All);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

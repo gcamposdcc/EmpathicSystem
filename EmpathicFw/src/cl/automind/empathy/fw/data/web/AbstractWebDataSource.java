@@ -35,12 +35,16 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 		setObservers(new CopyOnWriteArrayList<IObserver<IDataSource<T>>>());
 		this.template = template;
 		this.executorService = Executors.newSingleThreadExecutor();
-
 		// METADATA
-		WebMetadata metadata = getClass().getAnnotation(WebMetadata.class);
+		Class<?> thisClass = getClass();
+		if (thisClass.isAnonymousClass()){
+			thisClass = thisClass.getSuperclass();
+			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+		}
+		WebMetadata metadata = thisClass.getAnnotation(WebMetadata.class);
 		if (metadata != null){
 			this.name = metadata.name().trim().equals("") ?
-					getClass().getSimpleName().replaceAll("DataSource", "")
+					thisClass.getSimpleName().replaceAll("DataSource", "")
 					: metadata.name().trim();
 			this.useSameUrl = metadata.useSameUrl();
 			if (useSameUrl()){
@@ -55,7 +59,7 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 				this.updateUrl = metadata.updateUrl();
 			}
 		} else {
-			this.name = getClass().getSimpleName().replaceAll("DataSource", "");
+			this.name = thisClass.getSimpleName().replaceAll("DataSource", "");
 			this.useSameUrl = true;
 		}
 	}

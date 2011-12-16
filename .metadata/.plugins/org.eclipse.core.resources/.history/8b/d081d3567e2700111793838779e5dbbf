@@ -1,0 +1,87 @@
+package cl.automind.vote.empathy;
+
+import gcampos.dev.util.NamedValuePair;
+
+import java.util.List;
+
+import cl.automind.empathy.data.DefaultQueryCriterion;
+import cl.automind.empathy.data.IQueryCriterion;
+import cl.automind.empathy.data.QueryOption;
+import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.rule.AbstractRule;
+import cl.automind.empathy.rule.RuleMetadata;
+import cl.automind.sagde.model.SagdeMetadata;
+import cl.automind.vote.model.Score;
+
+@RuleMetadata(minVal = 0, maxVal = 1.0, threshold = 0.2, name = EmpathicConstants.R_CMO_PERFORMANCE)
+public class CmoPerformanceRule extends AbstractRule {
+	private static final String INCREASE = "increase";
+	private static final String CMO = "cmoName";
+	private static final IQueryCriterion<Score> filter = new ScoreByIdCmoCriterion();
+	public CmoPerformanceRule(){
+		super();
+		setMessage(new CmoPerformanceRuleMessage());
+		setParams(
+			new NamedValuePair<String>("idcmo","id"),
+			new NamedValuePair<Integer>("idestablishment", 0),
+			new NamedValuePair<String>("user", "rut"),
+			new NamedValuePair<String>("namecmo", "name")
+		);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean canEvaluate(Object... params) {
+		return getInSource(EmpathicConstants.DS_SCORES, QueryOption.Filter, filter).size() > 2;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public double evaluateImpl(Object... params) {
+		int total = 0;
+		int ok = 0;
+		List<Score> scores = getInSource(EmpathicConstants.DS_SCORES, QueryOption.Filter, filter);
+		total = scores.size();
+		SagdeMetadata metadata = new SagdeMetadata();
+		for (Score score: scores){
+			ok += score.getValue();
+			metadata = score.getSagdeMetadata();
+		}
+		IQueryCriterion<Integer> filterUser =
+			new DefaultQueryCriterion<Integer>
+				(0,
+					(NamedValuePair<String>) params[0],
+					(NamedValuePair<String>) params[1],
+					(NamedValuePair<String>) params[2]
+				);
+		List<Integer> historic = getInSource(EmpathicConstants.DS_CMOPERFORMANCE, QueryOption.Filter, filterUser);
+		int historicPerformance = 1;
+		if (historic.size() > 0) historicPerformance = historic.get(0);
+		int performance = (int)((ok*100.0)/total);
+		double increase = historicPerformance > 0 ? (performance - historicPerformance + 0.0) / historicPerformance : 1.0;
+		putValue(INCREASE, ((int) (increase*100)));
+		try{
+			NamedValuePair<String> namecmo = (NamedValuePair<String>) params[3];
+			System.out.println("Rule:"+getName()+"::NameCmo:" + namecmo.getValue());
+			putValue(CMO, namecmo.getValue());
+		} catch (Exception e){
+			putValue(CMO, "un cmo");
+		}
+		getMessage().getContext().getData().clear();
+		getMessage().getContext().getData().add(metadata);
+		return total > 0 ? increase : 0;
+	}
+	public class CmoPerformanceRuleMessage extends AbstractMessage{
+		@Override
+		public String getName() {
+			return "mCmoPerformance00";
+		}
+		@Override
+		public String getEmotionName() {
+			return "happiness";
+		}
+		@Override
+		public String getUnfilteredText() {
+			return "Has mejorado un "+key(INCREASE)+" % tu rendimiento en "+key(CMO)+"!!!";
+		}
+	}
+}

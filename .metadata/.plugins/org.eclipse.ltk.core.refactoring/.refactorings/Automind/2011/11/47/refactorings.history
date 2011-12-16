@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 2 elements to &apos;DevLib/src/net&apos;&#x0D;&#x0A;- Original project: &apos;Automind&apos;&#x0D;&#x0A;- Destination element: &apos;DevLib/src/net&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     cl.automind.connectivity.IHttpClient.java&#x0D;&#x0A;     cl.automind.connectivity.AbstractHttpClient.java&#x0D;&#x0A;- Update references to refactored element" description="Move compilation units" destination="=DevLib/src&lt;net" element1="/src&lt;cl.automind.connectivity{IHttpClient.java" element2="/src&lt;cl.automind.connectivity{AbstractHttpClient.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1321555722473" units="2" version="1.0"/>
+</session>

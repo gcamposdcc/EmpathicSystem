@@ -1,0 +1,20 @@
+1312768702724	Encapsulate field 'alias'
+1312768706970	Encapsulate field 'name'
+1312768712352	Encapsulate field 'type'
+1312769012905	Encapsulate field 'fields'
+1312769028720	Encapsulate field 'name'
+1312775431016	Encapsulate field 'name'
+1312775558863	Encapsulate field 'indicators'
+1312777086589	Encapsulate field 'type'
+1312777091933	Encapsulate field 'value'
+1312778025629	Delete element
+1312778213432	Encapsulate field 'fieldValues'
+1312778245976	Encapsulate field 'fieldValues'
+1312778506148	Encapsulate field 'fields'
+1312778509260	Encapsulate field 'indicators'
+1312780032728	Encapsulate field 'registeredTypes'
+1312780077432	Delete element
+1312780134058	Encapsulate field 'registeredTypes'
+1312780571053	Delete element
+1312781165899	Encapsulate field 'defval'
+1313179591815	Rename type 'AbstractSQLiteDataSource'

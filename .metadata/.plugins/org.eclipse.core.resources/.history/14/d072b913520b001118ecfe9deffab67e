@@ -1,0 +1,6 @@
+package cl.automind.empathy.data.sql;
+
+public @interface SqlSourceMetadata {
+	public String name() default  "";
+	public NamedQueries queries() default @NamedQueries;
+}
