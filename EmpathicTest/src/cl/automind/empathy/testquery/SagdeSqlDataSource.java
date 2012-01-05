@@ -10,7 +10,7 @@ import java.util.List;
 import cl.automind.empathy.data.sql.ISqlConnector;
 import cl.automind.empathy.data.sql.NamedQueries;
 import cl.automind.empathy.data.sql.NamedQuery;
-import cl.automind.empathy.data.sql.Sql;
+import cl.automind.empathy.data.sql.SqlPairs;
 import cl.automind.empathy.data.sql.SqlMetadata;
 import cl.automind.empathy.data.sql.SqlNamedValuePair;
 import cl.automind.empathy.fw.data.sql.AbstractSqlDataSource;
@@ -60,12 +60,12 @@ public class SagdeSqlDataSource extends AbstractSqlDataSource<SagdeMetadata>{
 	@Override
 	public Collection<SqlNamedValuePair<?>> toPairs(SagdeMetadata target) {
 		Collection<SqlNamedValuePair<?>> pairs = new ArrayList<SqlNamedValuePair<?>>();
-		pairs.add(Sql.pair("idsector", target.getIdSector()));
-		pairs.add(Sql.pair("ideje", target.getIdAxis()));
-		pairs.add(Sql.pair("idcmo", target.getIdCmo()));
-		pairs.add(Sql.pair("idobjcon", target.getIdKo()));
-		pairs.add(Sql.pair("idnivel", target.getIdLevel()));
-		pairs.add(Sql.pair("idempathy", target.getIdEmpathy()));
+		pairs.add(SqlPairs.pair("idsector", target.getIdSector()));
+		pairs.add(SqlPairs.pair("ideje", target.getIdAxis()));
+		pairs.add(SqlPairs.pair("idcmo", target.getIdCmo()));
+		pairs.add(SqlPairs.pair("idobjcon", target.getIdKo()));
+		pairs.add(SqlPairs.pair("idnivel", target.getIdLevel()));
+		pairs.add(SqlPairs.pair("idempathy", target.getIdEmpathy()));
 		return pairs;
 	}
 }

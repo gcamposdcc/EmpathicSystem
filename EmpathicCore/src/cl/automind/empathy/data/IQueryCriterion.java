@@ -1,6 +1,5 @@
 package cl.automind.empathy.data;
 
-import gcampos.dev.util.NamedValuePair;
 
 public interface IQueryCriterion<T> {
 	public boolean apply();

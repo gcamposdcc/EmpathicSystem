@@ -2,7 +2,6 @@ package cl.automind.empathy.fw.data.sql;
 
 import gcampos.dev.interfaces.behavioral.IDisposable;
 import gcampos.dev.patterns.behavioral.IObserver;
-import gcampos.dev.util.NamedValuePair;
 import gcampos.dev.util.Strings;
 
 import java.lang.reflect.Field;
@@ -19,6 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
+import cl.automind.empathy.data.NamedValuePair;
 import cl.automind.empathy.data.sql.Column;
 import cl.automind.empathy.data.sql.ISqlConnector;
 import cl.automind.empathy.data.sql.ISqlDataSource;
@@ -26,7 +26,7 @@ import cl.automind.empathy.data.sql.Id;
 import cl.automind.empathy.data.sql.NamedQuery;
 import cl.automind.empathy.data.sql.SqlMetadata;
 import cl.automind.empathy.data.sql.SqlNamedValuePair;
-import cl.automind.empathy.data.sql.Sql;
+import cl.automind.empathy.data.sql.SqlPairs;
 
 public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	private final Map<String, String> queryMap;
@@ -46,26 +46,21 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		Class<?> templateClass = template.getClass();
 
 		// METADATA
-		Class<?> thisClass = getClass();
-		if (thisClass.isAnonymousClass()){
-			thisClass = thisClass.getSuperclass();
-			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
-		}
+		Class<?> thisClass = getCurrentClass();
 		SqlMetadata metadata = thisClass.getAnnotation(SqlMetadata.class);
-		if (metadata != null){
-			this.name = metadata.name().trim().equals("") ? Strings.englishPlural(templateClass.getSimpleName()) : metadata.name().trim();
-			if(metadata.queries() != null){
-				for (NamedQuery query: metadata.queries().queries()){
-					getQueryMap().put(query.name(), query.query());
-				}
-			}
-		} else {
-			this.name = Strings.englishPlural(templateClass.getSimpleName()).toLowerCase();
+		this.name = extractDataSourceName(metadata, templateClass, thisClass);
+		extractClassMetadata(metadata);
+		extractTemplateData(template, templateClass);
+		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
+			System.out.println("Query::" + entry.getKey() + "::" + entry.getValue());
 		}
-		String tempFieldName = "";
+	}
+
+	private void extractTemplateData(T template, Class<?> templateClass) {
 		String idName = "id";
-		boolean hasId = false;
+		String tempFieldName = "";
 		List<String> fieldNames = new ArrayList<String>();
+		boolean hasId = false;
 		if (template != null){
 			Column columnMetadata = null;
 			Id idMetadata = null;
@@ -89,15 +84,8 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 			int fieldCount = fieldNames.size();
 			// BY ID
-			String updateById = "UPDATE " + getName() + " SET ";
-			if (fieldCount > 0) {
-				for (int i = 0; i < fieldCount; i++){
-					updateById += fieldNames.get(i) + ((i == fieldCount - 1) ? " ? " : " ?, ");
-					getDescriptor().addParamToQuery("updateById", fieldNames.get(i), i + 1);
-				}
-				updateById += " WHERE " + idName + " = ?;";
-				getDescriptor().addParamToQuery("updateById", idName, fieldCount + 1);
-			}
+			String updateById = buildUpdateByIdQuery(idName, fieldNames,
+					fieldCount);
 			getQueryMap().put("selectById", "SELECT * FROM " + getName() + " WHERE "+ idName + " = ?;");
 			getDescriptor().addParamToQuery("selectById", idName, 1);
 			getQueryMap().put("deleteById", "DELETE FROM " + getName() + " WHERE "+ idName + " = ?;");
@@ -105,41 +93,14 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			getQueryMap().put("updataById", updateById);
 			// NORMAL
 			// INSERT
-			String insert = "INSERT INTO "+ getName() + " ";
-			if (fieldCount > 0 ) {
-				for (int i = 0; i < fieldCount; i++){
-					insert += (i == 0 ? "(" : ", ") + fieldNames.get(i);
-					getDescriptor().addParamToQuery("insert", fieldNames.get(i), i + 1);
-				}
-				insert += ") VALUES (";
-				for (int i = 0; i < fieldCount; i++){
-					insert += (i == fieldCount - 1) ? "?" : "?, ";
-				}
-				insert += ")";
-				if (hasId) insert += " RETURNING " + idName;
-				insert += ";";
-			}
+			String insert = createInsertQuery(idName, hasId, fieldNames, fieldCount);
 			// UPDATE
-			String update = "UPDATE " + getName() + " SET ";
-			if (fieldCount > 0) {
-				for (int i = 0; i < fieldCount; i++){
-					update += fieldNames.get(i) + " = " + ((i == fieldCount - 1) ? " ? " : " ?, ");
-					getDescriptor().addParamToQuery("update", fieldNames.get(i), i + 1);
-				}
-//				update += " WHERE ";
-			}
+			String update = buildUpdateQuery(fieldNames, fieldCount);
 			// DELETE
-//			String delete = "DELETE FROM " + getName() + " WHERE ";
 			String delete = "DELETE FROM " + getName();
 			// SELECT
-//			String select = "SELECT * FROM " + getName() + " WHERE ";
 			String select = "SELECT * FROM " + getName();
-			if (fieldCount > 0) {
-				for (int i = 0; i < fieldCount; i++){
-					select += fieldNames.get(i) + ((i == fieldCount - 1) ? " ? " : " ?, ");
-					getDescriptor().addParamToQuery("update", fieldNames.get(i), i + 1);
-				}
-			}
+			select = buildSelectQuery(fieldNames, fieldCount, select);
 			getQueryMap().put("insert", insert);
 			getQueryMap().put("update", update);
 			getQueryMap().put("delete", delete);
@@ -147,9 +108,90 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			getQueryMap().put("count", "SELECT count(*) FROM " + getName() + ";");
 			getQueryMap().put("selectAll", "SELECT * FROM " + getName() + ";");
 		}
-		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
-			System.out.println("Query::" + entry.getKey() + "::" + entry.getValue());
+	}
+
+	private String extractDataSourceName(SqlMetadata metadata, Class<?> templateClass, Class<?> thisClass) {
+		String name = "";
+		if (metadata != null){
+			name = metadata.name().trim().equals("") ? Strings.englishPlural(templateClass.getSimpleName()) : metadata.name().trim();
+		} else {
+			name = Strings.englishPlural(templateClass.getSimpleName()).toLowerCase();
 		}
+		return name;
+	}
+	private void extractClassMetadata(SqlMetadata metadata){
+		if (metadata != null) {
+			if(metadata.queries() != null){
+				for (NamedQuery query: metadata.queries().queries()){
+					getQueryMap().put(query.name(), query.query());
+				}
+			}
+		}
+	}
+
+	private Class<?> getCurrentClass() {
+		Class<?> thisClass = getClass();
+		if (thisClass.isAnonymousClass()){
+			thisClass = thisClass.getSuperclass();
+			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+		}
+		return thisClass;
+	}
+
+	private String buildUpdateByIdQuery(String idName, List<String> fieldNames,
+			int fieldCount) {
+		String updateById = "UPDATE " + getName() + " SET ";
+		if (fieldCount > 0) {
+			for (int i = 0; i < fieldCount; i++){
+				updateById += fieldNames.get(i) + ((i == fieldCount - 1) ? " ? " : " ?, ");
+				getDescriptor().addParamToQuery("updateById", fieldNames.get(i), i + 1);
+			}
+			updateById += " WHERE " + idName + " = ?;";
+			getDescriptor().addParamToQuery("updateById", idName, fieldCount + 1);
+		}
+		return updateById;
+	}
+
+	private String buildSelectQuery(List<String> fieldNames, int fieldCount,
+			String select) {
+		if (fieldCount > 0) {
+			for (int i = 0; i < fieldCount; i++){
+				select += fieldNames.get(i) + ((i == fieldCount - 1) ? " ? " : " ?, ");
+				getDescriptor().addParamToQuery("update", fieldNames.get(i), i + 1);
+			}
+		}
+		return select;
+	}
+
+	private String buildUpdateQuery(List<String> fieldNames, int fieldCount) {
+		String update = "UPDATE " + getName() + " SET ";
+		if (fieldCount > 0) {
+			for (int i = 0; i < fieldCount; i++){
+				update += fieldNames.get(i) + " = " + ((i == fieldCount - 1) ? " ? " : " ?, ");
+				getDescriptor().addParamToQuery("update", fieldNames.get(i), i + 1);
+			}
+//				update += " WHERE ";
+		}
+		return update;
+	}
+
+	private String createInsertQuery(String idName, boolean hasId,
+			List<String> fieldNames, int fieldCount) {
+		String insert = "INSERT INTO "+ getName() + " ";
+		if (fieldCount > 0 ) {
+			for (int i = 0; i < fieldCount; i++){
+				insert += (i == 0 ? "(" : ", ") + fieldNames.get(i);
+				getDescriptor().addParamToQuery("insert", fieldNames.get(i), i + 1);
+			}
+			insert += ") VALUES (";
+			for (int i = 0; i < fieldCount; i++){
+				insert += (i == fieldCount - 1) ? "?" : "?, ";
+			}
+			insert += ")";
+			if (hasId) insert += " RETURNING " + idName;
+			insert += ";";
+		}
+		return insert;
 	}
 
 	@Override
@@ -354,7 +396,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			System.out.println("ExecutingQuery::" + queryName + "::" + queryString);
 			PreparedStatement query = getConnector().preparedStatement(queryString);
 			try {
-				SqlNamedValuePair<Integer> idPair = Sql.pair(getDescriptor().getIdName(), option.getValue());
+				SqlNamedValuePair<Integer> idPair = SqlPairs.pair(getDescriptor().getIdName(), option.getValue());
 				for (Integer index : getDescriptor().getParamPosition(queryName, idPair.getKey())){
 					idPair.set(query, index);
 				}

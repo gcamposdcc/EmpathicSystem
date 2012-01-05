@@ -1,5 +1,0 @@
-package cl.automind.empathy.fw.data.sql;
-
-public class SqlDescriptor {
-	private Map<String, Collection<Integer>> positions;
-}

@@ -134,29 +134,31 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	@Override
 	public List<T> select(IQueryOption option, IQueryCriterion<T>... criteria) {
 		if (option.getType() == IQueryOption.Type.Id){
-			List<T> result = new ArrayList<T>();
-			DataEntry<T> item = getData().get(option.getValue());
-			if (item != null) result.add(item.getValue());
-			return result;
+			return selectById(option);
 		} else if (option.getType() == IQueryOption.Type.All){
 			return selectAll();
 		} else if (option.getType() == IQueryOption.Type.Filter){
-			List<T> result = new ArrayList<T>();
-			for (IQueryCriterion<T> criterion : criteria){
-				for(DataEntry<T> t : getData().values()){
-					if (criterion.apply(t.getValue())) result.add(t.getValue());
-				}
-			}
-			return result;
+			return selectFiltering(criteria);
 		} else {
-			List<T> result = new ArrayList<T>();
-			for (IQueryCriterion<T> criterion : criteria){
-				for(DataEntry<T> t : getData().values()){
-					if (criterion.apply(t.getValue())) result.add(t.getValue());
-				}
-			}
-			return result;
+			return selectFiltering(criteria);
 		}
+	}
+
+	private List<T> selectFiltering(IQueryCriterion<T>... criteria) {
+		List<T> result = new ArrayList<T>();
+		for (IQueryCriterion<T> criterion : criteria){
+			for(DataEntry<T> t : getData().values()){
+				if (criterion.apply(t.getValue())) result.add(t.getValue());
+			}
+		}
+		return result;
+	}
+
+	private List<T> selectById(IQueryOption option) {
+		List<T> result = new ArrayList<T>();
+		DataEntry<T> item = getData().get(option.getValue());
+		if (item != null) result.add(item.getValue());
+		return result;
 	}
 	public T selectById(int id) {
 		DataEntry<T> d = getData().get(id);
@@ -204,40 +206,56 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	@Override
 	public boolean delete(IQueryOption option, IQueryCriterion<T>... criteria) {
 		if (option.getType() == IQueryOption.Type.Id){
-			return getData().remove(option.getValue()) == null;
+			return deleteById(option);
 		} else if (option.getType() == IQueryOption.Type.All){
-			boolean nonEmpty = getData().size() > 0;
-			clear();
-			return nonEmpty;
+			return deleteAll();
 		} else if (option.getType() == IQueryOption.Type.Filter){
-			Set<Integer> ids = new HashSet<Integer>();
-			for (IQueryCriterion<T> criterion : criteria){
-				for(DataEntry<T> t : getData().values()){
-					if (criterion.apply(t.getValue())) {
-						ids.add(t.getId());
-					}
-					if (option.getValue() > 0 && ids.size() == option.getValue()) break;
+			return deleteFiltering(option, criteria);
+		} else {
+			return defaultDelete(criteria);
+		}
+
+	}
+
+	private boolean defaultDelete(IQueryCriterion<T>... criteria) {
+		Set<Integer> ids = new HashSet<Integer>();
+		for (IQueryCriterion<T> criterion : criteria){
+			for(DataEntry<T> t : getData().values()){
+				if (criterion.apply(t.getValue())) {
+					ids.add(t.getId());
+				}
+			}
+		}
+		for (int id : ids){
+			getData().remove(id);
+		}
+		return ids.size() > 0;
+	}
+
+	private boolean deleteFiltering(IQueryOption option,IQueryCriterion<T>... criteria) {
+		Set<Integer> ids = new HashSet<Integer>();
+		for (IQueryCriterion<T> criterion : criteria){
+			for(DataEntry<T> t : getData().values()){
+				if (criterion.apply(t.getValue())) {
+					ids.add(t.getId());
 				}
 				if (option.getValue() > 0 && ids.size() == option.getValue()) break;
 			}
-			for (int id : ids){
-				getData().remove(id);
-			}
-			return ids.size() > 0;
-		} else {
-			Set<Integer> ids = new HashSet<Integer>();
-			for (IQueryCriterion<T> criterion : criteria){
-				for(DataEntry<T> t : getData().values()){
-					if (criterion.apply(t.getValue())) {
-						ids.add(t.getId());
-					}
-				}
-			}
-			for (int id : ids){
-				getData().remove(id);
-			}
-			return ids.size() > 0;
+			if (option.getValue() > 0 && ids.size() == option.getValue()) break;
 		}
+		for (int id : ids){
+			getData().remove(id);
+		}
+		return ids.size() > 0;
+	}
 
+	private boolean deleteAll() {
+		boolean nonEmpty = getData().size() > 0;
+		clear();
+		return nonEmpty;
+	}
+
+	private boolean deleteById(IQueryOption option) {
+		return getData().remove(option.getValue()) == null;
 	}
 }

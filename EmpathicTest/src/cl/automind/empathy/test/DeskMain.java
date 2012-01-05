@@ -18,16 +18,17 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
-import cl.automind.empathy.data.DefaultQueryCriterion;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryOption;
+import cl.automind.empathy.data.QueryCriterion;
 import cl.automind.empathy.data.QueryOption;
+import cl.automind.empathy.data.QueryOptions;
 import cl.automind.empathy.data.sql.ComparisonType;
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 import cl.automind.empathy.data.sql.ISqlConnector;
 import cl.automind.empathy.data.sql.ISqlDataSource;
-import cl.automind.empathy.data.sql.Sql;
 import cl.automind.empathy.data.sql.SqlNamedValuePair;
+import cl.automind.empathy.data.sql.SqlPairs;
 import cl.automind.empathy.fw.data.sql.DefaultSqlConnector;
 import cl.automind.empathy.fw.data.sql.PropertySqlConnectionInfo;
 import cl.automind.empathy.test.t00.Choice;
@@ -71,7 +72,7 @@ public class DeskMain {
 
 					final ISqlConnector psql_connector = new DefaultSqlConnector(psql);
 					IDataSource<SagdeMetadata> meta = new SagdeSqlDataSource(new SagdeMetadata(), psql_connector);
-					List<SagdeMetadata> sagdeMetadatas = ((ISqlDataSource<SagdeMetadata>) meta).executeNamedQuery("byIdEmpathy", Sql.pair("idempathy",6));
+					List<SagdeMetadata> sagdeMetadatas = ((ISqlDataSource<SagdeMetadata>) meta).executeNamedQuery("byIdEmpathy", SqlPairs.pair("idempathy",6));
 					System.out.println("ShowList:Begin");
 					for (SagdeMetadata sagdeMetadata: sagdeMetadatas){
 						System.out.println("ShowList:Pair:Begin");
@@ -100,7 +101,7 @@ public class DeskMain {
 
 					IDataSource<EmpathyMetadata> empathySource = new EmpathySqlDataSource(new EmpathyMetadata(), psql_connector);
 
-					List<EmpathyMetadata> empathyMetadatas = empathySource.select(QueryOption.All);
+					List<EmpathyMetadata> empathyMetadatas = empathySource.select(QueryOptions.All);
 
 					for (EmpathyMetadata empathyMetadata: empathyMetadatas){
 						System.out.println("ShowList:Pair:Begin");
@@ -125,13 +126,13 @@ public class DeskMain {
 					System.out.println("Inserting:Empathy:" + empathySource.insert(inserts));
 					System.out.println("Inserting:Empathy:" + empathySource.insert(empathy));
 					empathySource.delete(new QueryOption(IQueryOption.Type.Filter),
-							new DefaultQueryCriterion<EmpathyMetadata>(null ,Sql.pair("id", 33, ComparisonType.GreaterOrEqual)));
+							new QueryCriterion<EmpathyMetadata>(null ,SqlPairs.pair("id", 33, ComparisonType.GreaterOrEqual)));
 					EmpathyMetadata emp = new EmpathyMetadata();
 					emp.setEvaluated(true);
 					emp.setAnswered(true);
 					emp.setLiked(true);
 					emp.setCreatedAt(now);
-					empathySource.update(emp, QueryOption.All);
+					empathySource.update(emp, QueryOptions.All);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

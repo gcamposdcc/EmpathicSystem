@@ -3,7 +3,6 @@ package cl.automind.empathy.fw.data.web;
 import gcampos.dev.interfaces.behavioral.IDisposable;
 import gcampos.dev.net.IHttpClient;
 import gcampos.dev.patterns.behavioral.IObserver;
-import gcampos.dev.util.NamedValuePair;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +16,7 @@ import java.util.concurrent.Future;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
+import cl.automind.empathy.data.NamedValuePair;
 import cl.automind.empathy.data.web.IWebDataSource;
 import cl.automind.empathy.data.web.WebMetadata;
 

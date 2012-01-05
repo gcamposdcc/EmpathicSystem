@@ -10,7 +10,7 @@ import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
-import cl.automind.empathy.data.QueryOption;
+import cl.automind.empathy.data.QueryOptions;
 import cl.automind.empathy.data.UnmatchingClassException;
 
 
@@ -75,7 +75,7 @@ public abstract class AbstractDataManager implements IDataManager{
 		IDataSource<T> source;
 		try {
 			source = getDataSource(dataSourceName, template);
-			return source.select(QueryOption.All);
+			return source.select(QueryOptions.All);
 		} catch (UnmatchingClassException e) {
 			System.err.println("Returning empty list");
 		}

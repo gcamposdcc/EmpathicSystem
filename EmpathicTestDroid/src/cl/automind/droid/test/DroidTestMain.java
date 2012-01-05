@@ -1,11 +1,11 @@
 package cl.automind.droid.test;
 
 import gcampos.dev.net.IHttpClient;
-import gcampos.dev.util.NamedValuePair;
 
 import java.util.logging.Logger;
 
 import cl.automind.android.net.AndroidHttpClient;
+import cl.automind.empathy.data.NamedValuePair;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;

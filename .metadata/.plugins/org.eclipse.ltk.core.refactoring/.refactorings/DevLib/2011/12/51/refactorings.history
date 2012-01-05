@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 2 elements to &apos;EmpathicCore/src/cl.automind.empathy.data&apos;&#x0D;&#x0A;- Original project: &apos;DevLib&apos;&#x0D;&#x0A;- Destination element: &apos;EmpathicCore/src/cl.automind.empathy.data&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     gcampos.dev.util.KeyValuePair.java&#x0D;&#x0A;     gcampos.dev.util.NamedValuePair.java&#x0D;&#x0A;- Update references to refactored element" description="Move compilation units" destination="=EmpathicCore/src&lt;cl.automind.empathy.data" element1="/src&lt;gcampos.dev.util{KeyValuePair.java" element2="/src&lt;gcampos.dev.util{NamedValuePair.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1324160873801" units="2" version="1.0"/>
+</session>

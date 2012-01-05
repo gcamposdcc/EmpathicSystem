@@ -1,7 +1,0 @@
-package cl.automind.empathy.testquery;
-
-import cl.automind.empathy.fw.data.sql.AbstractSqlDataSource;
-
-public class EmpathySqlDataSource extends AbstractSqlDataSource<EmpathyMetadata>{
-
-}

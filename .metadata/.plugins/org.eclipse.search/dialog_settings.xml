@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<section name="">
-		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
-	</section>
 	<section name="org.eclipse.jdt.ui.JavaSearchResultPage">
 		<item value="TRUE" key="org.eclipse.jdt.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
@@ -13,8 +10,8 @@
 	<section name="DialogBounds_SearchDialog">
 		<item value="507" key="DIALOG_WIDTH"/>
 		<item value="265" key="DIALOG_Y_ORIGIN"/>
-		<item value="450" key="DIALOG_HEIGHT"/>
 		<item value="827" key="DIALOG_X_ORIGIN"/>
+		<item value="450" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="Search">
@@ -41,6 +38,10 @@
 		<item value="false" key="REG_EX_SEARCH"/>
 		<item value="false" key="SEARCH_DERIVED"/>
 		<item value="11" key="HISTORY_SIZE"/>
+		<section name="EXTENSIONS">
+			<item value="*.type" key="1"/>
+			<item value="*" key="0"/>
+		</section>
 		<section name="HISTORY2">
 			<item value="false" key="isRegExSearch"/>
 			<item value="option.getName().equals(DefaultQueryOptions.Id.getName())" key="textPattern"/>
@@ -52,13 +53,20 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="EXTENSIONS">
-			<item value="*.type" key="1"/>
-			<item value="*" key="0"/>
-		</section>
 		<section name="HISTORY3">
 			<item value="false" key="isRegExSearch"/>
 			<item value="thisClass.getAnnotation" key="textPattern"/>
+			<item value="0" key="scope"/>
+			<item value="false" key="ignoreCase"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item value="false" key="isRegExSearch"/>
+			<item value="option.getName().equals(DefaultQueryOptions.Filter.getName())" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -74,17 +82,6 @@
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
 				<item value="*.type"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY0">
-			<item value="false" key="isRegExSearch"/>
-			<item value="option.getName().equals(DefaultQueryOptions.Filter.getName())" key="textPattern"/>
-			<item value="0" key="scope"/>
-			<item value="false" key="ignoreCase"/>
-			<list key="fileNamePatterns">
-				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -167,9 +164,6 @@
 			</list>
 		</section>
 	</section>
-	<section name="SearchDialog.ScopePart">
-		<item value="0" key="scope"/>
-	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
 			<item value="option.getType() == IQueryOption.Type.Filter"/>
@@ -177,5 +171,8 @@
 			<item value="option.getType() == IQueryOption.Type.Id"/>
 			<item value="DataSource"/>
 		</list>
+	</section>
+	<section name="SearchDialog.ScopePart">
+		<item value="0" key="scope"/>
 	</section>
 </section>

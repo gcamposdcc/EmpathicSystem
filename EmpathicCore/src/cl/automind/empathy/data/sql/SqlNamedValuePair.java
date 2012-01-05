@@ -1,8 +1,10 @@
 package cl.automind.empathy.data.sql;
 
-import gcampos.dev.util.NamedValuePair;
 
 import java.sql.PreparedStatement;
+
+import cl.automind.empathy.data.NamedValuePair;
+import cl.automind.empathy.data.Pairs;
 
 
 public abstract class SqlNamedValuePair<V> extends NamedValuePair<V> {
@@ -26,7 +28,7 @@ public abstract class SqlNamedValuePair<V> extends NamedValuePair<V> {
 		return comparison;
 	}
 
-	public abstract Sql.Type getType();
+	public abstract Pairs.Type getType();
 
 	@Override
 	public String toString(){

@@ -1,0 +1,5 @@
+1324402261510	Encapsulate field 'host'
+1324402290908	Rename field 'PORT'
+1324404428205	Rename method 'setPreferredPort'
+1324404441481	Rename method 'setPreferredPort'
+1324404455766	Rename method 'getPreferredPort'
