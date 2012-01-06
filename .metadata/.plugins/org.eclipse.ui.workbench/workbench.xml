@@ -6,13 +6,13 @@
 <orientation position="512" view="com.android.ide.eclipse.ddms.views.LogCatView"/>
 <orientation position="512" view="net.sourceforge.metrics.ui.MetricsView"/>
 <orientation position="512" view="org.eclipse.debug.ui.MemoryView"/>
-<orientation position="512" view="com.android.ide.eclipse.ddms.views.DeviceView"/>
 <orientation position="512" view="org.eclipse.debug.ui.RegisterView"/>
+<orientation position="512" view="com.android.ide.eclipse.ddms.views.DeviceView"/>
 <orientation position="512" view="org.eclipse.debug.ui.DebugView"/>
 <orientation position="512" view="com.android.ide.eclipse.ddms.views.ThreadView"/>
-<orientation position="512" view="org.eclipse.ui.views.TaskList"/>
-<orientation position="512" view="org.eclipse.jdt.debug.ui.DisplayView"/>
 <orientation position="512" view="net.sourceforge.metrics.ui.layeredpackagegraph.LayeredPackageTableView"/>
+<orientation position="512" view="org.eclipse.jdt.debug.ui.DisplayView"/>
+<orientation position="512" view="org.eclipse.ui.views.TaskList"/>
 </fastViewData>
 <perspectiveBar>
 <itemSize x="235"/>
@@ -50,13 +50,18 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractWebDataSource.java" partName="AbstractWebDataSource.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java" title="AbstractWebDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractWebDataSource.java" partName="AbstractWebDataSource.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java" title="AbstractWebDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6694" selectionTopPixel="3548"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6386" selectionTopPixel="3565"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRule.java" partName="AbstractRule.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java" title="AbstractRule.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="3412"/>
 </editor>
 </editors>
 <views>
@@ -164,7 +169,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.PackageExplorer" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -515,10 +520,8 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/AbstractArbiter.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/MemoryDataSource.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
 </editors>
-<item historyLabel="AbstractArbiter.java" index="1">
-<position info="not_deleted" x="3418" y="318"/>
-</item>
 <item historyLabel="AbstractArbiter.java" index="1">
 <position info="not_deleted" x="3846" y="0"/>
 </item>
@@ -663,7 +666,10 @@
 <item historyLabel="LessUsedCriterion.java" index="2">
 <position info="not_deleted" x="616" y="850"/>
 </item>
-<item active="true" historyLabel="AbstractWebDataSource.java" index="11">
+<item historyLabel="AbstractWebDataSource.java" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="AbstractRule.java" index="12">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 </navigationHistory>
@@ -683,6 +689,9 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRule.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractWebDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java">
 <persistable path="/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java"/>
 </file>
@@ -724,9 +733,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EmpathicManagers.java" tooltip="EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java">
 <persistable path="/EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IArbiterCriterion.java" tooltip="EmpathicCore/src/cl/automind/empathy/IArbiterCriterion.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/IArbiterCriterion.java"/>
 </file>
 </mruList>
 </workbench>

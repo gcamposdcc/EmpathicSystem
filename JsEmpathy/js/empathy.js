@@ -1,3 +1,5 @@
+// °: bubuja que resuelve bugs
+
 function Managers ()
 {
 	var dataManager = null;

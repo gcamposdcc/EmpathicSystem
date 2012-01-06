@@ -18,11 +18,28 @@
         	style="border:1px solid #c3c3c3;"> 
         </canvas>
 		<script type="text/javascript">
-            //var empathic_plugin = new DefaultEmpathicPlugin();
-            //var empathy = new Empathy(empathic_plugin);
-            var v = function (text){ alert ('it works: ' + text); };
-            var f = function (fn) { fn.call(this, 'fine'); };
-            f(v);
+            function Test()
+            {
+                ObservableContext.call(this);
+
+                this.callback = 
+                    function () {
+                        var cback = 
+                            function (obs)
+                            {
+                                this.addObserver(obs);
+                            };
+                        return cback;
+                    }
+            }
+            var test = new Test();
+            test.addObserver('observer');
+            test.addObserver('observer');
+            test.addObserver('observer2');
+            test.removeObserver('observer');
+            var c = test.callback();
+            c.call(test, 'observer3');
+            alert(test.observers);
 		</script>
     </body>
 </html>

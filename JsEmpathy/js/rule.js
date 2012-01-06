@@ -1,5 +1,6 @@
 function DataRuleMediator(dataMan)
 {
+	ObservableContext.call(this);
 	var dataManager = dataMan;
 	this.get =
 		function (ds_name, option, args)
@@ -50,6 +51,8 @@ RuleManager.prototype.put =
 
 function EmpathicRule(ename)
 {
+	ObservableContext.call(this);
+	ObserverContext.call(this);
 	var dataMediator = null;
 	this.getDataMediator = function () { return dataMediator; }
 	this.setDataMediator = function (dataMed) { dataMediator = dataMed; }

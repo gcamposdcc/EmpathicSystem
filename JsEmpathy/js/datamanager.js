@@ -36,12 +36,14 @@ QueryCriterion.prototype.apply =
 		return passes;
 	}
 
-function QueryOption(t, v)
+function QueryOption(t, v, c)
 {
 	var type = t;
 	var value = v > 0 ? v : 1;
+	var callback = c;
 	this.getType = function () { return type; }
 	this.getValue = function () { return value; }
+	this.getEndCallback = function () { return callback; }
 }
 
 function DataManager() 
@@ -105,14 +107,32 @@ DataManager.prototype.del =
 
 function DataSource(ds_name, template)
 {
+	var type_name = template != null ? getObjectClass(template) : '__notype__';
+	var observers = new Array();
 	this.getName = function () { return ds_name; }
-	var type_name = template != null ? getObjectClass(template) : '__noType__';
 	this.getTypeName = function () { return typename; }
+	ObservableContext.call(this);
 }
-DataSource.prototype.ins = function (value) { return -1; }
-DataSource.prototype.upd = function (new_value, option, args) {}
-DataSource.prototype.sel = function (option, args) { return []; }
-DataSource.prototype.del = function (option, args) { return false; }
+DataSource.prototype.ins = 
+	function (value) 
+	{ 
+		notifyAll('insert', 'ds:' + this.getName(), -1); 
+	}
+DataSource.prototype.upd = 
+	function (new_value, option, args) 
+	{ 
+		notifyAll('update', 'ds:' + this.getName(), true); 
+	}
+DataSource.prototype.sel = 
+	function (option, args) 
+	{ 
+		notifyAll('insert', 'ds:' + this.getName(), []);
+	}
+DataSource.prototype.del = 
+	function (option, args) 
+	{ 
+		notifyAll('insert', 'ds:' + this.getName(), true);
+	}
 
 DataSource.prototype.passes = 
 	function (target, args)
@@ -148,6 +168,7 @@ MemoryDataSource.prototype.ins =
 		}
 		var l_id = this.getItems().push(value) - 1;
 		console.log(this.getName() + '::' + this.items());
+		notifyAll('insert', 'ds:' + this.getName(), l_id);
 		return l_id;
 	}
 MemoryDataSource.prototype.upd = 
@@ -159,6 +180,7 @@ MemoryDataSource.prototype.upd =
 		var value = option != null ? (option.getValue() > 0 ? option.getValue() : 1) : 1;
 		if (type == 'id') {
 			this.getItems()[value] = new_value;
+			notifyAll('update', 'ds:' + this.getName(), true);
 			return true;
 		}
 		for (i_index in its) {
@@ -170,13 +192,20 @@ MemoryDataSource.prototype.upd =
 		for (r_index in result){
 			this.getItems()[result[r_index]] = new_value;
 		}
+		notifyAll('update', 'ds:' + this.getName(), result.length > 0);
 		return result.length > 0;
 	}
 MemoryDataSource.prototype.sel = 
 	function (option, args) 
 	{
-		if (args == null) return this.getItems().slice(0);
-		if (args.length == 0) return this.getItems().slice(0);
+		if (args == null) {
+			notifyAll('select', 'ds:' + this.getName(), this.getItems().slice(0));
+			return this.getItems().slice(0);
+		}
+		if (args.length == 0) {
+			notifyAll('select', 'ds:' + this.getName(), this.getItems().slice(0));
+			return this.getItems().slice(0);
+		}
 		var its = this.getItems();
 		var result = new Array();
 		var count = 0;
@@ -189,6 +218,7 @@ MemoryDataSource.prototype.sel =
 			}
 			if (type == 'limit' && result.length == value) break;
 		}
+		notifyAll('select', 'ds:' + this.getName(), l_id);
 		return result;
 	}
 MemoryDataSource.prototype.del = 
@@ -200,6 +230,7 @@ MemoryDataSource.prototype.del =
 		var value = option != null ? (option.getValue() > 0 ? option.getValue() : 1) : 1;
 		if (type == 'id') {
 			delete this.getItems()[value];
+			notifyAll('delete', 'ds:' + this.getName(), true);
 			return true;
 		}
 		for (i_index in its) {
@@ -211,37 +242,34 @@ MemoryDataSource.prototype.del =
 		for (r_index in result){
 			delete this.getItems()[result[r_index]];
 		}
+		notifyAll('delete', 'ds:' + this.getName(), result.length > 0);
 		return result.length > 0;
 	}
 
-function WebMetadata(sel, ins, upd, del)
+function WebMetadata(def)
 {
-	var selectUrl = sel;
-	var insertUrl = ins;
-	var updateUrl = upd;
-	var deleteUrl = del;
-	this.getSelectUrl = function () { return selectUrl; }
-	this.getInsertUrl = function () { return insertUrl; }
-	this.getUpdateUrl = function () { return updateUrl; }
-	this.getDeleteUrl = function () { return deleteUrl; }
+	this.defaultUrl = def;
+	this.selectUrl = defaultUrl;
+	this.insertUrl = defaultUrl;
+	this.updateUrl = defaultUrl;
+	this.deleteUrl = defaultUrl;
+	this.parseSelect = function (response) { return null; }
+	this.parseDelete = function (response) { return false; }
+	this.parseInsert = function (response) { return -1; }
+	this.parseUpdate = function (response) { return false; }
 }
 
-private final T template;
-private final String name;
-private final boolean useSameUrl;
-private String defaultUrl;
-private String updateUrl;
-private String selectUrl;
-private String deleteUrl;
-private String insertUrl;
-private final ExecutorService executorService;
 function WebDataSource(ds_name, template, meta){
 	DataSource.call(this, ds_name, template);
 	var metadata = meta;
-	this.getSelectUrl = function () { return metadata.getSelectUrl(); }
-	this.getInsertUrl = function () { return metadata.getInsertUrl(); }
-	this.getUpdateUrl = function () { return metadata.getUpdateUrl(); }
-	this.getDeleteUrl = function () { return metadata.getDeleteUrl(); }
+	this.getSelectUrl = function () { return metadata.selectUrl; }
+	this.getInsertUrl = function () { return metadata.insertUrl; }
+	this.getUpdateUrl = function () { return metadata.updateUrl; }
+	this.getDeleteUrl = function () { return metadata.deleteUrl; }
+	this.parseSelect = function (response) { return metadata.parseSelect(response); }
+	this.parseDelete = function (response) { return metadata.parseDelete(response); }
+	this.parseInsert = function (response) { return metadata.parseInsert(response); }
+	this.parseUpdate = function (response) { return metadata.parseUpdate(response); }
 }
 
 WebDataSource.subclassOf(DataSource);
@@ -272,7 +300,6 @@ WebDataSource.prototype.request =
 	  			}
 			};
 		xhr.send(null);
-		return ;
 	}
 
 WebDataSource.prototype.ins = 
@@ -283,7 +310,7 @@ WebDataSource.prototype.ins =
 		var callback = 
 			function (response)
 			{
-				
+				this.notifyAll('insert', 'ds:' + this.getName(), this.parseInsert(response));
 			};
 		var r = this.request(this.getInsertUrl(), pars, method, callback);
 	}
@@ -294,7 +321,7 @@ WebDataSource.prototype.upd =
 		var callback = 
 			function (response)
 			{
-				
+				this.notifyAll('update', 'ds:' + this.getName(), this.parseUpdate(response));
 			};
 		var r = this.request(this.getUpdateUrl(), pars, method, callback);
 	}
@@ -306,7 +333,7 @@ WebDataSource.prototype.sel =
 		var callback = 
 			function (response)
 			{
-				
+				this.notifyAll('select' + ':' + 'ds:' + this.getName(), this, this.parseSelect(response));
 			};
 		var r = this.request(this.getSelectUrl(), pars, method, callback);
 	}
@@ -317,7 +344,7 @@ WebDataSource.prototype.del =
 		var callback = 
 			function (response)
 			{
-				
+				this.notifyAll('delete' + ':' + 'ds:' + this.getName(), this, this.parseDelete(response));
 			};
 		var r = this.request(this.getDeleteUrl(), pars, method, callback);
 	}
