@@ -1,6 +1,6 @@
 package cl.automind.empathy.data;
 
-public class QueryCriterions {
+public abstract class QueryCriterions {
 	static public <T> IQueryCriterion<T> get(T value){
 		return new QueryCriterion<T>(value, new NamedValuePair<?>[0]);
 	}

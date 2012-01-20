@@ -10,12 +10,14 @@ import cl.automind.empathy.rule.RuleUsage.Source;
 public class RuleUsageData{
 	private List<RuleUsage> dates = new ArrayList<RuleUsage>();
 	public RuleUsageData(boolean newUse){
-		if(newUse) newUse();
+		if(newUse) {
+			newUse();
+		}
 	}
 	public int getTimesUsed(){
 		return dates.size();
 	}
-	public void newUse(){
+	public final void newUse(){
 		dates.add(new RuleUsage(Calendar.getInstance().getTime()));
 	}
 	public void newUse(Date date){

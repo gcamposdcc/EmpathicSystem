@@ -14,6 +14,6 @@ public interface IArbiterCriterion{
 	 * @param arbiter the arbiter of the rules
 	 * @return the {@link IRule} to be used for feedback.
 	 */
-	public abstract IRule visit(IArbiter arbiter);
+	IRule visit(IArbiter arbiter);
 
 }

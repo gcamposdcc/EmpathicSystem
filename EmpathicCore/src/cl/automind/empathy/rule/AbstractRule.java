@@ -6,6 +6,7 @@ import gcampos.dev.util.ArrayUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
@@ -35,11 +36,10 @@ public abstract class AbstractRule implements INamed, IRule{
 	private double value;
 
 	public AbstractRule(){
-
 		Class<?> thisClass = getClass();
 		if (thisClass.isAnonymousClass()){
 			thisClass = thisClass.getSuperclass();
-			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
 		}
 		RuleMetadata metadata = thisClass.getAnnotation(RuleMetadata.class);
 		// <metadata-fields-init>
@@ -95,8 +95,11 @@ public abstract class AbstractRule implements INamed, IRule{
 	 */
 	@Override
 	public boolean hasStrategy(String strategyName){
-		if (strategyName.equals(StrategyMetadata.DEFAULT)) return true;
-		return ArrayUtils.contains(getStrategies(), strategyName);
+		if (strategyName.equals(StrategyMetadata.DEFAULT)) {
+			return true;
+		} else {
+			return ArrayUtils.contains(getStrategies(), strategyName);
+		}
 	}
 	// </metadata-fields-getters>
 	/* (non-Javadoc)
@@ -129,15 +132,19 @@ public abstract class AbstractRule implements INamed, IRule{
 	 */
 	@Override
 	public final boolean isSelectable(){
-		System.out.println("Rule::" + getName() +
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::" + getName() +
 				"Value:" + normalize(getValue()) +
 				"::Threshold:" + normalize(getThreshold()));
 		return normalize(getValue()) >= normalize(getThreshold());
 	}
-	protected final double normalize(double d){
-		if (d < getMinValue()) return 0.0;
-		if (d > getMaxValue()) return 1.0;
-		return (d - getMinValue())/getValueRange();
+	protected final double normalize(double value){
+		if (value < getMinValue()) {
+			return 0.0;
+		} else if (value > getMaxValue()) {
+			return 1.0;
+		} else {
+			return (value - getMinValue())/getValueRange();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -201,7 +208,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	 * @see cl.automind.empathy.rule.IRule#setDataMediator(cl.automind.empathy.rule.DataRuleMediator)
 	 */
 	@Override
-	public void setDataMediator(DataRuleMediator dataMediator) {
+	public final void setDataMediator(DataRuleMediator dataMediator) {
 		this.dataMediator = dataMediator;
 	}
 	/* (non-Javadoc)
@@ -212,7 +219,7 @@ public abstract class AbstractRule implements INamed, IRule{
 		return dataMediator;
 	}
 	protected void setValue(double value) {
-//		System.out.println("Rule::"+getName()+"::SetValue::"+value);
+//		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::"+getName()+"::SetValue::"+value);
 		this.value = value;
 	}
 	/* (non-Javadoc)
@@ -220,7 +227,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	 */
 	@Override
 	public double getValue() {
-//		System.out.println("Rule::"+getName()+"::GetValue::"+value);
+//		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::"+getName()+"::GetValue::"+value);
 		return value;
 	}
 	@Override

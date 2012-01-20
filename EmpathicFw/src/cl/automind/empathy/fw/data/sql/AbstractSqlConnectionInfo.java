@@ -8,13 +8,13 @@ import java.util.Properties;
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 
 public abstract class AbstractSqlConnectionInfo implements ISqlConnectionInfo {
-	private volatile Properties properties;
+	private Properties properties;
 
 	public AbstractSqlConnectionInfo(){
 		updateProperties();
 	}
 
-	protected void updateProperties(){
+	protected final void updateProperties(){
 		if (getProperties() == null) setProperties(new Properties());
 		getProperties().setProperty(ISqlConnectionInfo.Fields.Username.toString(), getUsername());
 		getProperties().setProperty(ISqlConnectionInfo.Fields.Password.toString(), getPassword());
@@ -35,10 +35,10 @@ public abstract class AbstractSqlConnectionInfo implements ISqlConnectionInfo {
 		}
 		return getProperties();
 	}
-	protected void setProperties(Properties properties) {
+	protected final void setProperties(Properties properties) {
 		this.properties = properties;
 	}
-	protected Properties getProperties() {
+	protected final Properties getProperties() {
 		return properties;
 	}
 

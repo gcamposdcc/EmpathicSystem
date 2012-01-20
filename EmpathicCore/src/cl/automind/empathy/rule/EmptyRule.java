@@ -4,7 +4,7 @@ import cl.automind.empathy.feedback.AbstractMessage;
 import cl.automind.empathy.feedback.EmptyMessage;
 
 public final class EmptyRule extends AbstractRule {
-	public final static AbstractRule instance = new EmptyRule();
+	public final static AbstractRule INSTANCE = new EmptyRule();
 	private final Object[] params = {};
 	private EmptyRule(){ super(); }
 	@Override

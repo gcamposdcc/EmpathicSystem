@@ -1,6 +1,6 @@
 package cl.automind.empathy.data;
 
-public class Pairs {
+public abstract class Pairs {
 
 	public enum Type {
 		Boolean, Char, Date, Short, Integer, Long, Float, Double, String

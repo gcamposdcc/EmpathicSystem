@@ -14,11 +14,11 @@ public class QueryDescriptor implements INamed{
 	private String name;
 
 	public QueryDescriptor(String name){
-		setName(name);
-		setParamPositions(new HashMap<String, Collection<Integer>>());
+		this.name = name;
+		this.paramPositions = new HashMap<String, Collection<Integer>>();
 //		setTypeMap(new HashMap<String, Sql.Type>());
 	}
-	private void setName(String name){
+	protected void setName(String name){
 		this.name = name;
 	}
 	@Override

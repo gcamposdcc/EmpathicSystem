@@ -1,15 +1,49 @@
 function DataRuleMediator(dataMan)
 {
+	ObserverContext.call(this);
 	ObservableContext.call(this);
 	var dataManager = dataMan;
 	this.get =
 		function (ds_name, option, args)
 		{
+			console.log("mediating select: rule " + option.getHandlerName() + ",ds " + ds_name);
 			var ds = dataManager.get(ds_name);
+			var eventName = 'select:ds:' + ds_name + ':' + option.getHandlerName();
 			if (ds != null) {
-				return ds.get(option, args);
+				ds.addObserver(this);
+				var callback = function (source, value)
+				{
+					this.removeHandler(eventName);
+					this.notifyAll(eventName, source, value);
+					ds.removeObserver(this);
+				}
+				this.addHandler(eventName, callback);
+				option.callbackHandler = this;
+				ds.sel(option, args);
 			} else {
-				return {};
+				this.notifyAll(eventName, null, {});
+			}
+		}
+
+	this.count =
+		function (ds_name, option, args)
+		{
+			console.log("mediating count: rule " + option.getHandlerName() + ",ds " + ds_name);
+			var ds = dataManager.get(ds_name);
+			var eventName = 'count:ds:' + ds_name + ':' + option.getHandlerName();
+			if (ds != null) {
+				ds.addObserver(this);
+				var callback = function (source, value)
+				{
+					this.removeHandler(eventName);
+					this.notifyAll(eventName, source, value);
+					ds.removeObserver(this);
+				}
+				this.addHandler(eventName, callback);
+				option.callbackHandler = this;
+				ds.count(option, args);
+			} else {
+				this.notifyAll(eventName, null, {});
 			}
 		}
 }
@@ -23,10 +57,8 @@ function RuleManager()
 		function (dataMed)
 		{
 			dataMediator = dataMed;
-			var rules = items();
-			for (key in rules)
-			{
-				rules[key].dataMediator.set(dataMed);
+			for (key in this.getItems()) {
+				this.getItems()[key].setDataMediator(dataMed);
 			}
 		}
 	this.getDataMediator = function () { return dataMediator; }
@@ -40,58 +72,34 @@ RuleManager.prototype.put =
 			return;
 		} else if (value == null) {
 			console.log('value cannot be null');
+			return;
 		} else if (getObjectClass(key) != 'String') {
 			console.log('key must be a String');
 			return;
 		}
-		getItems()[key] = value;
-		getNames().push(key);
-		value.dataMediator.set(this.dataMediator.get());
+		console.log("registering rule '" + key + "'");
+		this.getItems()[key] = value;
+		this.getNames().push(key);
+		value.setDataMediator(this.getDataMediator());
 	}
 
-function EmpathicRule(ename)
+function EmpathicMessageContext()
 {
-	ObservableContext.call(this);
-	ObserverContext.call(this);
-	var dataMediator = null;
-	this.getDataMediator = function () { return dataMediator; }
-	this.setDataMediator = function (dataMed) { dataMediator = dataMed; }
-	this.getName = function () { return ename; }
-	this.get = 
-		function (option, args)
-		{
-			if (dataMediator.get() != null){
-				dataMediator.get().get(option, args);
-			} else {
-				return {};
-			}
-		}
+	FlyweightFactory.call(this);
+	this.rulename = "";
+	this.setRulename = function (n) { this.rulename = n; }
+	this.getRulename = function () { return this.rulename; }
 }
-
-EmpathicRule.prototype.isSelectable = function () { return true; }
-EmpathicRule.prototype.canEvaluate = function (args) { return true; }
-EmpathicRule.prototype.evaluate = function (args) { return 0.0; }
-EmpathicRule.prototype.getMessage =
-	function ()
-	{
-		var mess = new EmpathicMessage();
-		mess.setRulename(this.getName());
-		return mess;
-	}
-EmpathicRule.prototype.getParams =
-	function ()
-	{
-		return {};
-	}
+EmpathicMessageContext.subclassOf(FlyweightFactory);
 
 function EmpathicMessage()
 {
-	var context = new EmpathicMessageContext();
-	this.getContext = function () { return context; }
+	this.context = new EmpathicMessageContext();
+	this.getContext = function () { return this.context; }
 	var unfilteredText = "This is the default EmpathicMessage text";
 	this.getUnfilteredText = function () { return unfilteredText; }
 	this.setUnfilteredText = function (utext) { unfilteredText = utext; }
-	this.getText = function () { return filterText(this.getUnfilteredText()); }
+	this.getText = function () { return this.filterText(this.getUnfilteredText()); }
 	var values = {};
 	this.filterText = 
 		function () 
@@ -109,15 +117,74 @@ function EmpathicMessage()
 			values[key] = value;
 		}
 	this.clearValues = function () { values = {} }
+	this.setRulename = function (n) { this.getContext().setRulename(n); }
+	this.getRulename = function () { this.getContext().getRulename(); }
 }
-EmpathicMessage.prototype.setRulename = function (n) { this.getContext().setRulename(n); }
-EmpathicMessage.prototype.getRulename = function () { this.getContext().getRulename(); }
 
-function EmpathicMessageContext()
+function EmpathicRule(ename)
 {
-	this.rulename = "";
+	ObservableContext.call(this);
+	ObserverContext.call(this);
+	var dataMediator = null;
+	this.result = 0;
+	this.getDataMediator = function () { 
+		console.log(dataMediator);
+		return dataMediator; 
+	}
+	this.setDataMediator = function (dataMed) { dataMediator = dataMed; }
+	this.getName = function () { return ename; }
+	this.get = 
+		function (ds_name, option, args, callback)
+		{
+			var eventName = 'select:ds:'+ds_name;
+			var c =
+				function(source, value){
+					this.removeHandler(eventName);
+					callback.call(this, source, value);
+				}
+			this.addHandler(eventName, c);
+			this.getDataMediator().get(option, args);
+		}
+	var mess = new EmpathicMessage();
+	mess.setRulename(this.getName());
+	this.getMessage = function () { return mess; }
 }
-EmpathicMessageContext.prototype.setRulename = function (n) { this.rulename = n; }
-EmpathicMessageContext.prototype.getRulename = function () { return this.rulename; }
-EmpathicMessageContext.subclassOf(FlyweightFactory);
+
+EmpathicRule.prototype.isSelectable = 
+	function () 
+	{ 
+		this.notifyAll('selectable:rule:'+this.getName(), this, true);
+		return true; 
+	}
+EmpathicRule.prototype.canEvaluate = 
+	function (args) 
+	{
+		this.notifyAll('evaluable:rule:'+this.getName(), this, true);
+		return true; 
+	}
+EmpathicRule.prototype.evaluate = 
+	function (args) 
+	{
+		this.notifyAll('evaluate:rule:'+this.getName(), this, this.result);
+		return this.result; 
+	}
+EmpathicRule.prototype.getParams =
+	function ()
+	{
+		return {};
+	}
+EmpathicRule.prototype.sel =
+	function (ds_name, option, args, handler)
+	{
+		this.getDataMediator().addObserver(this);
+		this.addHandler('select:ds:'+ds_name+':'+this.getName(), handler);
+		this.getDataMediator().count(ds_name, option, args);
+	}
+EmpathicRule.prototype.count =
+	function (ds_name, option, args, handler)
+	{
+		this.getDataMediator().addObserver(this);
+		this.addHandler('count:ds:'+ds_name+':'+this.getName(), handler);
+		this.getDataMediator().count(ds_name, option, args);
+	}
 

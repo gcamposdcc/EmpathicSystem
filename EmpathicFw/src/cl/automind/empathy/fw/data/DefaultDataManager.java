@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.UnmatchingClassException;
@@ -36,7 +37,7 @@ public class DefaultDataManager extends AbstractDataManager{
 	}
 	@Override
 	public IDataSource<?> getDataSource(String dataSourceName) {
-		System.out.println("GettingSource::" + dataSourceName + "::UsingNoTemplate");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("GettingSource::" + dataSourceName + "::UsingNoTemplate");
 		return getDataSources().createElement(dataSourceName);
 	}
 	@SuppressWarnings("unchecked")
@@ -44,7 +45,7 @@ public class DefaultDataManager extends AbstractDataManager{
 	public <T> IDataSource<T> getDataSource(String dataSourceName, T template) throws UnmatchingClassException{
 		IDataSource<T> source = null;
 		try{
-			System.out.println("GettingSource::" + dataSourceName + "::" +template.getClass());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("GettingSource::" + dataSourceName + "::" +template.getClass());
 			IDataSource<?> genericSource = getDataSources().createElement(dataSourceName);
 			if (genericSource != null){
 				if (!genericSource.getTemplate().getClass().isAssignableFrom(template.getClass())){
@@ -55,7 +56,7 @@ public class DefaultDataManager extends AbstractDataManager{
 		} catch (NullPointerException e){
 			e.printStackTrace();
 			if (createSpaceIfNotFound()){
-				System.out.println("AutoCreatingSource::" + dataSourceName + "::" +template.getClass());
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AutoCreatingSource::" + dataSourceName + "::" +template.getClass());
 				source = createDataSource(dataSourceName, template);
 			}
 		} catch (ClassCastException e){
@@ -70,7 +71,7 @@ public class DefaultDataManager extends AbstractDataManager{
 	@Override
 	public <T> boolean registerDataSource(String dataSourceName, IDataSource<T> dataSource) {
 		if (!getDataSources().elementRegistered(dataSourceName)){
-			System.out.println("RegisteringSource::" + dataSourceName + "::" +dataSource);
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("RegisteringSource::" + dataSourceName + "::" +dataSource);
 			getDataSources().registerElement(dataSourceName, dataSource);
 			getDataSourcesNames().add(dataSourceName);
 			getDataSourcesClasses().registerElement(dataSourceName, dataSource.getTemplate().getClass());
@@ -88,7 +89,7 @@ public class DefaultDataManager extends AbstractDataManager{
 				return null;
 			}
 		}
-		IDataSource<T> source = new MemoryDataSource<T>(true, template);
+		IDataSource<T> source = new MemoryDataSource<T>(template);
 		getDataSources().registerElement(dataSourceName, source);
 		getDataSourcesNames().add(dataSourceName);
 		getDataSourcesClasses().registerElement(dataSourceName, template.getClass());

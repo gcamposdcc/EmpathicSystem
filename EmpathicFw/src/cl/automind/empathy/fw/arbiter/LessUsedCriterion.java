@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
-import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.IArbiter;
+import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
 
@@ -21,9 +22,9 @@ public class LessUsedCriterion implements IArbiterCriterion{
 		int current = 0;
 		List<String> l_rulenames = new ArrayList<String>();
 		for (String rulename: rulenames){
-			if (rulename.equals(EmptyRule.instance.getName())) continue;
+			if (rulename.equals(EmptyRule.INSTANCE.getName())) continue;
 			current = arbiter.timesSelected(rulename, Integer.MAX_VALUE);
-			System.out.println("Rule::"+rulename+"::Used::"+current);
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::"+rulename+"::Used::"+current);
 			if (current < min){
 				min = current;
 				l_rulenames.clear();
@@ -32,13 +33,13 @@ public class LessUsedCriterion implements IArbiterCriterion{
 				l_rulenames.add(rulename);
 			}
 		}
-		System.out.println("LessUsedRules");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("LessUsedRules");
 		for (String rulename: rulenames){
-			System.out.println("-- "+rulename);
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("-- "+rulename);
 		}
 		switch(l_rulenames.size()){
 		case 0:
-			return EmptyRule.instance.getName();
+			return EmptyRule.INSTANCE.getName();
 		case 1:
 			return l_rulenames.get(0);
 		default:

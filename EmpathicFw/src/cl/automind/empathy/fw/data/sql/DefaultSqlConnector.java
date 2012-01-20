@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 import cl.automind.empathy.data.sql.ISqlConnector;
@@ -16,17 +17,17 @@ import cl.automind.empathy.data.sql.ISqlConnector;
 public class DefaultSqlConnector implements ISqlConnector{
 
 	private final ISqlConnectionInfo connectionInfo;
-	private volatile Driver driver;
-	private volatile Connection connection;
+	private Driver driver;
+	private Connection connection;
 	public DefaultSqlConnector(ISqlConnectionInfo connectionInfo){
 		this.connectionInfo = connectionInfo;
 		try {
-			setDriver(DriverManager.getDriver(getDriverString()));
+			this.driver = DriverManager.getDriver(getDriverString());
 		} catch (SQLException e){
 			try {
-				System.out.println("Loading::"+getConnectionInfo().getDriverClassname());
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Loading::"+getConnectionInfo().getDriverClassname());
 				Class.forName(getConnectionInfo().getDriverClassname()).newInstance();
-				setDriver(DriverManager.getDriver(getDriverString()));
+				this.driver = DriverManager.getDriver(getDriverString());
 			} catch (ClassNotFoundException se) {
 				e.printStackTrace();
 			} catch (SQLException se) {
@@ -50,7 +51,7 @@ public class DefaultSqlConnector implements ISqlConnector{
 	}
 	@Override
 	public void openConnection() {
-		System.out.println("OpeningConnection");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("OpeningConnection");
 		try {
 			if (isConnected()) closeConnection();
 			String args = "";
@@ -61,8 +62,8 @@ public class DefaultSqlConnector implements ISqlConnector{
 				args = args.substring(0, args.length()-1);
 				args = "?" + args;
 			}
-			System.out.println(getFullConnectionString());
-			System.out.println(getConnectionInfo().getUsername()+"::"+getConnectionInfo().getPassword());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(getFullConnectionString());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(getConnectionInfo().getUsername()+"::"+getConnectionInfo().getPassword());
 			setConnection(DriverManager.getConnection(
 					getFullConnectionString(), getConnectionInfo().getUsername(), getConnectionInfo().getPassword()));
 		} catch (SQLException e) {
@@ -81,10 +82,10 @@ public class DefaultSqlConnector implements ISqlConnector{
 			}
 		}
 	}
-	public String getDriverString(){
+	public final String getDriverString(){
 		return "jdbc:"+getConnectionInfo().getDriver()+":";
 	}
-	public String getUrlString(){
+	public final String getUrlString(){
 		return
 			getConnectionInfo().getHostname() +
 			(Strings.isNullOrEmpty(getConnectionInfo().getPort()) ? "" : ":"+getConnectionInfo().getPort() + "/")
@@ -104,7 +105,9 @@ public class DefaultSqlConnector implements ISqlConnector{
 	public Statement getStatement(){
 		try {
 			Connection conn = getConnection();
-			if (conn == null) System.err.println("Caca");
+			if (conn == null) {
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning("Connection in null");
+			}
 			return getConnection().createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,7 +119,9 @@ public class DefaultSqlConnector implements ISqlConnector{
 	public PreparedStatement preparedStatement(String statement) {
 		try {
 			Connection conn = getConnection();
-			if (conn == null) System.err.println("Caca");
+			if (conn == null) {
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning("Connection is null");
+			}
 			return getConnection().prepareStatement(statement);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -12,6 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
@@ -32,14 +33,14 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 	private String insertUrl;
 	private final ExecutorService executorService;
 	public AbstractWebDataSource(T template){
-		setObservers(new CopyOnWriteArrayList<IObserver<IDataSource<T>>>());
+		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
 		this.template = template;
 		this.executorService = Executors.newSingleThreadExecutor();
 		// METADATA
 		Class<?> thisClass = getClass();
 		if (thisClass.isAnonymousClass()){
 			thisClass = thisClass.getSuperclass();
-			System.out.println("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
 		}
 		WebMetadata metadata = thisClass.getAnnotation(WebMetadata.class);
 		if (metadata != null){
@@ -47,7 +48,7 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 					thisClass.getSimpleName().replaceAll("DataSource", "")
 					: metadata.name().trim();
 			this.useSameUrl = metadata.useSameUrl();
-			if (useSameUrl()){
+			if (metadata.useSameUrl()){
 				this.insertUrl = metadata.defaultUrl();
 				this.deleteUrl = metadata.defaultUrl();
 				this.selectUrl = metadata.defaultUrl();
@@ -142,18 +143,11 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public boolean validId(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ClearMethodNotImplemented");
 	}
 
 	@Override
 	public int count() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

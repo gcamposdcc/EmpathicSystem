@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="cl.automind.empathy.data.sql.ISqlConnector"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.fwdesk.data.sql.HsqldbDataSource"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.fwdesk.data.sql.HsqldbConnector"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.EmpathicKernel"/>
@@ -39,7 +38,6 @@
 <fullyQualifiedTypeName name="cl.automind.empathy.data.sql.SqlNamedValuePair"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.testquery.EmpathyMetadata"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.data.QueryOption"/>
-<fullyQualifiedTypeName name="cl.automind.empathy.data.sql.ComparisonType"/>
 <fullyQualifiedTypeName name="cl.automind.vote.android.application.AppContext"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="gcampos.dev.util.Strings"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="cl.automind.empathy.data.QueryCriterion"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.data.NamedValuePair"/>
 <fullyQualifiedTypeName name="cl.automind.empathy.data.IQueryOption.Type"/>
+<fullyQualifiedTypeName name="cl.automind.empathy.data.sql.ComparisonType"/>
+<fullyQualifiedTypeName name="java.util.logging.Logger"/>
 </qualifiedTypeNameHistroy>

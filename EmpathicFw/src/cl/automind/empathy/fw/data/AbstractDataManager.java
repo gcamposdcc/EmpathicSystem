@@ -5,6 +5,7 @@ import gcampos.dev.patterns.behavioral.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
@@ -35,8 +36,7 @@ public abstract class AbstractDataManager implements IDataManager{
 		} catch (Exception e){
 			return null;
 		}
-		if (source == null) return null;
-		return source.suscribe(observer);
+		return source != null ? source.suscribe(observer) : null;
 	}
 
 	@Override
@@ -45,11 +45,11 @@ public abstract class AbstractDataManager implements IDataManager{
 		try {
 			source = getDataSource(dataSourceName, value);
 			if (source == null) {
-				System.err.println("Source::" + dataSourceName + "NotFound;Returning invalid id = -1");
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning("Source::" + dataSourceName + "NotFound;Returning invalid id = -1");
 			}
 			return source.insert(value);
 		} catch (UnmatchingClassException e) {
-			System.err.println("Returning invalid id = -1");
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning("Returning invalid id = -1");
 		}
 		return -1;
 	}
@@ -60,7 +60,7 @@ public abstract class AbstractDataManager implements IDataManager{
 			source = getDataSource(dataSourceName, value);
 			return source.update(value, option, criteria);
 		} catch (UnmatchingClassException e) {
-			System.err.println("Returning invalid id = -1");
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning("Returning invalid id = -1");
 		}
 		return -1;
 	}
@@ -75,9 +75,9 @@ public abstract class AbstractDataManager implements IDataManager{
 		IDataSource<T> source;
 		try {
 			source = getDataSource(dataSourceName, template);
-			return source.select(QueryOptions.All);
+			return source.select(QueryOptions.ALL);
 		} catch (UnmatchingClassException e) {
-			System.err.println("Returning empty list");
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning("Returning empty list");
 		}
 		return new ArrayList<T>();
 	}

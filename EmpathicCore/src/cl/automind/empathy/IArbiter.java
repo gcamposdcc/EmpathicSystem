@@ -15,7 +15,7 @@ public interface IArbiter {
      * The information for each rule is mapped using the rule name as key.
      * @return a map with rule name as key and rule usage data as value.
      */
-    public abstract Map<String, RuleUsageData> getAllRuleUsageData();
+    Map<String, RuleUsageData> getAllRuleUsageData();
 
     /**
      * Gets the {@link RuleUsageData} associated with the rule with the name
@@ -24,7 +24,7 @@ public interface IArbiter {
      * @return The {@link RuleUsageData} associated to the rule. Returns
      * <i>null</i> if the rule doesn't exist.
      */
-    public abstract RuleUsageData getRuleUsageData(String rulename);
+    RuleUsageData getRuleUsageData(String rulename);
 
     /**
      * Gets a {@link List} containing the list of the names of the rules marked
@@ -32,21 +32,21 @@ public interface IArbiter {
      * encouraged to use a "first ocurrence elements go first" fashion.
      * @return a collection with the name of the rules used
      */
-    public abstract List<String> getRuleUsageList();
+    List<String> getRuleUsageList();
 
     /**
      * Gets the amount of different rules that have been marked as valid. As such,
      * repeated uses of the same rule are <b>not</b> be counted.
      * @return the number of different rules that have been marked as valid
      */
-    public abstract int getDifferentRulesUsedCount();
+    int getDifferentRulesUsedCount();
 
     /**
      * Gets the total amount of rules marked as valid. As such, repeated uses of the same
      * rule <b>are</b> counted.
      * @return the number of times that a rule has been marked as
      */
-    public abstract int getRuleTriggeredCount();
+    int getRuleTriggeredCount();
 
     /**
      * Gets the current valid rule, for doing this it first checks if the current
@@ -57,74 +57,74 @@ public interface IArbiter {
      * @return the current valid rule
      * @see AbstractRule
      */
-    public abstract IRule getValidRule();
+    IRule getValidRule();
 
     /**
      * Updates the current valid rule. It operates as a <i>Template Method</i>
      * chaining three other methods: {@code preUpdateValidRule()},
      * {@code updateValidRuleImpl()}, {@code postUpdateValidRule()}.
      */
-    public abstract void updateValidRule();
+    void updateValidRule();
 
     /**
      * This method is for handling before calling the {@link IArbiterCriterion}
      * and selecting the current valid rule.
      */
-    public abstract void preUpdateValidRule();
+    void preUpdateValidRule();
 
     /**
      * This method is for additional handling after the new valid rule
      * has been updated.
      */
-    public abstract void postUpdateValidRule();
+    void postUpdateValidRule();
 
     /**
      * Determines if the current valid rule needs to be updated
      * @return <b>true</b> if the current valid rule needs to be updated
      */
-    public abstract boolean needsUpdate();
+    boolean needsUpdate();
 
     /**
      * Accepts a criterion for selecting the next valid {@link IRule}
      * @param visitor
      * @return the rule to be used for the next Message
      */
-    public abstract IRule accept(IArbiterCriterion visitor);
+    IRule accept(IArbiterCriterion visitor);
     /**
      * Sets the current preferred {@link IArbiterCriterion} to
      * evaluate and priorize the {@link IRule}
      * @param criterion
      */
-    public abstract void setCriterion(IArbiterCriterion criterion);
+    void setCriterion(IArbiterCriterion criterion);
     /**
      * Gets the current preferred {@link IArbiterCriterion}
      * @return The current preferred {@link IArbiterCriterion}
      */
-    public abstract IArbiterCriterion getCriterion();
+    IArbiterCriterion getCriterion();
 
     /**
      * Gets the {@link IRule} of the specified name.
      * @param rulename The name of the {@link IRule} to be looked up.
      * @return
      */
-    public abstract IRule getRule(String rulename);
+    IRule getRule(String rulename);
     /**
      * Gets a {@link Set} of {@link String} containing the names of all the {@link IRule}
      * @return The names of all the rules
      */
-    public abstract Set<String> getAllRuleNames();
+    Set<String> getAllRuleNames();
     /**
      * Gets all the rules that match their evaluable criterion.
      * A rule is marked as evaluable when their {@code canEvaluate()} method returns true.
      * @return all rules that match their evaluable criterion
      */
-    public abstract List<String> getEvaluableRules();
+    List<String> getEvaluableRules();
     /**
      * Gets all the rules that match their selectable criterion.
      * A rule is marked as selectable when their {@code isSelectable()} method returns true.
      * @return all rules that match their selectable criterion
      */
-    public abstract List<String> getSelectableRules();
+    List<String> getSelectableRules();
     /**
      * Get the number of times a rule has been selected. The rule is looked up depending
      * on the specified rulename. A rule is selected after being returned by the
@@ -133,16 +133,16 @@ public interface IArbiter {
      * @param ifNotFound the value to be returned in case the rule isn't found
      * @return the number of times that the rule of name rulename has been selected
      */
-    public abstract int timesSelected(String rulename, int ifNotFound);
+    int timesSelected(String rulename, int ifNotFound);
     /**
-     * Sets the {@link EmpathicKernel} responsible for this arbiter.
+     * Sets the {@link AbstractEmpathicKernel} responsible for this arbiter.
      * @param empathicKernel the kernel
      */
-    public abstract void setEmpathicKernel(EmpathicKernel empathicKernel);
+    void setEmpathicKernel(AbstractEmpathicKernel empathicKernel);
     /**
-     * Gets the {@link EmpathicKernel} responsible for this arbiter.
+     * Gets the {@link AbstractEmpathicKernel} responsible for this arbiter.
      * @return
      */
-    abstract EmpathicKernel getEmpathicKernel();
+    AbstractEmpathicKernel getEmpathicKernel();
 
 }

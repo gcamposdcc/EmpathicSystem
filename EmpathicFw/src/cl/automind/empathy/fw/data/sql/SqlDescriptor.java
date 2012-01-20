@@ -13,9 +13,9 @@ public class SqlDescriptor {
 	private List<String> fieldNames;
 
 	public SqlDescriptor(){
-		setQueryPositionsMap(new HashMap<String, QueryDescriptor>());
-		setIdName("id");
-		setFieldNames(new ArrayList<String>());
+		this.queryDescriptorsMap = new HashMap<String, QueryDescriptor>();
+		this.idName = "id";
+		this.fieldNames = new ArrayList<String>();
 	}
 	public void addQuery(String queryName){
 		if (getQueryDescriptorsMap().containsKey(queryName)) return;
@@ -36,7 +36,7 @@ public class SqlDescriptor {
 		}
 		return Collections.emptyList();
 	}
-	private void setQueryPositionsMap(Map<String, QueryDescriptor> queryDescriptorsMap) {
+	protected void setQueryPositionsMap(Map<String, QueryDescriptor> queryDescriptorsMap) {
 		this.queryDescriptorsMap = queryDescriptorsMap;
 	}
 

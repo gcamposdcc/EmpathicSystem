@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target( {ElementType.TYPE , ElementType.LOCAL_VARIABLE})
+@Target(ElementType.TYPE)
 public @interface SqlMetadata {
 	public String name() default  "";
 	public NamedQueries queries() default @NamedQueries;

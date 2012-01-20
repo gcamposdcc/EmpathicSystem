@@ -7,15 +7,15 @@ import java.util.List;
 import cl.automind.empathy.data.IDataSource;
 
 public interface IWebDataSource<T> extends IDataSource<T> {
-	public void setDefaultUrl(String targetUrl);
-	public String getDefaultUrl();
-	public boolean useSameUrl();
-	public String getInsertUrl();
-	public String getSelectUrl();
-	public String getUpdateUrl();
-	public String getDeleteUrl();
-	public String toWebString(T value);
-	public T fromWebString(String value);
-	public List<T> listFromWebString(String value);
-	public IHttpClient getHttpClient();
+	void setDefaultUrl(String targetUrl);
+	String getDefaultUrl();
+	boolean useSameUrl();
+	String getInsertUrl();
+	String getSelectUrl();
+	String getUpdateUrl();
+	String getDeleteUrl();
+	String toWebString(T value);
+	T fromWebString(String value);
+	List<T> listFromWebString(String value);
+	IHttpClient getHttpClient();
 }

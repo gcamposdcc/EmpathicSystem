@@ -25,7 +25,7 @@ public class ScoreStreakRule extends AbstractRule {
 		int total = 0;
 		List<Score> scores = getAllInSource(TestDataManager.DS_SCORE, dummyScore);
 		for (int i = scores.size() - 1; i >= 0; i--){
-//			System.out.println("ScoreStreak::Score"+i+"::Value::"+scores.get(i).getValue());
+//			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ScoreStreak::Score"+i+"::Value::"+scores.get(i).getValue());
 			if (scores.get(i).getValue() > 0) total++;
 			else break;
 		}

@@ -6,7 +6,6 @@ public class KeyValuePair<K,V> {
 	private V value;
 
 	public KeyValuePair(K key, V value){
-		if (key == null) throw new NullPointerException();
 		this.key = key;
 		this.value = value;
 	}

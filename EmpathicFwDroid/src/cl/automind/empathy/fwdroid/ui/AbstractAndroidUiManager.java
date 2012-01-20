@@ -41,19 +41,13 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 	protected abstract String getUrl();
 
 	protected AbstractMessage.Context duplicateContext(AbstractMessage.Context context){
-		AbstractMessage.Context output =  new AbstractMessage.Context();
-		output.setCallingRuleName(context.getCallingRuleName());
-		for (Object data: context.getData()){
-			output.getData().add(data);
-		}
-		return output;
+		return context.duplicate();
 	}
 
 	protected void showEmpathicToast(Activity activity, AbstractMessage message){
 		final AbstractMessage.Context context = duplicateContext(message.getContext());
 		LayoutInflater inflater = activity.getLayoutInflater();
-		View layout = inflater.inflate(R.layout.empathic_toast,
-				(ViewGroup) activity.findViewById(R.id.toast_layout_root));
+		View layout = inflater.inflate(R.layout.empathic_toast, (ViewGroup) activity.findViewById(R.id.toast_layout_root));
 
 		ImageView image = (ImageView) layout.findViewById(R.id.emp_toast_image);
 		image.setImageResource(R.drawable.icon);
@@ -65,12 +59,9 @@ public abstract class AbstractAndroidUiManager extends AbstractUiManager{
 		toast.setDuration(Toast.LENGTH_LONG);
 		toast.setView(layout);
 		toast.show();
-		new CountDownTimer(9000, 1000)
-		{
-
+		new CountDownTimer(9000, 1000) {
 		    public void onTick(long millisUntilFinished) {toast.show();}
 		    public void onFinish() {toast.show();}
-
 		}.start();
 		registerMessageOcurrence(context, false, false, false);
 	}

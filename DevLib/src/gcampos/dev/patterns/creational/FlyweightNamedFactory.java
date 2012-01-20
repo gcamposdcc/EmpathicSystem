@@ -1,22 +1,23 @@
 package gcampos.dev.patterns.creational;
 
-import java.util.Map;
-
 import gcampos.dev.interfaces.structural.INamed;
+
+import java.util.Map;
+import java.util.logging.Logger;
 
 public abstract class FlyweightNamedFactory<T> implements NamedFactory<T>{
 	private Map<String, T> registry;
-	
+
 	public FlyweightNamedFactory(){
 		registry = initializeMap();
 	}
-	
+
 	public abstract Map<String, T> initializeMap();
-	
+
 	protected Map<String, T> getRegistry(){
 		return registry;
 	}
-	
+
 	@Override
 	public <TI extends INamed> T createElement(TI param) {
 		return isValidName(param)? getRegistry().get(param.getName()): null;
@@ -47,18 +48,18 @@ public abstract class FlyweightNamedFactory<T> implements NamedFactory<T>{
 	protected String fixName(String s){
 		return s.replace("\t", " ").replace("\n\r", " ").replace("\n", " ").replace(" ","_");
 	}
-	
+
 	public void printElements(){
 		for(Map.Entry<String, T> entry: getRegistry().entrySet()){
-			System.out.println("KEY::"+entry.getKey()+";;VALUE::+"+entry.getValue());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("KEY::"+entry.getKey()+";;VALUE::+"+entry.getValue());
 		}
 	}
-	
+
 	public boolean elementRegistered(String name){
 		return getRegistry().containsKey(name);
 	}
 	public boolean elementRegistered(INamed named){
 		return getRegistry().containsKey(named.getName());
 	}
-	
+
 }

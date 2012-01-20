@@ -27,10 +27,9 @@ public interface IDataSource<T> extends IObservable<IDataSource<T>>, INamed{
 	void clear();
 
 	// UTILS
-	boolean validId(int id);
 	int count();
 
-	public Type getType();
+	Type getType();
 
 	public enum Type{
 		Memory, Web, Sql

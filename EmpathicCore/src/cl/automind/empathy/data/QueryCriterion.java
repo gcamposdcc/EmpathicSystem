@@ -8,8 +8,8 @@ public class QueryCriterion<T> implements IQueryCriterion<T> {
 	public QueryCriterion(){ }
 
 	public QueryCriterion(T target, NamedValuePair<?>... params){
-		setTarget(target);
-		setParams(params);
+		this.target = target;
+		this.params = params;
 	}
 	@Override
 	public boolean apply() {
@@ -20,18 +20,6 @@ public class QueryCriterion<T> implements IQueryCriterion<T> {
 	public boolean apply(T target) {
 		return apply(target, getParams());
 	}
-//	@Override
-//	public boolean apply(T target, NamedValuePair<?> pair){
-//		return true;
-//	}
-//	@Override
-//	public boolean apply(T target, NamedValuePair<?> pair00, NamedValuePair<?> pair01){
-//		return true;
-//	}
-//	@Override
-//	public boolean apply(T target, NamedValuePair<?> pair00, NamedValuePair<?> pair01, NamedValuePair<?> pair02){
-//		return true;
-//	}
 	@Override
 	public boolean apply(T target, cl.automind.empathy.data.NamedValuePair<?>... params) {
 		return true;

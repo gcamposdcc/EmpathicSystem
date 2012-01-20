@@ -3,7 +3,7 @@ package cl.automind.empathy.test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import cl.automind.empathy.EmpathicPlugin;
+import cl.automind.empathy.AbstractEmpathicPlugin;
 import cl.automind.empathy.IArbiter;
 import cl.automind.empathy.IArbiterCriterion;
 import cl.automind.empathy.data.IDataManager;
@@ -18,7 +18,7 @@ import cl.automind.empathy.rule.IRule;
 import cl.automind.empathy.rule.IRuleManager;
 import cl.automind.empathy.ui.IUiManager;
 
-public class SamplePlugin extends EmpathicPlugin {
+public class SamplePlugin extends AbstractEmpathicPlugin {
 	private final IArbiter arbiter = new DefaultArbiter();
 	private final IArbiterCriterion criterion = new LessUsedCriterion();
 	private final IRuleManager ruleManager = new DefaultRuleManager();

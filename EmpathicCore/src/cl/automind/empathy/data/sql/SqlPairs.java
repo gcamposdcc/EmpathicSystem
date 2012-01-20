@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import cl.automind.empathy.data.Pairs;
 
-public class SqlPairs {
+public abstract class SqlPairs {
 
 	static public SqlNamedValuePair<Boolean> pair(String key, Boolean value){
 		return new SqlPairs.SqlBoolean(key, value);
@@ -67,21 +67,16 @@ public class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void set(PreparedStatement statement, int position) {
 			try {
-				s.setBoolean(position, getValue());
+				statement.setBoolean(position, getValue());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		@Override
 		public String toString(){
-			switch (getComparison()){
-			case Distinct:
-				return getKey() + " <> " + getValue() + " ";
-			default:
-				return getKey() + " = " + getValue() + " ";
-			}
+			return getKey() + (getComparison() == ComparisonType.Distinct ? " <> " : " = ")+ getValue() + " ";
 		}
 
 		@Override
@@ -101,9 +96,9 @@ public class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void set(PreparedStatement statement, int position) {
 			try {
-				s.setDate(position, getValue());
+				statement.setDate(position, getValue());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -125,9 +120,9 @@ public class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void set(PreparedStatement statement, int position) {
 			try {
-				s.setString(position, getValue());
+				statement.setString(position, getValue());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -135,20 +130,8 @@ public class SqlPairs {
 		@Override
 		public String toString(){
 			switch (getComparison()){
-			case Equal:
-				return getKey() + " LIKE " + "'" + getValue() + "'" + " ";
 			case Distinct:
 				return getKey() + " NOT LIKE " + "'" + getValue() + "'" + " ";
-			case Greater:
-				return getKey() + " LIKE " + "'" + getValue() + "'" + " ";
-			case GreaterOrEqual:
-				return getKey() + " LIKE " + "'" + getValue() + "'" + " ";
-			case Lesser:
-				return getKey() + " LIKE " + "'" + getValue() + "'" + " ";
-			case LesserOrEqual:
-				return getKey() + " LIKE " + "'" + getValue() + "'" + " ";
-			case ContainedIn:
-				return getKey() + " LIKE " + "'" + getValue() + "'" + " ";
 			case Contains:
 				return getKey() + " LIKE " + "'%" + getValue() + "%'" + " ";
 			case StartsWith:
@@ -176,9 +159,9 @@ public class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void set(PreparedStatement statement, int position) {
 			try {
-				s.setFloat(position, getValue());
+				statement.setFloat(position, getValue());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -200,9 +183,9 @@ public class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void set(PreparedStatement statement, int position) {
 			try {
-				s.setDouble(position, getValue());
+				statement.setDouble(position, getValue());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

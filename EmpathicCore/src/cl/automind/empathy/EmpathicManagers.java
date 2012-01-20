@@ -1,14 +1,13 @@
 package cl.automind.empathy;
 
 import cl.automind.empathy.data.IDataManager;
-import cl.automind.empathy.rule.AbstractRuleManager;
 import cl.automind.empathy.rule.IRuleManager;
 import cl.automind.empathy.ui.IUiManager;
 /**
  * This is class is responsible for the manager containment and
  * administration, as such it should provide the getters and setters
  * to access them and the methods required for their initialization.
- * This class should only be used paired with a {@link EmpathicKernel}
+ * This class should only be used paired with a {@link AbstractEmpathicKernel}
  * @author Guillermo
  */
 public final class EmpathicManagers {

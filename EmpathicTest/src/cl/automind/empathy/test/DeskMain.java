@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -48,6 +49,7 @@ public class DeskMain {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@SuppressWarnings("unchecked")
 			public void run() {
 				try {
 					DeskMain window = new DeskMain();
@@ -73,45 +75,45 @@ public class DeskMain {
 					final ISqlConnector psql_connector = new DefaultSqlConnector(psql);
 					IDataSource<SagdeMetadata> meta = new SagdeSqlDataSource(new SagdeMetadata(), psql_connector);
 					List<SagdeMetadata> sagdeMetadatas = ((ISqlDataSource<SagdeMetadata>) meta).executeNamedQuery("byIdEmpathy", SqlPairs.pair("idempathy",6));
-					System.out.println("ShowList:Begin");
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Begin");
 					for (SagdeMetadata sagdeMetadata: sagdeMetadatas){
-						System.out.println("ShowList:Pair:Begin");
-						System.out.println(sagdeMetadata);
+						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Pair:Begin");
+						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(""+sagdeMetadata);
 						Collection<SqlNamedValuePair<?>> pairs = ((ISqlDataSource<SagdeMetadata>) meta).toPairs(sagdeMetadata);
 						for (SqlNamedValuePair<?> pair: pairs){
-							System.out.println("Pair::" + pair);
+							Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Pair::" + pair);
 						}
-						System.out.println("ShowList:Pair:End");
+						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Pair:End");
 					}
-					System.out.println("ShowList:End");
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:End");
 //					for (SagdeMetadata sagdeMetadata: sagdeMetadatas){
-//						System.out.println("Inserting::" + meta.insert(sagdeMetadata));
+//						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Inserting::" + meta.insert(sagdeMetadata));
 //					}
 
 //					List<SagdeMetadata> metadatas = meta.select(QueryOption.All);
 //					for (SagdeMetadata sagdeMetadata: metadatas){
-//						System.out.println("ShowList:Pair:Begin");
-//						System.out.println(sagdeMetadata);
+//						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Pair:Begin");
+//						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(sagdeMetadata);
 //						Collection<SqlNamedValuePair<?>> pairs = ((ISqlDataSource<SagdeMetadata>) meta).toPairs(sagdeMetadata);
 //						for (SqlNamedValuePair<?> pair: pairs){
-//							System.out.println("Pair::" + pair);
+//							Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Pair::" + pair);
 //						}
-//						System.out.println("ShowList:Pair:End");
+//						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Pair:End");
 //					}
 
 					IDataSource<EmpathyMetadata> empathySource = new EmpathySqlDataSource(new EmpathyMetadata(), psql_connector);
 
-					List<EmpathyMetadata> empathyMetadatas = empathySource.select(QueryOptions.All);
+					List<EmpathyMetadata> empathyMetadatas = empathySource.select(QueryOptions.ALL);
 
 					for (EmpathyMetadata empathyMetadata: empathyMetadatas){
-						System.out.println("ShowList:Pair:Begin");
-						System.out.println(empathyMetadata);
+						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Pair:Begin");
+						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(""+empathyMetadata);
 						Collection<SqlNamedValuePair<?>> pairs
 							= ((ISqlDataSource<EmpathyMetadata>) empathySource).toPairs(empathyMetadata);
 						for (SqlNamedValuePair<?> pair: pairs){
-							System.out.println("Pair::" + pair);
+							Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Pair::" + pair);
 						}
-						System.out.println("ShowList:Pair:End");
+						Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ShowList:Pair:End");
 					}
 					Date now = new Date(Calendar.getInstance().getTimeInMillis());
 					EmpathyMetadata empathy = new EmpathyMetadata();
@@ -123,8 +125,8 @@ public class DeskMain {
 						dummy.setEvaluated(i%2 == 1);
 						inserts.add(dummy);
 					}
-					System.out.println("Inserting:Empathy:" + empathySource.insert(inserts));
-					System.out.println("Inserting:Empathy:" + empathySource.insert(empathy));
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Inserting:Empathy:" + empathySource.insert(inserts));
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Inserting:Empathy:" + empathySource.insert(empathy));
 					empathySource.delete(new QueryOption(IQueryOption.Type.Filter),
 							new QueryCriterion<EmpathyMetadata>(null ,SqlPairs.pair("id", 33, ComparisonType.GreaterOrEqual)));
 					EmpathyMetadata emp = new EmpathyMetadata();
@@ -132,7 +134,7 @@ public class DeskMain {
 					emp.setAnswered(true);
 					emp.setLiked(true);
 					emp.setCreatedAt(now);
-					empathySource.update(emp, QueryOptions.All);
+					empathySource.update(emp, QueryOptions.ALL);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -202,7 +204,7 @@ public class DeskMain {
 		JButton btnReset = new JButton("reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("NotImplemented");
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("NotImplemented");
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);

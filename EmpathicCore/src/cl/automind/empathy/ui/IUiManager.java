@@ -7,18 +7,18 @@ import cl.automind.empathy.feedback.AbstractMessage;
 
 public interface IUiManager {
 
-	public abstract void displayMessage(AbstractMessage message);
+	void displayMessage(AbstractMessage message);
 
-	public abstract void hideCurrentMessage();
+	void hideCurrentMessage();
 
-	public abstract void registerEmotion(String emotionName, AbstractEmotion emotion);
+	void registerEmotion(String emotionName, AbstractEmotion emotion);
 
-	public abstract AbstractEmotion getEmotion(String emotionName);
+	AbstractEmotion getEmotion(String emotionName);
 
-	public abstract Set<String> getAllEmotionnames();
+	Set<String> getAllEmotionnames();
 
-	public abstract void printElements();
+	void printElements();
 
-	public void registerMessageOcurrence(AbstractMessage.Context context, boolean evaluated, boolean answered, boolean liked);
+	void registerMessageOcurrence(AbstractMessage.Context context, boolean evaluated, boolean answered, boolean liked);
 
 }

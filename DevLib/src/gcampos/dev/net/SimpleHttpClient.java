@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 
@@ -26,14 +27,15 @@ public class SimpleHttpClient extends AbstractHttpClient{
             // Send the request
             URL url = new URL(getUrl()+getRequestParamString());
             URLConnection conn = url.openConnection();
-        	System.out.println(conn.getURL());
+        	Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(""+conn.getURL());
             conn.connect();
 
             Map<String, List<String>> headers = conn.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : headers.entrySet()){
-            	System.out.print("Header::"+entry.getKey()+" -> ");
-            	for(String s : entry.getValue()) System.out.print(s+";");
-            	System.out.println();
+            	String log = "";
+            	log += "Header::"+entry.getKey()+" -> ";
+            	for(String s : entry.getValue()) log += s+";";
+            	Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(log);
             }
 
             // Get the response
@@ -42,13 +44,13 @@ public class SimpleHttpClient extends AbstractHttpClient{
             String line;
             while ((line = reader.readLine()) != null) {
                 answer.append(line);
-                System.out.println("NewResponseLine::"+line);
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("NewResponseLine::"+line);
             }
             reader.close();
 
             // Output the response
             setResponse("Response::"+answer.toString());
-            System.out.println(answer.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(answer.toString());
             return answer.toString();
         } catch (MalformedURLException ex) {
             ex.printStackTrace();

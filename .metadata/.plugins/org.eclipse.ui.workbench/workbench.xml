@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="24" version="2.0">
+<workbench progressCount="25" version="2.0">
 <workbenchAdvisor/>
-<window height="728" maximized="true" width="960" x="296" y="23">
+<window height="728" maximized="true" width="960" x="-1391" y="-23">
 <fastViewData fastViewLocation="1024">
-<orientation position="512" view="com.android.ide.eclipse.ddms.views.LogCatView"/>
 <orientation position="512" view="net.sourceforge.metrics.ui.MetricsView"/>
+<orientation position="512" view="net.sourceforge.pmd.eclipse.ui.views.CPDView"/>
 <orientation position="512" view="org.eclipse.debug.ui.MemoryView"/>
-<orientation position="512" view="org.eclipse.debug.ui.RegisterView"/>
 <orientation position="512" view="com.android.ide.eclipse.ddms.views.DeviceView"/>
 <orientation position="512" view="org.eclipse.debug.ui.DebugView"/>
 <orientation position="512" view="com.android.ide.eclipse.ddms.views.ThreadView"/>
+<orientation position="512" view="com.qasystems.qstudio.java.integration.eclipse.QStudioView"/>
 <orientation position="512" view="net.sourceforge.metrics.ui.layeredpackagegraph.LayeredPackageTableView"/>
 <orientation position="512" view="org.eclipse.jdt.debug.ui.DisplayView"/>
 <orientation position="512" view="org.eclipse.ui.views.TaskList"/>
+<orientation position="512" view="com.android.ide.eclipse.ddms.views.LogCatView"/>
+<orientation position="512" view="net.sourceforge.pmd.eclipse.ui.views.violationOutline"/>
+<orientation position="512" view="net.sourceforge.pmd.eclipse.ui.views.violationOverview"/>
+<orientation position="512" view="org.eclipse.debug.ui.RegisterView"/>
 </fastViewData>
 <perspectiveBar>
-<itemSize x="235"/>
+<itemSize x="294"/>
 </perspectiveBar>
 <coolbarLayout locked="0">
 <coolItem id="group.file" itemType="typeGroupMarker"/>
@@ -51,30 +55,35 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractWebDataSource.java" partName="AbstractWebDataSource.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java" title="AbstractWebDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6386" selectionTopPixel="3565"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DefaultRuleManager.java" partName="DefaultRuleManager.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicFw/src/cl/automind/empathy/fw/rule/DefaultRuleManager.java" title="DefaultRuleManager.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/rule/DefaultRuleManager.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicFw/src/cl/automind/empathy/fw/rule/DefaultRuleManager.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="88" selectionTopPixel="0"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRule.java" partName="AbstractRule.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java" title="AbstractRule.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="3412"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRuleManager.java" partName="AbstractRuleManager.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicFw/src/cl/automind/empathy/fw/rule/AbstractRuleManager.java" title="AbstractRuleManager.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/rule/AbstractRuleManager.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicFw/src/cl/automind/empathy/fw/rule/AbstractRuleManager.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="19" selectionOffset="383" selectionTopPixel="119"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RandomSelectionCriterion.java" partName="RandomSelectionCriterion.java" path="C:/Users/Guillermo/workspace/memoria/EmpathicFw/src/cl/automind/empathy/fw/arbiter/RandomSelectionCriterion.java" title="RandomSelectionCriterion.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/arbiter/RandomSelectionCriterion.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/RandomSelectionCriterion.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="396" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
 <view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Type Hierarchy">
 <viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
 </view>
-<view id="net.sourceforge.metrics.ui.MetricsView" partName="Metrics View">
+<view id="net.sourceforge.metrics.ui.MetricsView" partName="Metrics - IArbiter.java">
 <viewState average="50" description="270" max="60" method="150" path="300" value="50" variance="60"/>
 </view>
 <view id="org.eclipse.search.ui.views.SearchView" partName="Search">
 <viewState isPinned="false">
-<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
 <view IMemento.internal.id="org.eclipse.search.text.FileSearchResultPage" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2" org.eclipse.search.resultpage.limit="1000" org.eclipse.search.resultpage.sorting="2"/>
+<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
 </viewState>
 </view>
 <view id="org.eclipse.jdt.callhierarchy.view" partName="Call Hierarchy">
@@ -89,7 +98,7 @@
 <view id="de.loskutov.eclipse.jdepend.views.DependencyView" partName="Dependencies">
 <viewState/>
 </view>
-<view id="net.sourceforge.metrics.ui.layeredpackagegraph.LayeredPackageTableView" partName="Layered Package Table View">
+<view id="net.sourceforge.metrics.ui.layeredpackagegraph.LayeredPackageTableView" partName="Layers - IArbiter.java">
 <viewState dependencies="1250" description="70" value="250"/>
 </view>
 <view id="org.eclipse.ui.views.TaskList" partName="Tasks">
@@ -107,20 +116,29 @@
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
+<view id="net.sourceforge.pmd.eclipse.ui.views.violationOutline" partName="Violations Outline">
+<viewState/>
+</view>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView" partName="LogCat">
 <viewState/>
 </view>
+<view id="net.sourceforge.pmd.eclipse.ui.views.violationOverview" partName="Violations Overview">
+<viewState/>
+</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
-<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.resourceField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
 <category IMemento.internal.id="Warnings (100 of 161 items)"/>
+<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Errors"/>
 </expanded>
-<columnWidths org.eclipse.ui.ide.locationField="64" org.eclipse.ui.ide.markerType="94" org.eclipse.ui.ide.pathField="124" org.eclipse.ui.ide.resourceField="94" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
+<columnWidths org.eclipse.ui.ide.locationField="64" org.eclipse.ui.ide.markerType="94" org.eclipse.ui.ide.pathField="124" org.eclipse.ui.ide.resourceField="237" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
+<DESCENDING_FIELDS IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
 </view>
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
@@ -242,23 +260,32 @@
 <perspective_action id="com.android.ide.eclipse.hierarchyviewer.TreeViewPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.ui.views.ProblemView"/>
-<view id="org.eclipse.jdt.ui.JavadocView"/>
-<view id="org.eclipse.jdt.ui.SourceView"/>
-<view id="org.eclipse.ui.console.ConsoleView"/>
-<view id="org.eclipse.search.ui.views.SearchView"/>
-<view id="org.eclipse.jdt.callhierarchy.view"/>
-<view id="org.eclipse.ui.views.TaskList"/>
-<view id="org.eclipse.debug.ui.DebugView"/>
-<view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
 <view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <view id="org.eclipse.jdt.ui.TypeHierarchy"/>
-<view id="org.eclipse.ui.views.ContentOutline"/>
 <fastViews>
-<view id="net.sourceforge.metrics.ui.MetricsView" ratio="0.4064801"/>
-<view id="net.sourceforge.metrics.ui.layeredpackagegraph.LayeredPackageTableView" ratio="0.29970545"/>
+<view id="net.sourceforge.metrics.ui.MetricsView" ratio="0.40638074"/>
+<view id="net.sourceforge.metrics.ui.layeredpackagegraph.LayeredPackageTableView" ratio="0.2996862"/>
 </fastViews>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="1024" id="bottom" orientation="256" selectedTabId="org.eclipse.ui.views.ProblemView" style="0">
+<fastViews>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.JavadocView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.SourceView" ratio="0.3"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.3"/>
+<view id="org.eclipse.search.ui.views.SearchView" ratio="0.3"/>
+<view id="org.eclipse.jdt.callhierarchy.view" ratio="0.3"/>
+<view id="org.eclipse.ui.views.TaskList" ratio="0.3"/>
+<view id="org.eclipse.debug.ui.DebugView" ratio="0.3"/>
+<view id="com.android.ide.eclipse.ddms.views.LogCatView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="right" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="0">
+<fastViews>
+<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
@@ -285,31 +312,21 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.21845019" ratioLeft="296" ratioRight="1059" relationship="2" relative="left"/>
-<info folder="true" part="bottom" ratio="0.8048387" ratioLeft="499" ratioRight="121" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
-<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
-<page content="org.eclipse.jdt.callhierarchy.view" label="Call Hierarchy"/>
-<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
-<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
-<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
+<info folder="true" part="bottom" ratio="0.42596567" ratioLeft="397" ratioRight="535" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
+<page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.callhierarchy.view" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.DebugView" label="LabelNotFound"/>
+<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
 <page content="net.sourceforge.metrics.ui.DependencyGraphView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-<part id="5"/>
-<part id="6"/>
-<part id="7"/>
-<part id="8"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@9ffb18" ratio="0.7869318" ratioLeft="831" ratioRight="225" relationship="2" relative="org.eclipse.ui.editorss">
@@ -319,13 +336,11 @@
 </folder>
 </info>
 <info folder="true" part="right" ratio="0.4989011" ratioLeft="227" ratioRight="228" relationship="4" relative="org.eclipse.ui.internal.ViewStack@9ffb18">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.egit.ui.RepositoriesView" ratio="0.5996705" ratioLeft="364" ratioRight="243" relationship="4" relative="left"/>
@@ -371,27 +386,40 @@
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="de.loskutov.eclipse.jdepend.views.PackageTreeView"/>
 <fastViewBars/>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="left">&#x0A;<folder activePageID="de.loskutov.eclipse.jdepend.views.PackageTreeView" appearance="2" expanded="2">&#x0A;<page content="de.loskutov.eclipse.jdepend.views.PackageTreeView" label="Packages"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<layout>
+<mainWindow>
+<info folder="true" part="left">
+<folder activePageID="de.loskutov.eclipse.jdepend.views.PackageTreeView" appearance="2" expanded="2">
+<page content="de.loskutov.eclipse.jdepend.views.PackageTreeView" label="Packages"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="left">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="left">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.9497326" ratioLeft="888" ratioRight="47" relationship="4" relative="left"/>
 <info part="org.eclipse.egit.ui.RepositoriesView" ratio="0.5" ratioLeft="956" ratioRight="956" relationship="2" relative="org.eclipse.ui.editorss"/>
-<info folder="true" part="top" ratio="0.2996862" ratioLeft="573" ratioRight="1339" relationship="2" relative="left">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="de.loskutov.eclipse.jdepend.views.DependencyView" label="Dependencies"/>
+<info folder="true" part="top" ratio="0.2996862" ratioLeft="573" ratioRight="1339" relationship="2" relative="left">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="de.loskutov.eclipse.jdepend.views.DependencyView" label="Dependencies"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="bottom_left" ratio="0.6993243" ratioLeft="621" ratioRight="267" relationship="4" relative="left">&#x0A;<folder activePageID="de.loskutov.eclipse.jdepend.views.MetricsView" appearance="2" expanded="2">&#x0A;<page content="de.loskutov.eclipse.jdepend.views.MetricsView" label="Metrics"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<info folder="true" part="bottom_left" ratio="0.6993243" ratioLeft="621" ratioRight="267" relationship="4" relative="left">
+<folder activePageID="de.loskutov.eclipse.jdepend.views.MetricsView" appearance="2" expanded="2">
+<page content="de.loskutov.eclipse.jdepend.views.MetricsView" label="Metrics"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
@@ -504,173 +532,247 @@
 </mainWindow>
 </layout>
 </perspective>
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="net.sourceforge.pmd.eclipse.ui.views.PMDPerspective" id="net.sourceforge.pmd.eclipse.ui.views.pmdPerspective" label="PMD"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="adt.actionSet.wizards"/>
+<alwaysOnActionSet id="adt.actionSet.refactorings"/>
+<alwaysOnActionSet id="adt.actionSet.avdManager"/>
+<alwaysOnActionSet id="com.google.gdt.eclipse.designer.actionset"/>
+<alwaysOnActionSet id="org.eclipse.wb.core.ui.actionset"/>
+<alwaysOnActionSet id="AnyEdit.actionSet"/>
+<alwaysOnActionSet id="EclipseSkins.sessions"/>
+<hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer"/>
+<view id="net.sourceforge.pmd.eclipse.ui.views.violationOutline"/>
+<view id="net.sourceforge.pmd.eclipse.ui.views.violationOverview"/>
+<view id="org.eclipse.search.ui.views.SearchView"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@e6bc76">
+<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e6bc76">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="478" ratioRight="1434" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e6bc76"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1768b95" ratio="0.6491979" ratioLeft="607" ratioRight="328" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.search.ui.views.SearchView" appearance="2" expanded="2">
+<page content="net.sourceforge.pmd.eclipse.ui.views.violationOverview" label="Violations Overview"/>
+<page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@5eea84" ratio="0.6" ratioLeft="561" ratioRight="374" relationship="4" relative="org.eclipse.ui.internal.ViewStack@e6bc76">
+<folder activePageID="net.sourceforge.pmd.eclipse.ui.views.violationOutline" appearance="2" expanded="2">
+<page content="net.sourceforge.pmd.eclipse.ui.views.violationOutline" label="Violations Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info part="org.eclipse.egit.ui.RepositoriesView" ratio="0.5989305" ratioLeft="336" ratioRight="225" relationship="4" relative="org.eclipse.ui.internal.ViewStack@e6bc76"/>
+</mainWindow>
+</layout>
+</perspective>
 </perspectives>
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/DefaultArbiter.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/AbstractArbiter.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/LessUsedCriterion.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFwDroid/src/cl/automind/empathy/fwdroid/ui/AbstractAndroidUiManager.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/sql/DefaultSqlConnector.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/data/DataEntry.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/sql/AbstractSqlDataSource.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/EmpathicKernel.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/data/sql/SqlPairs.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/AbstractArbiter.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/MemoryDataSource.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/LessUsedCriterion.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFwDroid/src/cl/automind/empathy/fwdroid/ui/AbstractAndroidUiManager.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/feedback/AbstractMessage.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/data/IQueryOption.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/data/IQueryCriterion.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/rule/DefaultRuleManager.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRuleManager.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/rule/AbstractRuleManager.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/rule/EmptyRule.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/rule/EmptyRule.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/RandomSelectionCriterion.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/IArbiter.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicCore/src/cl/automind/empathy/AbstractEmpathicKernel.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/EmpathicFw/src/cl/automind/empathy/fw/data/MemoryDataSource.java"/>
 </editors>
-<item historyLabel="AbstractArbiter.java" index="1">
-<position info="not_deleted" x="3846" y="0"/>
+<item historyLabel="AbstractSqlDataSource.java" index="1">
+<position info="not_deleted" x="13760" y="10"/>
 </item>
-<item historyLabel="AbstractArbiter.java" index="1">
-<position info="not_deleted" x="854" y="19"/>
-</item>
-<item historyLabel="DefaultArbiter.java" index="0">
-<position info="not_deleted" x="1076" y="0"/>
-</item>
-<item historyLabel="LessUsedCriterion.java" index="2">
-<position info="not_deleted" x="616" y="850"/>
-</item>
-<item historyLabel="AbstractAndroidUiManager.java" index="3">
-<position info="not_deleted" x="1264" y="85"/>
-</item>
-<item historyLabel="DefaultSqlConnector.java" index="4">
-<position info="not_deleted" x="598" y="63"/>
-</item>
-<item historyLabel="DataEntry.java" index="5">
-<position info="not_deleted" x="39" y="71"/>
-</item>
-<item historyLabel="DefaultSqlConnector.java" index="4">
-<position info="not_deleted" x="598" y="63"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="7791" y="10"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="1440" y="67"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="1555" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="7791" y="10"/>
-</item>
-<item historyLabel="EmpathicKernel.java" index="7">
-<position info="not_deleted" x="2360" y="33"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="1440" y="67"/>
-</item>
-<item historyLabel="SqlPairs.java" index="8">
+<item historyLabel="AbstractArbiter.java" index="0">
 <position/>
 </item>
-<item historyLabel="SqlPairs.java" index="8">
+<item historyLabel="SqlPairs.java" index="2">
+<position info="not_deleted" x="4104" y="11"/>
+</item>
+<item historyLabel="SqlPairs.java" index="2">
+<position info="not_deleted" x="4176" y="0"/>
+</item>
+<item historyLabel="SqlPairs.java" index="2">
+<position info="not_deleted" x="4104" y="11"/>
+</item>
+<item historyLabel="SqlPairs.java" index="2">
+<position info="not_deleted" x="1154" y="0"/>
+</item>
+<item historyLabel="MemoryDataSource.java" index="3">
 <position/>
 </item>
-<item historyLabel="SqlPairs.java" index="8">
+<item historyLabel="LessUsedCriterion.java" index="4">
 <position/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="1440" y="67"/>
+<item historyLabel="AbstractRule.java" index="5">
+<position info="not_deleted" x="1064" y="23"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="4367" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="1979" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="4470" y="21"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="4491" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="1969" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="4470" y="21"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="4905" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="5101" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2049" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
+<item historyLabel="LessUsedCriterion.java" index="4">
 <position/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2292" y="0"/>
-</item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
+<item historyLabel="MemoryDataSource.java" index="3">
 <position/>
 </item>
-<item historyLabel="SqlPairs.java" index="8">
-<position info="not_deleted" x="152" y="23"/>
+<item historyLabel="SqlPairs.java" index="2">
+<position info="not_deleted" x="1154" y="0"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="1334" y="0"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position/>
+<item historyLabel="AbstractMessage.java" index="7">
+<position info="not_deleted" x="1741" y="7"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2292" y="0"/>
+<item historyLabel="AbstractMessage.java" index="7">
+<position info="not_deleted" x="2386" y="0"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2355" y="0"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="1380" y="0"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position/>
+<item historyLabel="AbstractMessage.java" index="7">
+<position info="not_deleted" x="2317" y="0"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2292" y="0"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="1388" y="78"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2066" y="0"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="2306" y="0"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2327" y="0"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="1388" y="78"/>
 </item>
-<item historyLabel="AbstractArbiter.java" index="9">
-<position info="not_deleted" x="2792" y="10"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="1904" y="0"/>
 </item>
-<item historyLabel="MemoryDataSource.java" index="10">
-<position info="not_deleted" x="5882" y="10"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="3855" y="0"/>
 </item>
-<item historyLabel="MemoryDataSource.java" index="10">
-<position info="not_deleted" x="6216" y="0"/>
+<item historyLabel="MemoryDataSource.java" index="3">
+<position info="not_deleted" x="684" y="60"/>
 </item>
-<item historyLabel="MemoryDataSource.java" index="10">
-<position info="not_deleted" x="4119" y="0"/>
+<item historyLabel="MemoryDataSource.java" index="3">
+<position info="not_deleted" x="5259" y="0"/>
 </item>
-<item historyLabel="AbstractArbiter.java" index="9">
-<position info="not_deleted" x="2792" y="10"/>
+<item historyLabel="MemoryDataSource.java" index="3">
+<position info="not_deleted" x="5271" y="51"/>
 </item>
-<item historyLabel="AbstractSqlDataSource.java" index="6">
-<position info="not_deleted" x="2327" y="0"/>
+<item historyLabel="MemoryDataSource.java" index="3">
+<position info="not_deleted" x="5768" y="0"/>
 </item>
-<item historyLabel="EmpathicKernel.java" index="7">
-<position info="not_deleted" x="2495" y="0"/>
+<item historyLabel="AbstractAndroidUiManager.java" index="6">
+<position info="not_deleted" x="3855" y="0"/>
 </item>
-<item historyLabel="AbstractAndroidUiManager.java" index="3">
-<position info="not_deleted" x="1264" y="85"/>
-</item>
-<item historyLabel="LessUsedCriterion.java" index="2">
-<position info="not_deleted" x="616" y="850"/>
-</item>
-<item historyLabel="AbstractWebDataSource.java" index="11">
+<item historyLabel="IQueryOption.java" index="8">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="AbstractRule.java" index="12">
+<item historyLabel="IQueryCriterion.java" index="9">
 <position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="IQueryOption.java" index="8">
+<position info="not_deleted" x="594" y="0"/>
+</item>
+<item historyLabel="DefaultRuleManager.java" index="10">
+<position info="not_deleted" x="142" y="0"/>
+</item>
+<item historyLabel="AbstractRuleManager.java" index="11">
+<position info="not_deleted" x="291" y="19"/>
+</item>
+<item historyLabel="AbstractRuleManager.java" index="12">
+<position info="not_deleted" x="380" y="19"/>
+</item>
+<item historyLabel="LessUsedCriterion.java" index="4">
+<position info="not_deleted" x="824" y="0"/>
+</item>
+<item historyLabel="EmptyRule.java" index="13">
+<position info="not_deleted" x="213" y="9"/>
+</item>
+<item historyLabel="EmptyRule.java" index="14">
+<position info="not_deleted" x="163" y="9"/>
+</item>
+<item historyLabel="LessUsedCriterion.java" index="4">
+<position info="not_deleted" x="827" y="0"/>
+</item>
+<item historyLabel="RandomSelectionCriterion.java" index="15">
+<position info="not_deleted" x="396" y="0"/>
+</item>
+<item historyLabel="IArbiter.java" index="16">
+<position/>
+</item>
+<item historyLabel="RandomSelectionCriterion.java" index="15">
+<position info="not_deleted" x="396" y="0"/>
+</item>
+<item historyLabel="AbstractArbiter.java" index="0">
+<position info="not_deleted" x="3663" y="0"/>
+</item>
+<item historyLabel="EmpathicManagers.java" index="17">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="AbstractArbiter.java" index="0">
+<position info="not_deleted" x="3663" y="0"/>
+</item>
+<item historyLabel="IArbiter.java" index="16">
+<position info="not_deleted" x="583" y="0"/>
+</item>
+<item historyLabel="AbstractArbiter.java" index="0">
+<position info="not_deleted" x="3663" y="0"/>
+</item>
+<item historyLabel="AbstractEmpathicKernel.java" index="18">
+<position info="not_deleted" x="829" y="0"/>
+</item>
+<item historyLabel="AbstractArbiter.java" index="0">
+<position info="not_deleted" x="3663" y="0"/>
+</item>
+<item historyLabel="RandomSelectionCriterion.java" index="15">
+<position info="not_deleted" x="396" y="0"/>
+</item>
+<item historyLabel="MemoryDataSource.java" index="19">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="RandomSelectionCriterion.java" index="15">
+<position info="not_deleted" x="396" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -678,6 +780,9 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="right"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -685,54 +790,55 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+<trimItem IMemento.internal.id="bottom"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRule.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractWebDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java">
-<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/data/web/AbstractWebDataSource.java"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MemoryDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/MemoryDataSource.java">
 <persistable path="/EmpathicFw/src/cl/automind/empathy/fw/data/MemoryDataSource.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractEmpathicKernel.java" tooltip="EmpathicCore/src/cl/automind/empathy/AbstractEmpathicKernel.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/AbstractEmpathicKernel.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IArbiter.java" tooltip="EmpathicCore/src/cl/automind/empathy/IArbiter.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/IArbiter.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EmpathicManagers.java" tooltip="EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractArbiter.java" tooltip="EmpathicCore/src/cl/automind/empathy/AbstractArbiter.java">
 <persistable path="/EmpathicCore/src/cl/automind/empathy/AbstractArbiter.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SqlPairs.java" tooltip="EmpathicCore/src/cl/automind/empathy/data/sql/SqlPairs.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/data/sql/SqlPairs.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RandomSelectionCriterion.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/arbiter/RandomSelectionCriterion.java">
+<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/RandomSelectionCriterion.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EmpathicKernel.java" tooltip="EmpathicCore/src/cl/automind/empathy/EmpathicKernel.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/EmpathicKernel.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractSqlDataSource.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/sql/AbstractSqlDataSource.java">
-<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/data/sql/AbstractSqlDataSource.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DataEntry.java" tooltip="EmpathicCore/src/cl/automind/empathy/data/DataEntry.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/data/DataEntry.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DefaultSqlConnector.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/sql/DefaultSqlConnector.java">
-<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/data/sql/DefaultSqlConnector.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractAndroidUiManager.java" tooltip="EmpathicFwDroid/src/cl/automind/empathy/fwdroid/ui/AbstractAndroidUiManager.java">
-<persistable path="/EmpathicFwDroid/src/cl/automind/empathy/fwdroid/ui/AbstractAndroidUiManager.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DefaultArbiter.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/arbiter/DefaultArbiter.java">
-<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/DefaultArbiter.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EmptyRule.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/EmptyRule.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/rule/EmptyRule.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LessUsedCriterion.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/arbiter/LessUsedCriterion.java">
 <persistable path="/EmpathicFw/src/cl/automind/empathy/fw/arbiter/LessUsedCriterion.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractDataManager.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/data/AbstractDataManager.java">
-<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/data/AbstractDataManager.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRuleManager.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/AbstractRuleManager.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRuleManager.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SqlNamedValuePair.java" tooltip="EmpathicCore/src/cl/automind/empathy/data/sql/SqlNamedValuePair.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/data/sql/SqlNamedValuePair.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DefaultRuleManager.java" tooltip="EmpathicFw/src/cl/automind/empathy/fw/rule/DefaultRuleManager.java">
+<persistable path="/EmpathicFw/src/cl/automind/empathy/fw/rule/DefaultRuleManager.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="EmpathicManagers.java" tooltip="EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java">
-<persistable path="/EmpathicCore/src/cl/automind/empathy/EmpathicManagers.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IQueryCriterion.java" tooltip="EmpathicCore/src/cl/automind/empathy/data/IQueryCriterion.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/data/IQueryCriterion.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IQueryOption.java" tooltip="EmpathicCore/src/cl/automind/empathy/data/IQueryOption.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/data/IQueryOption.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractMessage.java" tooltip="EmpathicCore/src/cl/automind/empathy/feedback/AbstractMessage.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/feedback/AbstractMessage.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractAndroidUiManager.java" tooltip="EmpathicFwDroid/src/cl/automind/empathy/fwdroid/ui/AbstractAndroidUiManager.java">
+<persistable path="/EmpathicFwDroid/src/cl/automind/empathy/fwdroid/ui/AbstractAndroidUiManager.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractRule.java" tooltip="EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java">
+<persistable path="/EmpathicCore/src/cl/automind/empathy/rule/AbstractRule.java"/>
 </file>
 </mruList>
 </workbench>

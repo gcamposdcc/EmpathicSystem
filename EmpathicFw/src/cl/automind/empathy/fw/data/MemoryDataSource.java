@@ -14,37 +14,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Logger;
 
-import cl.automind.empathy.data.DataEntry;
+import cl.automind.empathy.data.AbstractDataEntry;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
 
 public class MemoryDataSource<T> implements IDataSource<T> {
 	private List<IObserver<IDataSource<T>>> observers;
-	private final Map<Integer, DataEntry<T>> data;
+	private final Map<Integer, AbstractDataEntry<T>> data;
 	private String name;
 	private static int code = 0;
 	private int id = 0;
-	private final boolean useBackup;
 	private final T template;
-	public MemoryDataSource(boolean useBackup, T template){
+	public MemoryDataSource(T template){
 		this.template = template;
 		this.data = initiateMap();
-		setObservers(new CopyOnWriteArrayList<IObserver<IDataSource<T>>>());
+		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
 		this.name = "genname" + (code++);
-		this.useBackup = useBackup;
 	}
 
 	public MemoryDataSource(String name, boolean useBackup, T template){
 		this.template = template;
 		this.data = initiateMap();
-		setObservers(new CopyOnWriteArrayList<IObserver<IDataSource<T>>>());
+		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
 		this.name = !Strings.isNullOrEmpty(name)? name : "genname" + (code++);
-		this.useBackup = useBackup;
 	}
-	private Map<Integer, DataEntry<T>> initiateMap(){
-		return new Hashtable<Integer, DataEntry<T>>();
+	private Map<Integer, AbstractDataEntry<T>> initiateMap(){
+		return new Hashtable<Integer, AbstractDataEntry<T>>();
 	}
 	public void setObservers(List<IObserver<IDataSource<T>>> observers) {
 		this.observers = observers;
@@ -52,7 +50,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	public List<IObserver<IDataSource<T>>> getObservers() {
 		return observers;
 	}
-	protected Map<Integer, DataEntry<T>> getData(){
+	protected Map<Integer, AbstractDataEntry<T>> getData(){
 		return data;
 	}
 	private synchronized int nextId() {
@@ -85,7 +83,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	@Override
 	public synchronized int insert(T value) {
 		int id = nextId();
-		getData().put(id, new MemoryDataEntry<T>(id, value, useBackup));
+		getData().put(id, new MemoryDataEntry<T>(id, value));
 		printAll();
 		return id;
 	}
@@ -95,13 +93,13 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 		int id;
 		for(T val: value){
 			id = nextId();
-			getData().put(id, new MemoryDataEntry<T>(getData().size(), val, useBackup));
+			getData().put(id, new MemoryDataEntry<T>(getData().size(), val));
 			ids.add(id - 1);
 		}
 		return ids;
 	}
-	private List<DataEntry<T>> getEntriesOrderedById(){
-		List<DataEntry<T>> list = new ArrayList<DataEntry<T>>(getData().values());
+	private List<AbstractDataEntry<T>> getEntriesOrderedById(){
+		List<AbstractDataEntry<T>> list = new ArrayList<AbstractDataEntry<T>>(getData().values());
 		Collections.sort(list);
 		return list;
 	}
@@ -110,17 +108,13 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 		getData().clear();
 	}
 	@Override
-	public boolean validId(int id) {
-		return getData().containsKey(id);
-	}
-	@Override
 	public int count() {
 		return data.size();
 	}
 
 	private void printAll(){
-		for(DataEntry<T> t : getEntriesOrderedById()){
-			System.out.println("Id::" + t.getId()+ "::Value::" + t.getValue());
+		for(AbstractDataEntry<T> t : getEntriesOrderedById()){
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Id::" + t.getId()+ "::Value::" + t.getValue());
 		}
 	}
 	@Override
@@ -147,7 +141,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	private List<T> selectFiltering(IQueryCriterion<T>... criteria) {
 		List<T> result = new ArrayList<T>();
 		for (IQueryCriterion<T> criterion : criteria){
-			for(DataEntry<T> t : getData().values()){
+			for(AbstractDataEntry<T> t : getData().values()){
 				if (criterion.apply(t.getValue())) result.add(t.getValue());
 			}
 		}
@@ -156,51 +150,58 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 
 	private List<T> selectById(IQueryOption option) {
 		List<T> result = new ArrayList<T>();
-		DataEntry<T> item = getData().get(option.getValue());
+		AbstractDataEntry<T> item = getData().get(option.getValue());
 		if (item != null) result.add(item.getValue());
 		return result;
 	}
 	public T selectById(int id) {
-		DataEntry<T> d = getData().get(id);
+		AbstractDataEntry<T> d = getData().get(id);
 		return d != null ? d.getValue() : null;
 	}
 	public List<T> selectAll() {
 		List<T> list = new ArrayList<T>();
-		for(DataEntry<T> t : getEntriesOrderedById()){
+		for(AbstractDataEntry<T> t : getEntriesOrderedById()){
 			list.add(t.getValue());
 		}
 		return Collections.unmodifiableList(list);
 	}
 	public int update(int id, T value) {
-		DataEntry<T> item = getData().get(id);
+		AbstractDataEntry<T> item = getData().get(id);
 		return item != null ? item.setValue(value) : -1;
 	}
 	@Override
 	public int update(T value, IQueryOption option, IQueryCriterion<T>... criteria) {
 		if (option.getType() == IQueryOption.Type.Id){
-			DataEntry<T> item = getData().get(option.getValue());
-			if (item != null) {
-				item.setValue(value);
-				return 1;
-			} else {
-				return 0;
-			}
+			return updateById(option.getValue(), value);
 		} else {
-			List<Integer> ids = new ArrayList<Integer>();
-			for (IQueryCriterion<T> criterion : criteria){
-				for(DataEntry<T> t : getData().values()){
-					if (criterion.apply(t.getValue())) {
-						t.setValue(value);
-						ids.add(t.getId());
-						if (option.getValue() > 0 && ids.size() == option.getValue()) {
-							//FIXME return type
-							return ids.size();
-						}
+			return defaultUpdate(value, option, criteria);
+		}
+	}
+
+	private int defaultUpdate(T value, IQueryOption option, IQueryCriterion<T>... criteria) {
+		List<Integer> ids = new ArrayList<Integer>();
+		for (IQueryCriterion<T> criterion : criteria){
+			for(AbstractDataEntry<T> t : getData().values()){
+				if (criterion.apply(t.getValue())) {
+					t.setValue(value);
+					ids.add(t.getId());
+					if (option.getValue() > 0 && ids.size() == option.getValue()) {
+						//FIXME return type
+						return ids.size();
 					}
 				}
 			}
-			//FIXME return type
-			return ids.size();
+		}
+		//FIXME return type
+		return ids.size();
+	}
+	private int updateById(int id, T value){
+		AbstractDataEntry<T> item = getData().get(id);
+		if (item != null) {
+			item.setValue(value);
+			return 1;
+		} else {
+			return 0;
 		}
 	}
 	@Override
@@ -220,7 +221,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	private boolean defaultDelete(IQueryCriterion<T>... criteria) {
 		Set<Integer> ids = new HashSet<Integer>();
 		for (IQueryCriterion<T> criterion : criteria){
-			for(DataEntry<T> t : getData().values()){
+			for(AbstractDataEntry<T> t : getData().values()){
 				if (criterion.apply(t.getValue())) {
 					ids.add(t.getId());
 				}
@@ -235,7 +236,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 	private boolean deleteFiltering(IQueryOption option,IQueryCriterion<T>... criteria) {
 		Set<Integer> ids = new HashSet<Integer>();
 		for (IQueryCriterion<T> criterion : criteria){
-			for(DataEntry<T> t : getData().values()){
+			for(AbstractDataEntry<T> t : getData().values()){
 				if (criterion.apply(t.getValue())) {
 					ids.add(t.getId());
 				}

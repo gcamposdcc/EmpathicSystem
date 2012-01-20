@@ -4,10 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public interface ISqlConnector {
-	public ISqlConnectionInfo getConnectionInfo();
-	public boolean isConnected();
-	public void openConnection();
-	public void closeConnection();
-	public Statement getStatement();
-	public PreparedStatement preparedStatement(String statement);
+	ISqlConnectionInfo getConnectionInfo();
+	boolean isConnected();
+	void openConnection();
+	void closeConnection();
+	Statement getStatement();
+	PreparedStatement preparedStatement(String statement);
 }

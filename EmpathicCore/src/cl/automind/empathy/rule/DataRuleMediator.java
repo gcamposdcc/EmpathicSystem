@@ -9,16 +9,16 @@ import cl.automind.empathy.data.IQueryOption;
 public class DataRuleMediator {
 	private IDataManager dataManager;
 	private IRuleManager ruleManager;
-	protected void setDataManager(IDataManager dataManager) {
+	protected final void setDataManager(IDataManager dataManager) {
 		this.dataManager = dataManager;
 	}
-	protected IDataManager getDataManager() {
+	protected final IDataManager getDataManager() {
 		return dataManager;
 	}
-	protected void setRuleManager(IRuleManager ruleManager) {
+	protected final void setRuleManager(IRuleManager ruleManager) {
 		this.ruleManager = ruleManager;
 	}
-	protected IRuleManager getRuleManager() {
+	protected final IRuleManager getRuleManager() {
 		return ruleManager;
 	}
 	public DataRuleMediator(IDataManager dataManager, IRuleManager ruleManager){

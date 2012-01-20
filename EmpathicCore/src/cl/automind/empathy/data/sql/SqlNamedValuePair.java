@@ -11,14 +11,14 @@ public abstract class SqlNamedValuePair<V> extends NamedValuePair<V> {
 	private ComparisonType comparison;
 	public SqlNamedValuePair(String key, V value){
 		super(key, value);
-		setComparison(ComparisonType.Equal);
+		this.comparison = ComparisonType.Equal;
 	}
 	public SqlNamedValuePair(String key, V value, ComparisonType comparison){
 		super(key, value);
-		setComparison(comparison);
+		this.comparison = comparison;
 	}
 
-	abstract public void set(PreparedStatement s, int position);
+	abstract public void set(PreparedStatement statement, int position);
 
 	public void setComparison(ComparisonType comparison) {
 		this.comparison = comparison;
@@ -32,29 +32,31 @@ public abstract class SqlNamedValuePair<V> extends NamedValuePair<V> {
 
 	@Override
 	public String toString(){
+		String result = "";
 		switch (getComparison()){
 		case Equal:
-			return getKey() + " = " + getValue() + " ";
+			result = getKey() + " = " + getValue() + " "; break;
 		case Distinct:
-			return getKey() + " <> " + getValue() + " ";
+			result = getKey() + " <> " + getValue() + " "; break;
 		case Greater:
-			return getKey() + " > " + getValue() + " ";
+			result = getKey() + " > " + getValue() + " "; break;
 		case GreaterOrEqual:
-			return getKey() + " >= " + getValue() + " ";
+			result = getKey() + " >= " + getValue() + " "; break;
 		case Lesser:
-			return getKey() + " < " + getValue() + " ";
+			result = getKey() + " < " + getValue() + " "; break;
 		case LesserOrEqual:
-			return getKey() + " <= " + getValue() + " ";
+			result = getKey() + " <= " + getValue() + " "; break;
 		case ContainedIn:
-			return getKey() + " = " + getValue() + " ";
+			result = getKey() + " = " + getValue() + " "; break;
 		case Contains:
-			return getKey() + " = " + getValue() + " ";
+			result = getKey() + " = " + getValue() + " "; break;
 		case StartsWith:
-			return getKey() + " = " + getValue() + " ";
+			result = getKey() + " = " + getValue() + " "; break;
 		case EndsWith:
-			return getKey() + " = " + getValue() + " ";
+			result = getKey() + " = " + getValue() + " "; break;
 		default:
-			return getKey() + " = " + getValue() + " ";
+			result = getKey() + " = " + getValue() + " "; break;
 		}
+		return result;
 	}
 }

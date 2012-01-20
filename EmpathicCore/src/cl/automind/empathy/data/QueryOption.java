@@ -18,7 +18,7 @@ public class QueryOption implements IQueryOption{
 	}
 
 	@Override
-	public void setType(IQueryOption.Type type) {
+	public final void setType(IQueryOption.Type type) {
 		this.type = type;
 	}
 	@Override
@@ -26,7 +26,7 @@ public class QueryOption implements IQueryOption{
 		return type;
 	}
 	@Override
-	public void setValue(int value) {
+	public final void setValue(int value) {
 		this.value = value;
 	}
 	@Override

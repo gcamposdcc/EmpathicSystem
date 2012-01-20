@@ -1,5 +1,7 @@
 package cl.automind.empathy.fw.ui;
 
+import java.util.logging.Logger;
+
 import cl.automind.empathy.feedback.AbstractMessage;
 import cl.automind.empathy.feedback.AbstractMessage.Context;
 
@@ -15,21 +17,21 @@ public class DefaultUiManager extends AbstractUiManager{
 	}
 
 	private synchronized void doDisplay(AbstractMessage message){
-		System.out.println("= MessageRequest");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("= MessageRequest");
 		if (isShowing()){
-			System.out.println("== RequestFailed::ShowingMessage::"+message.getName());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("== RequestFailed::ShowingMessage::"+message.getName());
 			return;
 		}
-		System.out.println("= StartingMessage");
-		System.out.println("==  ShowingMessage::"+message.getName());
-		System.out.println("==  ShowingMessage::"+message.getUnfilteredText());
-		System.out.println("==  ShowingMessage::"+message.getEmotionName());
-		System.out.println("==  ShowingMessage::"+message.getText());
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("= StartingMessage");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("==  ShowingMessage::"+message.getName());
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("==  ShowingMessage::"+message.getUnfilteredText());
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("==  ShowingMessage::"+message.getEmotionName());
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("==  ShowingMessage::"+message.getText());
 		Thread t = new Thread(){
 			@Override public void run(){
 				AbstractMessage message = getCurrentMessage();
 				try{ Thread.sleep(5000); }
-				catch(Exception e){}
+				catch(Exception e){ Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning(e.getMessage());}
 				finally {hideMessage(message); }
 			}
 		};
@@ -47,12 +49,12 @@ public class DefaultUiManager extends AbstractUiManager{
 		doHide(message);
 	}
 	private synchronized void doHide(){
-		System.out.println("= HiddingMessage");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("= HiddingMessage");
 		setShowing(false);
 		setCurrentMessage(null);
 	}
 	private synchronized void doHide(AbstractMessage message){
-		System.out.println("= HiddingMessage");
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("= HiddingMessage");
 		if (message == getCurrentMessage()){
 			doHide();
 		}

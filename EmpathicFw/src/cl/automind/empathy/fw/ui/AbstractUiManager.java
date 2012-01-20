@@ -16,7 +16,7 @@ public abstract class AbstractUiManager implements IUiManager {
 
 
 	public AbstractUiManager(){
-		emotionFactory = initializeEmotionFactory();
+		emotionFactory = new EmpathicEmotionFactory();
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.ui.IUiManager#displayMessage(cl.automind.empathy.feedback.AbstractMessage)

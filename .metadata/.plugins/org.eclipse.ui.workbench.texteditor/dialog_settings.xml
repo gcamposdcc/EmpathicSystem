@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="249" key="DIALOG_Y_ORIGIN"/>
+		<item value="291" key="DIALOG_Y_ORIGIN"/>
+		<item value="56" key="DIALOG_X_ORIGIN"/>
 		<item value="473" key="DIALOG_HEIGHT"/>
-		<item value="871" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="true" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="getAll" key="selection"/>
+		<item value="getName" key="selection"/>
 		<list key="findhistory">
-			<item value="getAll"/>
-			<item value="setPref"/>
-			<item value="SqlNamedValuePair"/>
-			<item value="SqlPairs.Type"/>
-			<item value="java.lang."/>
-			<item value="&lt;Long&gt;"/>
-			<item value="&lt;Boolean&gt;"/>
-			<item value="executeQuery"/>
+			<item value="getName"/>
+			<item value="public "/>
+			<item value="public abstract "/>
+			<item value="interface"/>
+			<item value="abstract "/>
+			<item value="deploy"/>
+			<item value="System.out.println"/>
+			<item value="Syste"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
+			<item value="public interface"/>
+			<item value="Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).fine"/>
 			<item value="NamedValuePair"/>
 			<item value="Pairs.Type"/>
-			<item value=""/>
 			<item value="&lt;java.lang.Boolean&gt;"/>
 			<item value="empathy"/>
 			<item value="EmpathyMetadata"/>
-			<item value="String"/>
-			<item value="Double"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

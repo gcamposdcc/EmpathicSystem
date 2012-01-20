@@ -33,7 +33,7 @@ function FlyweightFactory()
 }
 
 FlyweightFactory.prototype.contains =
-	function (key) { return getItems()[key] != null; }
+	function (key) { return this.getItems()[key] != null; }
 
 FlyweightFactory.prototype.put = 
 	function (key, value) {
@@ -46,9 +46,9 @@ FlyweightFactory.prototype.put =
 			console.log('key must be a String');
 			return;
 		}
-		getItems()[key] = value;
-		getNames().push(key);
+		this.getItems()[key] = value;
+		this.getNames().push(key);
 	}
 
 FlyweightFactory.prototype.get =
-	function (key) { return getItems()[key]; }
+	function (key) { return this.getItems()[key]; }

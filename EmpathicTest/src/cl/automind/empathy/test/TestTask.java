@@ -2,6 +2,8 @@ package cl.automind.empathy.test;
 
 import gcampos.dev.util.concurrent.AsyncTask;
 
+import java.util.logging.Logger;
+
 public class TestTask extends AsyncTask<Integer, String, String> {
 
 	@Override
@@ -10,7 +12,7 @@ public class TestTask extends AsyncTask<Integer, String, String> {
 		int cycles = params[1];
 
 		for (int i = 0; i < cycles; i++){
-//			System.out.println("BackThread"+"Id:" + id + "::Cycle:" + i);
+//			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("BackThread"+"Id:" + id + "::Cycle:" + i);
 			publishProgress("Id:"+id, "Cycle:"+i);
 		}
 
@@ -20,13 +22,13 @@ public class TestTask extends AsyncTask<Integer, String, String> {
 	@Override
 	protected void onProgressUpdate(String... values) {
 		super.onProgressUpdate(values);
-//		System.out.println("MainThread" + values[0] + "::" + values[1]);
+//		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("MainThread" + values[0] + "::" + values[1]);
 	}
 
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		System.out.println("MainThread" + result);
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("MainThread" + result);
 	}
 
 }

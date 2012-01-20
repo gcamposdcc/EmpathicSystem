@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -51,7 +52,7 @@ public class AndroidHttpClient extends AbstractHttpClient{
             }
             in.close();
             String page = sb.toString();
-            System.out.println(page);
+            Logger.global.info(page);
 	        setResponse(page);
 	        return page;
 	    } catch (Exception e){

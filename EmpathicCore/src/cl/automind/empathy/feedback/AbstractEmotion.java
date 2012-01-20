@@ -20,8 +20,11 @@ public abstract class AbstractEmotion implements INamed{
 		return name;
 	}
 	public boolean hasFamily(String familyName){
-		if (familyName.equals(EmotionMetadata.DEFAULT)) return true;
-		return ArrayUtils.contains(getFamilies(), familyName);
+		if (familyName.equals(EmotionMetadata.DEFAULT)) {
+			return true;
+		} else {
+			return ArrayUtils.contains(getFamilies(), familyName);
+		}
 	}
 	private String[] getFamilies() {
 		return families;

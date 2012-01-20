@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
@@ -19,15 +20,15 @@ public abstract class AbstractArbiter implements IArbiter{
 	 */
 	private IArbiterCriterion criterion;
 	/**
-	 * The current responsible {@link EmpathicKernel}
+	 * The current responsible {@link AbstractEmpathicKernel}
 	 */
-	private EmpathicKernel empathicKernel;
+	private AbstractEmpathicKernel empathicKernel;
 	public AbstractArbiter(){
 
 	}
 
-	public AbstractArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
-		this.setEmpathicKernel(kernel);
+	public AbstractArbiter(AbstractEmpathicKernel kernel, IArbiterCriterion criterion){
+		setEmpathicKernel(kernel);
 		setCriterion(criterion);
 	}
 
@@ -103,7 +104,7 @@ public abstract class AbstractArbiter implements IArbiter{
 	}
 
 	@Override
-	public void setCriterion(IArbiterCriterion criterion){
+	public final void setCriterion(IArbiterCriterion criterion){
 		this.criterion = criterion;
 	}
 
@@ -131,15 +132,17 @@ public abstract class AbstractArbiter implements IArbiter{
 			try{
 				if (rule.canEvaluate(rule.getParams())){
 					list.add(rulename);
-					System.out.println("Rule::"+rulename+"::Evaluable?:YES");
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::"+rulename+"::Evaluable?:YES");
 				} else {
-					System.out.println("Rule::"+rulename+"::Evaluable?:NOT");
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::"+rulename+"::Evaluable?:NOT");
 				}
 			} catch (Exception e){
 				e.printStackTrace();
 			}
 		}
-		if(list.size() == 0) list.add(EmptyRule.instance.getName());
+		if(list.size() == 0) {
+			list.add(EmptyRule.INSTANCE.getName());
+		}
 		return list;
 	}
 
@@ -151,7 +154,9 @@ public abstract class AbstractArbiter implements IArbiter{
 			try{
 				rule = getRule(rulename);
 				rule.evaluate(rule.getParams());
-				if (rule.isSelectable()) list.add(rulename);
+				if (rule.isSelectable()) {
+					list.add(rulename);
+				}
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -164,17 +169,18 @@ public abstract class AbstractArbiter implements IArbiter{
 		RuleUsageData rud = getAllRuleUsageData().get(rulename);
 		if (rud != null){
 			return rud.getTimesUsed();
+		} else {
+			return getAllRuleNames().contains(rulename) ? 0: ifNotFound;
 		}
-		else return getAllRuleNames().contains(rulename) ? 0: ifNotFound;
 	}
 
 	@Override
-	public void setEmpathicKernel(EmpathicKernel empathicKernel) {
+	public final void setEmpathicKernel(AbstractEmpathicKernel empathicKernel) {
 		this.empathicKernel = empathicKernel;
 	}
 
 	@Override
-	public	EmpathicKernel getEmpathicKernel() {
+	public	AbstractEmpathicKernel getEmpathicKernel() {
 		return empathicKernel;
 	}
 }

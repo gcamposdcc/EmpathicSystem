@@ -7,8 +7,10 @@
         <script type="text/javascript" src="js/flyweightfactory.js"></script>
         <script type="text/javascript" src="js/datamanager.js"></script>
         <script type="text/javascript" src="js/rule.js"></script>
+        <script type="text/javascript" src="js/ui.js"></script>
         <script type="text/javascript" src="js/arbiter.js"></script>
         <script type="text/javascript" src="js/empathy.js"></script>
+        <script type="text/javascript" src="js/tests.js"></script>
         <title>New Web Project</title>
     </head>
     <body>
@@ -18,28 +20,12 @@
         	style="border:1px solid #c3c3c3;"> 
         </canvas>
 		<script type="text/javascript">
-            function Test()
-            {
-                ObservableContext.call(this);
-
-                this.callback = 
-                    function () {
-                        var cback = 
-                            function (obs)
-                            {
-                                this.addObserver(obs);
-                            };
-                        return cback;
-                    }
-            }
-            var test = new Test();
-            test.addObserver('observer');
-            test.addObserver('observer');
-            test.addObserver('observer2');
-            test.removeObserver('observer');
-            var c = test.callback();
-            c.call(test, 'observer3');
-            alert(test.observers);
+            // var t = new ObserverPatternTest();
+            // var t = new MemoryDsTest();
+            // var t = new WebDsTest();
+            // var t = new DataManagerTest();
+            // var t = new RuleTest();
+            var t = new EmpathyLoadTest();
 		</script>
     </body>
 </html>

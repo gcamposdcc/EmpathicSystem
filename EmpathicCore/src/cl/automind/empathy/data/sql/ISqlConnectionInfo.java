@@ -6,15 +6,15 @@ import java.util.Properties;
 
 
 public interface ISqlConnectionInfo {
-	public String getUsername();
-	public String getPassword();
-	public String getHostname();
-	public String getDatabase();
-	public String getDriver();
-	public String getDriverClassname();
-	public String getPort();
-	public Property[] getAdditionalConfig();
-	public Properties asProperties();
+	String getUsername();
+	String getPassword();
+	String getHostname();
+	String getDatabase();
+	String getDriver();
+	String getDriverClassname();
+	String getPort();
+	Property[] getAdditionalConfig();
+	Properties asProperties();
 
 	public enum Fields {
 		Username {@Override public String toString() {return "user";} },

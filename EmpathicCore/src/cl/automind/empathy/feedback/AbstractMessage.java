@@ -10,8 +10,8 @@ import java.util.Map;
 public abstract class AbstractMessage implements INamed{
 	public final static String KEY_PREFIX = "@";
 	public final static String KEY_SUFFIX = "";
-	public final static String key(String s){
-		return KEY_PREFIX+s+KEY_SUFFIX;
+	public final static String key(String value){
+		return KEY_PREFIX + value + KEY_SUFFIX;
 	}
 
 	private final Context context = new Context();
@@ -72,6 +72,14 @@ public abstract class AbstractMessage implements INamed{
 		}
 		public List<Object> getData() {
 			return data;
+		}
+		public Context duplicate(){
+			AbstractMessage.Context output =  new AbstractMessage.Context();
+			output.setCallingRuleName(getCallingRuleName());
+			for (Object data: getData()){
+				output.getData().add(data);
+			}
+			return output;
 		}
 	}
 }

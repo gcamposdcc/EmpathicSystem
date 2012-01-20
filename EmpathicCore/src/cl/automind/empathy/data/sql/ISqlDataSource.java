@@ -7,8 +7,8 @@ import java.util.List;
 import cl.automind.empathy.data.IDataSource;
 
 public interface ISqlDataSource<T> extends IDataSource<T> {
-	public ISqlConnector getConnector();
-	public List<T> executeNamedQuery(String queryName, SqlNamedValuePair<?>... constrains);
-	public List<T> parse(ResultSet rs);
-	public Collection<SqlNamedValuePair<?>> toPairs(T target);
+	ISqlConnector getConnector();
+	List<T> executeNamedQuery(String queryName, SqlNamedValuePair<?>... constrains);
+	List<T> parse(ResultSet rs);
+	Collection<SqlNamedValuePair<?>> toPairs(T target);
 }
