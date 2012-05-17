@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="291" key="DIALOG_Y_ORIGIN"/>
-		<item value="56" key="DIALOG_X_ORIGIN"/>
+		<item value="263" key="DIALOG_Y_ORIGIN"/>
 		<item value="473" key="DIALOG_HEIGHT"/>
+		<item value="56" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="true" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="getName" key="selection"/>
+		<item value="Trago" key="selection"/>
 		<list key="findhistory">
+			<item value="Trago"/>
+			<item value="trago"/>
+			<item value="delete"/>
+			<item value="abstract"/>
 			<item value="getName"/>
 			<item value="public "/>
 			<item value="public abstract "/>
 			<item value="interface"/>
-			<item value="abstract "/>
-			<item value="deploy"/>
-			<item value="System.out.println"/>
-			<item value="Syste"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

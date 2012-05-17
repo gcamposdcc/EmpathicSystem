@@ -10,6 +10,4 @@ public interface IRuleManager {
 
 	Set<String> getAllRulenames();
 
-	void printElements();
-
 }

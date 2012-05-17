@@ -17,7 +17,7 @@ public class SampleRule extends AbstractRule {
 	public double evaluateImpl(Object... params) {
 		int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		if (day == 23) {
-			putValue("valor", "el método putValue()");
+			putMessageValue("valor", "el método putValue()");
 			return 1000;
 		}
 		else return 0;

@@ -27,7 +27,7 @@ public class TotalScoreRule extends AbstractRule {
 		for (Score score: scores){
 			total += score.getValue();
 		}
-		putValue("score", total);
+		putMessageValue("score", total);
 		return total;
 	}
 

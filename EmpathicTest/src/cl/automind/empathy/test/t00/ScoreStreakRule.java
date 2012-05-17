@@ -30,8 +30,8 @@ public class ScoreStreakRule extends AbstractRule {
 			else break;
 		}
 		if (total > 0) {
-			clearValues();
-			putValue(STREAK, total);
+			clearMessageValues();
+			putMessageValue(STREAK, total);
 		}
 		return total;
 	}

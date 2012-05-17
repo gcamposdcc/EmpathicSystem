@@ -35,7 +35,7 @@ public class MemoryDataSource<T> implements IDataSource<T> {
 		this.name = "genname" + (code++);
 	}
 
-	public MemoryDataSource(String name, boolean useBackup, T template){
+	public MemoryDataSource(String name, T template){
 		this.template = template;
 		this.data = initiateMap();
 		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();

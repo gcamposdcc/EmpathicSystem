@@ -94,7 +94,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			getQueryMap().put("updataById", updateById);
 			// NORMAL
 			// INSERT
-			String insert = createInsertQuery(idName, hasId, fieldNames, fieldCount);
+			String insert = buildInsertQuery(idName, hasId, fieldNames, fieldCount);
 			// UPDATE
 			String update = buildUpdateQuery(fieldNames, fieldCount);
 			// DELETE
@@ -176,7 +176,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		return update;
 	}
 
-	private String createInsertQuery(String idName, boolean hasId,
+	private String buildInsertQuery(String idName, boolean hasId,
 			List<String> fieldNames, int fieldCount) {
 		String insert = "INSERT INTO "+ getName() + " ";
 		if (fieldCount > 0 ) {
@@ -346,7 +346,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			return list;
 		} else {
 			String queryName = "insert";
-			String queryString = buildQuery(getQueryMap().get(queryName), criteria);
+			String queryString = completeQuery(getQueryMap().get(queryName), criteria);
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 			ResultSet rs = null;
 			try {
@@ -404,7 +404,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			return 1;
 		} else {
 			String queryName = "update";
-			String queryString = buildQuery(getQueryMap().get(queryName), criteria);
+			String queryString = completeQuery(getQueryMap().get(queryName), criteria);
 			PreparedStatement query = getConnector().preparedStatement(queryString);
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 			try {
@@ -423,7 +423,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			return deleteById((Integer) criteria[0].getParams()[0].getValue());
 		} else {
 			String queryName = "delete";
-			String queryString = buildQuery(getQueryMap().get(queryName), criteria);
+			String queryString = completeQuery(getQueryMap().get(queryName), criteria);
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 			PreparedStatement query = getConnector().preparedStatement(queryString);
 			try {
@@ -451,7 +451,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		return descriptor;
 	}
 
-	private String buildQuery(String qs, IQueryCriterion<T>... criteria){
+	private String completeQuery(String qs, IQueryCriterion<T>... criteria){
 		String queryString = qs;
 		if (criteria == null) return queryString + ";";
 		if (criteria.length == 0) return queryString + ";";

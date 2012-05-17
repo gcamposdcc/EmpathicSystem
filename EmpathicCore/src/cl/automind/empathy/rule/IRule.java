@@ -15,13 +15,6 @@ public interface IRule {
 
 	boolean hasStrategy(String strategyName);
 
-	// </metadata-fields-getters>
-	/**
-	 * Determinates the priority of this rule.
-	 * @return
-	 */
-	double evaluateImpl(Object...params);
-
 	double evaluate(Object... params);
 
 	boolean canEvaluate(Object... params);
@@ -32,19 +25,19 @@ public interface IRule {
 
 	void setMessage(AbstractMessage message);
 
-	Map<String, Object> getValuesMap();
+	Map<String, Object> getMessageValuesMap();
 
-	void clearValues();
+	void clearMessageValues();
 
-	void putValue(String key, Object value);
+	void putMessageValue(String key, Object value);
 
-	void removeValue(String key);
+	void removeMessageValue(String key);
 
 	void setDataMediator(DataRuleMediator dataMediator);
 
 	DataRuleMediator getDataMediator();
 
-	double getValue();
+	double getLastEvaluationValue();
 
 	void setParams(Object...params);
 

@@ -39,7 +39,9 @@ public abstract class AbstractMessage implements INamed{
 	/**
 	 * @return The codename of the EmpathicEmotion that will be displayed with this message.
 	 */
-	public abstract String getEmotionName();
+	public String getEmotionName(){
+		return "happiness";
+	}
 
 	public abstract String getUnfilteredText();
 

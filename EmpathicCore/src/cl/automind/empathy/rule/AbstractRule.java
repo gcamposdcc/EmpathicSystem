@@ -20,23 +20,21 @@ import cl.automind.empathy.feedback.EmptyMessage;
  */
 public abstract class AbstractRule implements INamed, IRule{
 	private AbstractMessage message = new EmptyMessage();
-	private final Map<String, Object> valuesMap = new HashMap<String, Object>();
+	private final Map<String, Object> messageValueMap = new HashMap<String, Object>();
 	private DataRuleMediator dataMediator;
 	private Object[] params = {};
+	private final AbstractRule.ValueHolder ruleValues;
 
 	// <metadata-fields>
 	private final String name;
 	private final String[] strategies;
-	private final double minValue;
-	private final double maxValue;
-	private final double threshold;
-	private final double valueRange;
 	// </metadata-fields>
 
 	private double value;
 
 	public AbstractRule(){
 		Class<?> thisClass = getClass();
+		ruleValues = new AbstractRule.ValueHolder();
 		if (thisClass.isAnonymousClass()){
 			thisClass = thisClass.getSuperclass();
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
@@ -50,10 +48,9 @@ public abstract class AbstractRule implements INamed, IRule{
 			name = thisClass.getSimpleName().replaceAll("Rule", "");
 		}
 		strategies = metadata != null ? metadata.strategies() : RuleMetadata.STRATEGIES;
-		minValue = metadata != null ? metadata.minVal() : RuleMetadata.MIN_VALUE;
-		maxValue = metadata != null ? metadata.maxVal() : RuleMetadata.MAX_VALUE;
-		threshold = metadata != null ? metadata.threshold() : RuleMetadata.THRESHOLD;
-		valueRange = maxValue - minValue;
+		getRuleValues().setMinValue(metadata != null ? metadata.minVal() : RuleMetadata.MIN_VALUE);
+		getRuleValues().setMaxValue(metadata != null ? metadata.maxVal() : RuleMetadata.MAX_VALUE);
+		getRuleValues().setThreshold(metadata != null ? metadata.threshold() : RuleMetadata.THRESHOLD);
 		// </metadata-fields-init>
 	}
 	public AbstractRule(DataRuleMediator dataMediator){
@@ -78,16 +75,16 @@ public abstract class AbstractRule implements INamed, IRule{
 		return strategies;
 	}
 	protected double getMinValue(){
-		return minValue;
+		return getRuleValues().getMinValue();
 	}
 	protected double getMaxValue(){
-		return maxValue;
+		return getRuleValues().getMaxValue();
 	}
 	protected double getThreshold(){
-		return threshold;
+		return getRuleValues().getThreshold();
 	}
 	protected double getValueRange(){
-		return valueRange;
+		return getRuleValues().getValueRange();
 	}
 
 	/* (non-Javadoc)
@@ -102,11 +99,7 @@ public abstract class AbstractRule implements INamed, IRule{
 		}
 	}
 	// </metadata-fields-getters>
-	/* (non-Javadoc)
-	 * @see cl.automind.empathy.rule.IRule#evaluateImpl()
-	 */
-	@Override
-	public abstract double evaluateImpl(Object... params);
+	protected abstract double evaluateImpl(Object... params);
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#evaluate(java.lang.Object)
 	 */
@@ -120,7 +113,7 @@ public abstract class AbstractRule implements INamed, IRule{
 //		}
 		setValue(eval);
 		pushValues();
-		return getValue();
+		return getLastEvaluationValue();
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#canEvaluate(java.lang.Object)
@@ -133,9 +126,9 @@ public abstract class AbstractRule implements INamed, IRule{
 	@Override
 	public final boolean isSelectable(){
 		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::" + getName() +
-				"Value:" + normalize(getValue()) +
+				"Value:" + normalize(getLastEvaluationValue()) +
 				"::Threshold:" + normalize(getThreshold()));
-		return normalize(getValue()) >= normalize(getThreshold());
+		return normalize(getLastEvaluationValue()) >= normalize(getThreshold());
 	}
 	protected final double normalize(double value){
 		if (value < getMinValue()) {
@@ -177,32 +170,32 @@ public abstract class AbstractRule implements INamed, IRule{
 	 * @see cl.automind.empathy.rule.IRule#getValuesMap()
 	 */
 	@Override
-	public Map<String, Object> getValuesMap() {
-		return valuesMap;
+	public Map<String, Object> getMessageValuesMap() {
+		return messageValueMap;
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#clearValues()
 	 */
 	@Override
-	public void clearValues(){
-		getValuesMap().clear();
+	public void clearMessageValues(){
+		getMessageValuesMap().clear();
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#putValue(java.lang.String, java.lang.Object)
 	 */
 	@Override
-	public void putValue(String key, Object value){
-		getValuesMap().put(key, value);
+	public void putMessageValue(String key, Object value){
+		getMessageValuesMap().put(key, value);
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#removeValue(java.lang.String)
 	 */
 	@Override
-	public void removeValue(String key){
-		getValuesMap().remove(key);
+	public void removeMessageValue(String key){
+		getMessageValuesMap().remove(key);
 	}
 	private void pushValues(){
-		getMessage().setDefaultValues(getValuesMap());
+		getMessage().setDefaultValues(getMessageValuesMap());
 	}
 	/* (non-Javadoc)
 	 * @see cl.automind.empathy.rule.IRule#setDataMediator(cl.automind.empathy.rule.DataRuleMediator)
@@ -226,7 +219,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	 * @see cl.automind.empathy.rule.IRule#getValue()
 	 */
 	@Override
-	public double getValue() {
+	public double getLastEvaluationValue() {
 //		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Rule::"+getName()+"::GetValue::"+value);
 		return value;
 	}
@@ -237,6 +230,39 @@ public abstract class AbstractRule implements INamed, IRule{
 	@Override
 	public Object[] getParams() {
 		return params;
+	}
+
+	protected AbstractRule.ValueHolder getRuleValues() {
+		return ruleValues;
+	}
+
+	public static class ValueHolder{
+		private double minValue;
+		private double maxValue;
+		private double threshold;
+		public void setMinValue(double minValue) {
+			this.minValue = minValue;
+		}
+		public double getMinValue() {
+			return minValue;
+		}
+		public void setMaxValue(double maxValue) {
+			this.maxValue = maxValue;
+		}
+		public double getMaxValue() {
+			return maxValue;
+		}
+		public void setThreshold(double threshold) {
+			this.threshold = threshold;
+		}
+		public double getThreshold() {
+			return threshold;
+		}
+		public double getValueRange() {
+			return maxValue - minValue;
+		}
+
+
 	}
 
 }

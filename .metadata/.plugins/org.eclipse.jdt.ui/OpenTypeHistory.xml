@@ -3,9 +3,15 @@
 <typeInfo handle="=EmpathicCore/C:\/Program Files\/Java\/jre6\/lib\/rt.jar&lt;com.sun.corba.se.spi.ior(IdentifiableFactory.class[IdentifiableFactory" modifiers="1537" timestamp="1317628638000"/>
 <typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data.sql{ISqlDataSource.java[ISqlDataSource" modifiers="513" timestamp="1326898182066"/>
 <typeInfo handle="=EmpathicCore/C:\/Program Files\/Java\/jre6\/lib\/rt.jar&lt;java.lang(Exception.class[Exception" modifiers="1" timestamp="1317628638000"/>
-<typeInfo handle="=EmpathicFw/src&lt;cl.automind.empathy.fw.data.web{AbstractWebDataSource.java[AbstractWebDataSource" modifiers="1025" timestamp="1326903788077"/>
+<typeInfo handle="=EmpathicFw/src&lt;cl.automind.empathy.fw.data.web{AbstractWebDataSource.java[AbstractWebDataSource" modifiers="1025" timestamp="1327553376819"/>
 <typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{IQueryable.java[IQueryable" modifiers="513" timestamp="1326899137494"/>
 <typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data.sql{ISqlConnectionInfo.java[ISqlConnectionInfo" modifiers="513" timestamp="1326898100169"/>
 <typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data.web{IWebDataSource.java[IWebDataSource" modifiers="513" timestamp="1326898168009"/>
 <typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{IQueryCriterion.java[IQueryCriterion" modifiers="513" timestamp="1326899105647"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy{AbstractEmpathicPlugin.java[AbstractEmpathicPlugin" modifiers="1025" timestamp="1326903174135"/>
+<typeInfo handle="=EmpathicFw/src&lt;cl.automind.empathy.fw{DefaultEmpathicPlugin.java[DefaultEmpathicPlugin" modifiers="1" timestamp="1326903173969"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.rule{AbstractRule.java[AbstractRule" modifiers="1025" timestamp="1330642246555"/>
+<typeInfo handle="=EmpathicFw/src&lt;cl.automind.empathy.fw.ui{AbstractUiManager.java[AbstractUiManager" modifiers="1025" timestamp="1326902386068"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy.data{QueryCriterion.java[QueryCriterion" modifiers="1" timestamp="1326898625949"/>
+<typeInfo handle="=EmpathicCore/src&lt;cl.automind.empathy{AbstractEmpathicKernel.java[AbstractEmpathicKernel" modifiers="1" timestamp="1329788924722"/>
 </typeInfoHistroy>

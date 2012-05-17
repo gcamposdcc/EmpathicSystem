@@ -70,7 +70,7 @@ function ObserverContext ()
 		function (task, handler)
 		{
 			// if (!this.existsHandlerFor(task)) {
-				console.log("setting handler for '" + task + "'");
+				// console.log("setting handler for '" + task + "'");
 				this.handlers[task] = handler;
 			// }
 		}
@@ -78,7 +78,7 @@ function ObserverContext ()
 		function (task)
 		{
 			if (this.existsHandlerFor(task)) {
-				console.log("removing handler for '" + task + "'");
+				// console.log("removing handler for '" + task + "'");
 				delete this.handlers[task];
 			}
 		}
@@ -93,6 +93,7 @@ function ObserverContext ()
 			if (this.existsHandlerFor(task)) {
 				console.log("handling task '"+task + "'");
 				this.handlers[task].call(this, source, value);
+				// this.removeHandler(task);
 			} else {
 				console.log("no handler for task '"+task + "'");
 			}
@@ -108,4 +109,8 @@ function assert(value, expected)
 {
 	if (value == expected) console.log('all ok: ' + value + " == " + expected);
 	else alert('not ok: ' + value + " != " + expected);
+}
+
+function callAndWait(caller, handler, handler_args, target, method, method_args){
+	
 }

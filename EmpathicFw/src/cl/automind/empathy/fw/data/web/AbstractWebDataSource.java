@@ -19,7 +19,6 @@ import cl.automind.empathy.data.IQueryCriterion;
 import cl.automind.empathy.data.IQueryOption;
 import cl.automind.empathy.data.NamedValuePair;
 import cl.automind.empathy.data.web.IWebDataSource;
-import cl.automind.empathy.data.web.WebMetadata;
 
 public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 	private List<IObserver<IDataSource<T>>> observers;
