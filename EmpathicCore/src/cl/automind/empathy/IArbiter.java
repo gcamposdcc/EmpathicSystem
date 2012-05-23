@@ -135,14 +135,14 @@ public interface IArbiter {
      */
     int timesSelected(String rulename, int ifNotFound);
     /**
-     * Sets the {@link AbstractEmpathicKernel} responsible for this arbiter.
+     * Sets the {@link EmpathicKernel} responsible for this arbiter.
      * @param empathicKernel the kernel
      */
-    void setEmpathicKernel(AbstractEmpathicKernel empathicKernel);
+    void setEmpathicKernel(EmpathicKernel empathicKernel);
     /**
-     * Gets the {@link AbstractEmpathicKernel} responsible for this arbiter.
+     * Gets the {@link EmpathicKernel} responsible for this arbiter.
      * @return
      */
-    AbstractEmpathicKernel getEmpathicKernel();
+    EmpathicKernel getEmpathicKernel();
 
 }

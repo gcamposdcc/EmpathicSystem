@@ -67,7 +67,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement statement, int position) {
+		public void setIn(PreparedStatement statement, int position) {
 			try {
 				statement.setBoolean(position, getValue());
 			} catch (SQLException e) {
@@ -96,7 +96,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement statement, int position) {
+		public void setIn(PreparedStatement statement, int position) {
 			try {
 				statement.setDate(position, getValue());
 			} catch (SQLException e) {
@@ -120,7 +120,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement statement, int position) {
+		public void setIn(PreparedStatement statement, int position) {
 			try {
 				statement.setString(position, getValue());
 			} catch (SQLException e) {
@@ -159,7 +159,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement statement, int position) {
+		public void setIn(PreparedStatement statement, int position) {
 			try {
 				statement.setFloat(position, getValue());
 			} catch (SQLException e) {
@@ -183,7 +183,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement statement, int position) {
+		public void setIn(PreparedStatement statement, int position) {
 			try {
 				statement.setDouble(position, getValue());
 			} catch (SQLException e) {
@@ -207,7 +207,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void setIn(PreparedStatement s, int position) {
 			try {
 				s.setShort(position, getValue());
 			} catch (SQLException e) {
@@ -231,7 +231,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void setIn(PreparedStatement s, int position) {
 			try {
 				s.setInt(position, getValue());
 			} catch (SQLException e) {
@@ -255,7 +255,7 @@ public abstract class SqlPairs {
 		}
 
 		@Override
-		public void set(PreparedStatement s, int position) {
+		public void setIn(PreparedStatement s, int position) {
 			try {
 				s.setLong(position, getValue());
 			} catch (SQLException e) {

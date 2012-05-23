@@ -18,7 +18,7 @@ public abstract class SqlNamedValuePair<V> extends NamedValuePair<V> {
 		this.comparison = comparison;
 	}
 
-	abstract public void set(PreparedStatement statement, int position);
+	abstract public void setIn(PreparedStatement statement, int position);
 
 	public void setComparison(ComparisonType comparison) {
 		this.comparison = comparison;

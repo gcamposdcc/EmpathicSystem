@@ -7,7 +7,7 @@ import cl.automind.empathy.ui.IUiManager;
  * This is class is responsible for the manager containment and
  * administration, as such it should provide the getters and setters
  * to access them and the methods required for their initialization.
- * This class should only be used paired with a {@link AbstractEmpathicKernel}
+ * This class should only be used paired with a {@link EmpathicKernel}
  * @author Guillermo
  */
 public final class EmpathicManagers {

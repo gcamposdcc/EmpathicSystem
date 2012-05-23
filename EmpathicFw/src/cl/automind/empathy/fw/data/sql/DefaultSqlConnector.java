@@ -13,14 +13,22 @@ import java.util.logging.Logger;
 
 import cl.automind.empathy.data.sql.ISqlConnectionInfo;
 import cl.automind.empathy.data.sql.ISqlConnector;
+import cl.automind.empathy.data.sql.ISqlTranslator;
 
 public class DefaultSqlConnector implements ISqlConnector{
 
 	private final ISqlConnectionInfo connectionInfo;
 	private Driver driver;
 	private Connection connection;
+	private ISqlTranslator sqlTranslator;
+	
 	public DefaultSqlConnector(ISqlConnectionInfo connectionInfo){
+		this(connectionInfo, new DefaultSqlTranslator());
+	}
+	
+	public DefaultSqlConnector(ISqlConnectionInfo connectionInfo, ISqlTranslator translator){
 		this.connectionInfo = connectionInfo;
+		setSqlTranslator(translator);
 		try {
 			this.driver = DriverManager.getDriver(getDriverString());
 		} catch (SQLException e){
@@ -38,6 +46,7 @@ public class DefaultSqlConnector implements ISqlConnector{
 				e.printStackTrace();
 			}
 		}
+		openConnection();
 	}
 	@Override
 	public ISqlConnectionInfo getConnectionInfo() {
@@ -92,7 +101,8 @@ public class DefaultSqlConnector implements ISqlConnector{
 			+ getConnectionInfo().getDatabase();
 	}
 	public String getFullConnectionString(){
-		return getDriverString()+"//"+getUrlString();
+		String urlString = getUrlString();
+		return getDriverString() + (Strings.isNullOrEmpty(urlString)? "" : "//" + getUrlString());
 	}
 	protected void setConnection(Connection connection) {
 		this.connection = connection;
@@ -102,7 +112,7 @@ public class DefaultSqlConnector implements ISqlConnector{
 	}
 
 	@Override
-	public Statement getStatement(){
+	public Statement createStatement(){
 		try {
 			Connection conn = getConnection();
 			if (conn == null) {
@@ -132,5 +142,12 @@ public class DefaultSqlConnector implements ISqlConnector{
 	@Override
 	public boolean isConnected() {
 		return getConnection() != null;
+	}
+	public void setSqlTranslator(ISqlTranslator sqlTranslator){
+		this.sqlTranslator = sqlTranslator;
+	}
+	@Override
+	public ISqlTranslator getTranslator() {
+		return sqlTranslator;
 	}
 }

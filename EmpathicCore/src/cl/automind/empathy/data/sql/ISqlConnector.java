@@ -8,6 +8,7 @@ public interface ISqlConnector {
 	boolean isConnected();
 	void openConnection();
 	void closeConnection();
-	Statement getStatement();
+	Statement createStatement();
 	PreparedStatement preparedStatement(String statement);
+	ISqlTranslator getTranslator();
 }

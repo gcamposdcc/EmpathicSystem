@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
 
-import cl.automind.empathy.AbstractEmpathicKernel;
+import cl.automind.empathy.EmpathicKernel;
 import cl.automind.empathy.AbstractEmpathicPlugin;
 
-public class DefaultEmpathicKernel extends AbstractEmpathicKernel{
+public class DefaultEmpathicKernel extends EmpathicKernel{
 	protected static AbstractEmpathicPlugin[] defaultPlugins =
 	{
 		new DefaultEmpathicPlugin()

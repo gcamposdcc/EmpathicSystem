@@ -11,4 +11,5 @@ public @interface Column{
 	String name() default "";
 	int length() default 255;
 	boolean nullable() default false;
+	SqlType type() default SqlType.NONE;
 }

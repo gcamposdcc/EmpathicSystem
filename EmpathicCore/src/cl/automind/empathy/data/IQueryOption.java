@@ -14,6 +14,7 @@ public interface IQueryOption extends INamed{
 		Id {@Override public int getDefaultValue() {return 1;} },
 		None {@Override public int getDefaultValue() {return 0;} },
 		Filter {@Override public int getDefaultValue() {return 10;} },
+		CustomFilter {@Override public int getDefaultValue() {return 10;} },
 		All {@Override public int getDefaultValue() {return 0;} };
 		public int getDefaultValue(){
 			return 0;

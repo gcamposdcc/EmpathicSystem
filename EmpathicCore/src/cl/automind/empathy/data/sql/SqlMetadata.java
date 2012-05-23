@@ -9,5 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface SqlMetadata {
 	public String name() default  "";
-	public NamedQueries queries() default @NamedQueries;
+	public boolean createOnInit() default false;
+	public NamedQuery[] initQueries() default {};
+	public NamedQuery[] namedQueries() default {};
 }

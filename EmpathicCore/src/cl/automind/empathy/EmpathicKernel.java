@@ -22,9 +22,9 @@ import cl.automind.empathy.ui.IUiManager;
  * @author Guillermo
  * @see EmpathicManagers
  */
-public class AbstractEmpathicKernel {
+public class EmpathicKernel {
 
-	public AbstractEmpathicKernel(){
+	public EmpathicKernel(){
 		setManagers(new EmpathicManagers());
 		loadEmpathy();
 		getManagers().getRuleManager().registerRule(EmptyRule.INSTANCE.getName(), EmptyRule.INSTANCE);
@@ -36,7 +36,7 @@ public class AbstractEmpathicKernel {
 	 */
 	private IArbiter arbiter;
 	/**
-	 * Sets the arbiter for the current {@link AbstractEmpathicKernel}
+	 * Sets the arbiter for the current {@link EmpathicKernel}
 	 * @param arbiter the new arbiter
 	 */
 	public final void setArbiter(IArbiter arbiter) {

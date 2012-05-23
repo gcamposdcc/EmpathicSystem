@@ -10,12 +10,16 @@ import java.util.Map;
 public class SqlDescriptor {
 	private Map<String, QueryDescriptor> queryDescriptorsMap;
 	private String idName;
+	private boolean usesId;
 	private List<String> fieldNames;
+	private Map<String, ColumnDescriptor> columnDescriptorMap;
 
 	public SqlDescriptor(){
-		this.queryDescriptorsMap = new HashMap<String, QueryDescriptor>();
-		this.idName = "id";
-		this.fieldNames = new ArrayList<String>();
+		setUsesId(false);
+		setIdName("id");
+		setQueryDescriptorsMap(new HashMap<String, QueryDescriptor>());
+		setFieldNames(new ArrayList<String>());
+		setColumnDescriptorMap(new HashMap<String, ColumnDescriptor>());
 	}
 	public void addQuery(String queryName){
 		if (getQueryDescriptorsMap().containsKey(queryName)) return;
@@ -36,7 +40,7 @@ public class SqlDescriptor {
 		}
 		return Collections.emptyList();
 	}
-	protected void setQueryPositionsMap(Map<String, QueryDescriptor> queryDescriptorsMap) {
+	protected void setQueryDescriptorsMap(Map<String, QueryDescriptor> queryDescriptorsMap) {
 		this.queryDescriptorsMap = queryDescriptorsMap;
 	}
 
@@ -57,5 +61,17 @@ public class SqlDescriptor {
 	}
 	public QueryDescriptor getQueryDescriptor(String queryName){
 		return getQueryDescriptorsMap().get(queryName);
+	}
+	public Map<String, ColumnDescriptor> getColumnDescriptorMap() {
+		return columnDescriptorMap;
+	}
+	public void setColumnDescriptorMap(Map<String, ColumnDescriptor> columnDescriptorMap) {
+		this.columnDescriptorMap = columnDescriptorMap;
+	}
+	public boolean getUsesId() {
+		return usesId;
+	}
+	public void setUsesId(boolean usesId) {
+		this.usesId = usesId;
 	}
 }

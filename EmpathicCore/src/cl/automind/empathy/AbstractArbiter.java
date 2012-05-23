@@ -20,14 +20,14 @@ public abstract class AbstractArbiter implements IArbiter{
 	 */
 	private IArbiterCriterion criterion;
 	/**
-	 * The current responsible {@link AbstractEmpathicKernel}
+	 * The current responsible {@link EmpathicKernel}
 	 */
-	private AbstractEmpathicKernel empathicKernel;
+	private EmpathicKernel empathicKernel;
 	public AbstractArbiter(){
 
 	}
 
-	public AbstractArbiter(AbstractEmpathicKernel kernel, IArbiterCriterion criterion){
+	public AbstractArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
 		setEmpathicKernel(kernel);
 		setCriterion(criterion);
 	}
@@ -175,12 +175,12 @@ public abstract class AbstractArbiter implements IArbiter{
 	}
 
 	@Override
-	public final void setEmpathicKernel(AbstractEmpathicKernel empathicKernel) {
+	public final void setEmpathicKernel(EmpathicKernel empathicKernel) {
 		this.empathicKernel = empathicKernel;
 	}
 
 	@Override
-	public	AbstractEmpathicKernel getEmpathicKernel() {
+	public	EmpathicKernel getEmpathicKernel() {
 		return empathicKernel;
 	}
 }
