@@ -29,7 +29,7 @@ public class SqlQueryBuilder {
 			query += columnDescriptor.isNullable() ? "" : "NOT NULL";
 			query += ", ";
 		}
-		query = query.substring(0, query.length()-1);
+		query = query.lastIndexOf(",") > 0 ? query.substring(0, query.lastIndexOf(",")) : query;
 		query += ");";
 		System.out.println(query);
 		return query;

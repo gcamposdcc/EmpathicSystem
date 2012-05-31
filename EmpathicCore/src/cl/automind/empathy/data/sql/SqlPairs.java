@@ -7,6 +7,7 @@ import cl.automind.empathy.data.Pairs;
 
 public abstract class SqlPairs {
 
+	static public final SqlNamedValuePair<?>[] EMPTY = new SqlNamedValuePair<?>[]{};
 	static public SqlNamedValuePair<Boolean> pair(String key, Boolean value){
 		return new SqlPairs.SqlBoolean(key, value);
 	}

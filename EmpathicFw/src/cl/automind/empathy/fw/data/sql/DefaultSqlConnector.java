@@ -126,7 +126,7 @@ public class DefaultSqlConnector implements ISqlConnector{
 	}
 
 	@Override
-	public PreparedStatement preparedStatement(String statement) {
+	public PreparedStatement prepareStatement(String statement) {
 		try {
 			Connection conn = getConnection();
 			if (conn == null) {

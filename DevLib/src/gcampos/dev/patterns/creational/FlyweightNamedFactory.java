@@ -2,6 +2,7 @@ package gcampos.dev.patterns.creational;
 
 import gcampos.dev.interfaces.structural.INamed;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -61,5 +62,8 @@ public abstract class FlyweightNamedFactory<T> implements NamedFactory<T>{
 	public boolean elementRegistered(INamed named){
 		return getRegistry().containsKey(named.getName());
 	}
-
+	@Override
+	public Collection<String> getNames() {
+		return getRegistry().keySet();
+	}
 }

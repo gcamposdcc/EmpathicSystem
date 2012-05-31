@@ -1,7 +1,12 @@
 package cl.automind.empathy.feedback;
 
-public class EmptyMessage extends AbstractMessage{
-
+public class ForcedMessage extends AbstractMessage{
+	private final String message;
+	public ForcedMessage(String message){
+		super();
+		this.message = message;
+		getContext().setCallingRuleName("NoRule");
+	}
 	@Override
 	public String getName() {
 		return "EMPTY_MESSAGE";
@@ -14,7 +19,7 @@ public class EmptyMessage extends AbstractMessage{
 
 	@Override
 	public String getUnfilteredText() {
-		return "This is the default message, override it in your rule: "+ getContext().getCallingRuleName();
+		return message;
 	}
 
 }

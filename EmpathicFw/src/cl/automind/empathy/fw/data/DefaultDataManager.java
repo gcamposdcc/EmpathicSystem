@@ -64,6 +64,7 @@ public class DefaultDataManager extends AbstractDataManager{
 			return null;
 		}
 		if (source == null && createSpaceIfNotFound()){
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("SourceNotFound::" + dataSourceName);
 			source = createDataSource(dataSourceName, template);
 		}
 		return source;

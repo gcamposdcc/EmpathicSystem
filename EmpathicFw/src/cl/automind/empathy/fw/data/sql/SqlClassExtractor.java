@@ -4,9 +4,10 @@ import gcampos.dev.util.Strings;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 import cl.automind.empathy.data.sql.Column;
 import cl.automind.empathy.data.sql.Id;
@@ -25,16 +26,21 @@ public class SqlClassExtractor<T> {
 	public void setDataSource(AbstractSqlDataSource<T> dataSource) {
 		this.dataSource = dataSource;
 	}
-	
+
 	public SqlClassExtractor(AbstractSqlDataSource<T> dataSource){
 		setDataSource(dataSource);
 	}
-	
-	public void extractTemplateData(T template, Class<?> templateClass) {
+	public void extractTemplateData(){
+		extractTemplateData(getDataSource());
+	}
+	@SuppressWarnings("unchecked")
+	private void extractTemplateData(AbstractSqlDataSource<T> ds) {
 		String idName = "id";
 		String tempFieldName = "";
+		T template = ds.getTemplate(); 
+		Class<T> templateClass = (Class<T>) template.getClass();
 		List<String> fieldNames = new ArrayList<String>();
-		Map<String, ColumnDescriptor> columnDescriptorMap = new HashMap<String, ColumnDescriptor>();
+		Map<String, ColumnDescriptor> columnDescriptorMap = new ConcurrentHashMap<String, ColumnDescriptor>();
 		boolean hasId = false;
 		if (template != null){
 			Column columnMetadata = null;
@@ -48,7 +54,8 @@ public class SqlClassExtractor<T> {
 					SqlType fieldType = columnMetadata.type() != SqlType.NONE ? columnMetadata.type() : SqlType.inferSqlType(field.getType());
 					columnDescriptorMap.put(
 							tempFieldName, 
-							new ColumnDescriptor(tempFieldName, fieldType, columnMetadata.length(), columnMetadata.nullable()));
+							new ColumnDescriptor(tempFieldName, fieldType, columnMetadata.length(), true/*columnMetadata.nullable()*/));
+					// FIXME support
 				} else {
 					idMetadata = field.getAnnotation(Id.class);
 					if (idMetadata != null){
@@ -58,40 +65,47 @@ public class SqlClassExtractor<T> {
 					}
 				}
 			}
-			getDataSource().getDescriptor().setIdName(idName);
-			getDataSource().getDescriptor().setUsesId(hasId);
-			getDataSource().getDescriptor().getFieldNames().addAll(fieldNames);
-			getDataSource().getDescriptor().setColumnDescriptorMap(columnDescriptorMap);
+			ds.getDescriptor().setIdName(idName);
+			ds.getDescriptor().setUsesId(hasId);
+			ds.getDescriptor().setFieldNames(fieldNames);
+			for (String fieldname: ds.getDescriptor().getFieldNames()){
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("FieldName::" + fieldname);
+			}
+//			ds.getDescriptor().getFieldNames().addAll(fieldNames);
+			ds.getDescriptor().setColumnDescriptorMap(columnDescriptorMap);
 		}
+	}
+	public void extractAndBuildQueries(){
 		buildQueries(getDataSource());
 	}
-	public void buildQueries(AbstractSqlDataSource<T> ds){
+	private static void buildQueries(AbstractSqlDataSource<?> ds){		
 		String idName = ds.getName();
 		boolean hasId = ds.getDescriptor().getUsesId();
 		List<String> fieldNames = ds.getDescriptor().getFieldNames();
 		// BUILD QUERIES
-		SqlQueryBuilder queryBuilder = new SqlQueryBuilder(getDataSource());
-		String create = queryBuilder.buildCreateQuery(idName, hasId, getDataSource().getDescriptor().getColumnDescriptorMap());
-		getDataSource().getQueryMap().put("create", create);
+		SqlQueryBuilder queryBuilder = new SqlQueryBuilder(ds);
+		String create = queryBuilder.buildCreateQuery(idName, hasId, ds.getDescriptor().getColumnDescriptorMap());
+		ds.getQueryMap().put("create", create);
 		int fieldCount = fieldNames.size();
 		// BY ID
 		String updateById = queryBuilder.buildUpdateByIdQuery(idName, fieldNames, fieldCount);
-		getDataSource().getQueryMap().put("selectById", "SELECT * FROM " + getDataSource().getName() + " WHERE "+ idName + " = ?;");
-		getDataSource().getDescriptor().addParamToQuery("selectById", idName, 1);
-		getDataSource().getQueryMap().put("deleteById", "DELETE FROM " + getDataSource().getName() + " WHERE "+ idName + " = ?;");
-		getDataSource().getDescriptor().addParamToQuery("deleteById", idName, 1);
-		getDataSource().getQueryMap().put("updataById", updateById);
+		ds.getQueryMap().put("selectById", "SELECT * FROM " + ds.getName() + " WHERE "+ idName + " = ?;");
+		ds.getDescriptor().addParamToQuery("selectById", idName, 1);
+		ds.getQueryMap().put("deleteById", "DELETE FROM " + ds.getName() + " WHERE "+ idName + " = ?;");
+		ds.getDescriptor().addParamToQuery("deleteById", idName, 1);
+		ds.getQueryMap().put("updataById", updateById);
 		// NORMAL
-		getDataSource().getQueryMap().put("insert", queryBuilder.buildInsertQuery(fieldNames, fieldCount, idName, hasId));
-		getDataSource().getQueryMap().put("update", queryBuilder.buildUpdateQuery(fieldNames, fieldCount));
-		getDataSource().getQueryMap().put("delete", queryBuilder.buildDeleteQuery(fieldNames, fieldCount));
-		getDataSource().getQueryMap().put("select", queryBuilder.buildSelectQuery(fieldNames, fieldCount));
-		getDataSource().getQueryMap().put("count", "SELECT count(*) FROM " + getDataSource().getName() + ";");
-		getDataSource().getQueryMap().put("selectAll", "SELECT * FROM " + getDataSource().getName() + ";");
+		ds.getQueryMap().put("insert", queryBuilder.buildInsertQuery(fieldNames, fieldCount, idName, hasId));
+		ds.getQueryMap().put("update", queryBuilder.buildUpdateQuery(fieldNames, fieldCount));
+		ds.getQueryMap().put("delete", queryBuilder.buildDeleteQuery(fieldNames, fieldCount));
+		ds.getQueryMap().put("select", queryBuilder.buildSelectQuery(fieldNames, fieldCount));
+		ds.getQueryMap().put("count", "SELECT count(*) FROM " + ds.getName() + ";");
+		ds.getQueryMap().put("selectAll", "SELECT * FROM " + ds.getName() + ";");
+		ds.getQueryMap().put("drop", "DROP TABLE " + ds.getName() + ";");
 		// CUSTOM
-		getDataSource().getQueryMap().put("updateCustom", queryBuilder.buildUpdateCustomQuery(fieldNames, fieldCount));
-		getDataSource().getQueryMap().put("deleteCustom", "DELETE FROM " + getDataSource().getName());
-		getDataSource().getQueryMap().put("selectCustom", "SELECT * FROM " + getDataSource().getName());
+		ds.getQueryMap().put("updateCustom", queryBuilder.buildUpdateCustomQuery(fieldNames, fieldCount));
+		ds.getQueryMap().put("deleteCustom", "DELETE FROM " + ds.getName());
+		ds.getQueryMap().put("selectCustom", "SELECT * FROM " + ds.getName());
 	}
 
 	public static String extractDataSourceName(SqlMetadata metadata, Class<?> templateClass, Class<?> thisClass) {
@@ -103,7 +117,8 @@ public class SqlClassExtractor<T> {
 		}
 		return name;
 	}
-	public void extractClassMetadata(SqlMetadata metadata){
+	public void extractClassMetadata(){
+		SqlMetadata metadata = getDataSource().getMetadata();
 		if (metadata != null) {
 			if(metadata.namedQueries() != null){
 				for (NamedQuery query: metadata.namedQueries()){
@@ -111,6 +126,12 @@ public class SqlClassExtractor<T> {
 				}
 			}
 		}
+	}
+
+	public void extractAll() {
+		extractClassMetadata();
+		extractTemplateData();
+		extractAndBuildQueries();
 	}
 	
 }

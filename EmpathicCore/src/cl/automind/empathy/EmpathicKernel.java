@@ -8,6 +8,7 @@ import cl.automind.empathy.data.IDataManager;
 import cl.automind.empathy.data.IDataSource;
 import cl.automind.empathy.feedback.AbstractEmotion;
 import cl.automind.empathy.feedback.AbstractMessage;
+import cl.automind.empathy.feedback.ForcedMessage;
 import cl.automind.empathy.rule.DataRuleMediator;
 import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
@@ -99,6 +100,9 @@ public class EmpathicKernel {
 	}
 	public void showEmpathy(AbstractMessage message){
 		getManagers().getUiManager().displayMessage(message);
+	}
+	public void showEmpathy(String message){
+		getManagers().getUiManager().displayMessage(new ForcedMessage(message));
 	}
 	public void showEmpathy(AbstractMessage message, long timeout){
 		getManagers().getUiManager().displayMessage(message);

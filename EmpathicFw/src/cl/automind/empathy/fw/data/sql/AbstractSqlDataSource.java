@@ -28,38 +28,50 @@ import cl.automind.empathy.data.sql.SqlPairs;
 public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	public final static String UPDATE_OLD_FIELD_PREFIX = "#GCUPDOLD";
 	private final Map<String, String> queryMap;
-	private final Map<String, PreparedStatement> preparesdStatementMap;
+	private final Map<String, PreparedStatement> preparedStatementMap;
 	private final Collection<IObserver<IDataSource<T>>> observers;
 	private final String name;
 	private final T template;
 	private final ISqlConnector connector;
 	private final SqlDescriptor descriptor;
+	private final SqlMetadata metadata;
 
 	public AbstractSqlDataSource(T template, ISqlConnector connector){
 		// INIT GLOBALS
 		this.template = template;
 		this.queryMap = new ConcurrentHashMap<String, String>();
 		this.observers = new CopyOnWriteArrayList<IObserver<IDataSource<T>>>();
-		this.preparesdStatementMap = new ConcurrentHashMap<String, PreparedStatement>();
+		this.preparedStatementMap = new ConcurrentHashMap<String, PreparedStatement>();
 		this.connector = connector;
 		this.descriptor = new SqlDescriptor();
 		Class<?> templateClass = template.getClass();
 
 		// METADATA
 		Class<?> thisClass = getCurrentClass();
-		SqlMetadata metadata = thisClass.getAnnotation(SqlMetadata.class);
+		this.metadata = thisClass.getAnnotation(SqlMetadata.class);
 		this.name = SqlClassExtractor.extractDataSourceName(metadata, templateClass, thisClass);
-		SqlClassExtractor<T> extractor = new SqlClassExtractor<T>(this);
-		extractor.extractClassMetadata(metadata);
-		extractor.extractTemplateData(template, templateClass);
-		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Query::" + entry.getKey() + "::" + entry.getValue());
-		}
-		doInitTasks(metadata);
-		buildPrepareStatements();
+		doInitTasks();
 	}
-	private void doInitTasks(SqlMetadata metadata){
-		if (metadata.createOnInit()){
+	public final void drop(){
+		executeNamedUpdate("drop", SqlPairs.EMPTY);
+	}
+	public final void reset(){
+		drop();
+		clearAll();
+		doInitTasks();
+	}
+	private void clearAll(){
+		getDescriptor().setIdName("id");
+		getDescriptor().setUsesId(false);
+		getDescriptor().getFieldNames().clear();
+		getDescriptor().getColumnDescriptorMap().clear();
+		getDescriptor().getQueryDescriptorsMap().clear();
+		getPreparedStatementMap().clear();
+	}
+	private void doInitTasks(){
+		SqlClassExtractor<T> extractor = new SqlClassExtractor<T>(this);
+		extractor.extractAll();
+		if (getMetadata().createOnInit()){
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("CreationalQuery::" + getQueryMap().get("create"));
 			try {
 				getConnector().createStatement().execute(getQueryMap().get("create"));
@@ -78,13 +90,17 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		for (NamedQuery query: metadata.namedQueries()){
 			addPreparedStatement(query.name(), getQueryMap().get(query.name()));
 		}
+		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AddingQuery::" + entry.getKey() + "::" + entry.getValue());
+		}
+		buildPrepareStatements();
 	}
 	private void buildPrepareStatements(){
 		if (getDescriptor().getUsesId()){
 			String[] byId = {"updateById", "selectById", "deleteById"};
 			initPreparedStatements(byId);
 		}
-		String[] queries = {"update", "select", "delete", "insert", "count", "selectAll"};
+		String[] queries = {"drop", "update", "select", "delete", "insert", "count", "selectAll"};
 		initPreparedStatements(queries);
 	}
 	private void initPreparedStatements(String[] queryNames){
@@ -93,8 +109,9 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		}
 	}
 	private void addPreparedStatement(String queryName, String query){
-		try { 
-			getPreparesdStatementMap().put(queryName, getConnector().preparedStatement(query));
+		try {
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AddingPreparedStatement::" + queryName +"::" + query);
+			getPreparedStatementMap().put(queryName, getConnector().prepareStatement(query));
 		} catch (Exception e) { 
 			e.printStackTrace();	
 		}
@@ -140,7 +157,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	@Override
 	public int insert(T value) {
 		int id = -1;
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("insert"));
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get("insert"));
 		ResultSet rs;
 		try {
 			putInPreparedStatement(query, "insert", value);
@@ -157,7 +174,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	@Override
 	public List<Integer> insert(Collection<T> values) {
 		List<Integer> ids = new ArrayList<Integer>();
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("insert"));
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get("insert"));
 		ResultSet rs;
 		for(T value: values){
 			try {
@@ -179,7 +196,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 	@Override
 	public int count() {
-		PreparedStatement count = getConnector().preparedStatement(getQueryMap().get("count"));
+		PreparedStatement count = getConnector().prepareStatement(getQueryMap().get("count"));
 		ResultSet rs;
 		int total = 0;
 		try {
@@ -230,23 +247,43 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		return rs!= null? parse(rs) : new ArrayList<T>();
 	}
 	@Override
+	public int executeNamedUpdate(String queryName, SqlNamedValuePair<?>... constrains) {
+		verifyConnection();
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get(queryName));
+		fillPreparedStatement(query, constrains);
+		try {
+			return query.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	@Override
 	public ResultSet executeCustomNamedQuery(String queryName, SqlNamedValuePair<?>... constrains) {
-		if (!getConnector().isConnected()){
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("SqlSourceNotConnected::Connecting");
-			getConnector().openConnection();
-		}
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingCustomNamedQuery::" + queryName + "::" + getQueryMap().get(queryName));
+		verifyConnection();
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get(queryName));
+		fillPreparedStatement(query, constrains);
 		ResultSet output = null;
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get(queryName));
-		int index = 1;
-		for(SqlNamedValuePair<?> constrain: constrains){
-			constrain.setIn(query, index++);
-		}
 		try {
 			output = query.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return output;
+	}
+	private PreparedStatement fillPreparedStatement(PreparedStatement query, SqlNamedValuePair<?>... constrains) {
+		int index = 1;
+		for(SqlNamedValuePair<?> constrain: constrains){
+			constrain.setIn(query, index++);
+		}
+		return query;
+	}
+	private void verifyConnection() {
+		if (!getConnector().isConnected()){
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("SqlSourceNotConnected::Connecting");
+			getConnector().openConnection();
+		}
 	}
 	@Override
 	public T getTemplate() {
@@ -276,7 +313,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			try {
 				String queryName = "select";
 				String queryString = getQueryMap().get(queryName);
-				PreparedStatement query = getPreparesdStatementMap().get(queryName);
+				PreparedStatement query = getPreparedStatementMap().get(queryName);
 				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 				putInPreparedStatement(query, queryName, criteria);
 				ResultSet rs = query.executeQuery();
@@ -291,7 +328,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 			ResultSet rs = null;
 			try {
-				rs = getConnector().preparedStatement(queryString).executeQuery();
+				rs = getConnector().prepareStatement(queryString).executeQuery();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -300,7 +337,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	}
 
 	public T selectById(int id) {
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectById"));
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get("selectById"));
 		ResultSet rs;
 		List<T> result = new ArrayList<T>();
 		try {
@@ -314,7 +351,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	}
 
 	public List<T> selectAll() {
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("selectAll"));
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get("selectAll"));
 		ResultSet rs;
 		List<T> result = new ArrayList<T>();
 		try {
@@ -331,7 +368,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			String queryName = "updateById";
 			String queryString = getQueryMap().get(queryName);
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
-			PreparedStatement query = getConnector().preparedStatement(queryString);
+			PreparedStatement query = getConnector().prepareStatement(queryString);
 			try {
 				SqlNamedValuePair<Integer> idPair = SqlPairs.pair(getDescriptor().getIdName(), option.getValue());
 				for (Integer index : getDescriptor().getParamPosition(queryName, UPDATE_OLD_FIELD_PREFIX +idPair.getKey())){
@@ -347,7 +384,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			try {
 				String queryName = "update";
 				String queryString = getQueryMap().get(queryName);
-				PreparedStatement query = getPreparesdStatementMap().get(queryName);
+				PreparedStatement query = getPreparedStatementMap().get(queryName);
 				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 				putInPreparedStatement(query, queryName, criteria);
 				query.execute();
@@ -358,7 +395,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		} else {
 			String queryName = "updateCustom";
 			String queryString = completeQuery(getQueryMap().get(queryName), criteria);
-			PreparedStatement query = getConnector().preparedStatement(queryString);
+			PreparedStatement query = getConnector().prepareStatement(queryString);
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 			try {
 				putInPreparedStatement(query, queryName, value);
@@ -378,7 +415,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			try {
 				String queryName = "delete";
 				String queryString = getQueryMap().get(queryName);
-				PreparedStatement query = getPreparesdStatementMap().get(queryName);
+				PreparedStatement query = getPreparedStatementMap().get(queryName);
 				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 				putInPreparedStatement(query, queryName, criteria);
 				query.execute();
@@ -389,7 +426,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 			String queryName = "deleteCustom";
 			String queryString = completeQuery(getQueryMap().get(queryName), criteria);
 			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
-			PreparedStatement query = getConnector().preparedStatement(queryString);
+			PreparedStatement query = getConnector().prepareStatement(queryString);
 			try {
 				query.execute();
 			} catch (SQLException e) {
@@ -400,7 +437,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		return true;
 	}
 	private boolean deleteById(int id){
-		PreparedStatement query = getConnector().preparedStatement(getQueryMap().get("deleteById"));
+		PreparedStatement query = getConnector().prepareStatement(getQueryMap().get("deleteById"));
 		try {
 			query.setInt(0, id);
 			query.execute();
@@ -439,7 +476,10 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		return queryString;
 	}
 
-	public Map<String, PreparedStatement> getPreparesdStatementMap() {
-		return preparesdStatementMap;
+	public Map<String, PreparedStatement> getPreparedStatementMap() {
+		return preparedStatementMap;
+	}
+	public SqlMetadata getMetadata() {
+		return metadata;
 	}
 }

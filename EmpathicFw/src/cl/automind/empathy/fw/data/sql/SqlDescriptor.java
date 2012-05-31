@@ -44,7 +44,7 @@ public class SqlDescriptor {
 		this.queryDescriptorsMap = queryDescriptorsMap;
 	}
 
-	private Map<String, QueryDescriptor> getQueryDescriptorsMap() {
+	protected Map<String, QueryDescriptor> getQueryDescriptorsMap() {
 		return queryDescriptorsMap;
 	}
 	public void setIdName(String idName) {

@@ -8,6 +8,7 @@ import cl.automind.empathy.data.IDataSource;
 
 public interface ISqlDataSource<T> extends IDataSource<T> {
 	ISqlConnector getConnector();
+	int executeNamedUpdate(String queryName, SqlNamedValuePair<?>... constrains);
 	ResultSet executeCustomNamedQuery(String queryName, SqlNamedValuePair<?>... constrains);
 	List<T> executeNamedQuery(String queryName, SqlNamedValuePair<?>... constrains);
 	List<T> parse(ResultSet rs);

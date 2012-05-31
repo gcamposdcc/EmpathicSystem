@@ -9,6 +9,6 @@ public interface ISqlConnector {
 	void openConnection();
 	void closeConnection();
 	Statement createStatement();
-	PreparedStatement preparedStatement(String statement);
+	PreparedStatement prepareStatement(String statement);
 	ISqlTranslator getTranslator();
 }

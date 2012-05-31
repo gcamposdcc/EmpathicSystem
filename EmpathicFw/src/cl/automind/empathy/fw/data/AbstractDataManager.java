@@ -70,6 +70,7 @@ public abstract class AbstractDataManager implements IDataManager{
 	public <T> List<T> getValue(String dataSourceName, IQueryOption option, IQueryCriterion<T>... criteria){
 		return ((IDataSource<T>)getDataSource(dataSourceName)).select(option, criteria);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> getAll(String dataSourceName, T template){
 		IDataSource<T> source;
