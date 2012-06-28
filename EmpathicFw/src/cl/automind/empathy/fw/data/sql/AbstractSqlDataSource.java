@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,6 +36,8 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	private final ISqlConnector connector;
 	private final SqlDescriptor descriptor;
 	private final SqlMetadata metadata;
+	
+	public static boolean DEBUG = false;
 
 	public AbstractSqlDataSource(T template, ISqlConnector connector){
 		// INIT GLOBALS
@@ -72,7 +75,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		SqlClassExtractor<T> extractor = new SqlClassExtractor<T>(this);
 		extractor.extractAll();
 		if (getMetadata().createOnInit()){
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("CreationalQuery::" + getQueryMap().get("create"));
+			if (DEBUG) Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("CreationalQuery::" + getQueryMap().get("create"));
 			try {
 				getConnector().createStatement().execute(getQueryMap().get("create"));
 			} catch (SQLException e) {
@@ -81,7 +84,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		}
 		for (NamedQuery query: metadata.initQueries()){
 			try {
-				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("StartupQuery::" + query.query());
+				if (DEBUG) Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("StartupQuery::" + query.query());
 				getConnector().createStatement().execute(query.query());
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -90,8 +93,10 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		for (NamedQuery query: metadata.namedQueries()){
 			addPreparedStatement(query.name(), getQueryMap().get(query.name()));
 		}
-		for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AddingQuery::" + entry.getKey() + "::" + entry.getValue());
+		if (DEBUG) {
+			for (Map.Entry<String, String> entry: getQueryMap().entrySet()){
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AddingQuery::" + entry.getKey() + "::" + entry.getValue());
+			}
 		}
 		buildPrepareStatements();
 	}
@@ -110,7 +115,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 	}
 	private void addPreparedStatement(String queryName, String query){
 		try {
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AddingPreparedStatement::" + queryName +"::" + query);
+			if (DEBUG) Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AddingPreparedStatement::" + queryName +"::" + query);
 			getPreparedStatementMap().put(queryName, getConnector().prepareStatement(query));
 		} catch (Exception e) { 
 			e.printStackTrace();	
@@ -120,7 +125,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		Class<?> thisClass = getClass();
 		if (thisClass.isAnonymousClass()){
 			thisClass = thisClass.getSuperclass();
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
+			if (DEBUG) Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("AnonymousClassDetected::Parent::" + thisClass.getSimpleName());
 		}
 		return thisClass;
 	}
@@ -161,7 +166,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		ResultSet rs;
 		try {
 			putInPreparedStatement(query, "insert", value);
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(getQueryMap().get("insert"));
+			if (DEBUG) Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(getQueryMap().get("insert"));
 			rs = query.executeQuery();
 			rs.next();
 			id = rs.getInt(1);
@@ -191,7 +196,7 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 
 	@Override
 	public void clear() {
-		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ClearMethodNotImplemented");
+		if (DEBUG) Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ClearMethodNotImplemented");
 	}
 
 	@Override
@@ -241,6 +246,9 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 		return queryMap;
 	}
 
+	public Map<String, String> getInmutableQueryMap(){
+		return Collections.unmodifiableMap(queryMap);
+	}
 	@Override
 	public List<T> executeNamedQuery(String queryName, SqlNamedValuePair<?>... constrains) {
 		ResultSet rs = executeCustomNamedQuery(queryName, constrains);
@@ -316,6 +324,30 @@ public abstract class AbstractSqlDataSource<T> implements ISqlDataSource<T> {
 				PreparedStatement query = getPreparedStatementMap().get(queryName);
 				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
 				putInPreparedStatement(query, queryName, criteria);
+				ResultSet rs = query.executeQuery();
+				return parse(rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return new ArrayList<T>();
+		} else if (option.getType() == IQueryOption.Type.Query){
+			try{
+				String queryName = option.getName();
+				String queryString = getQueryMap().get(queryName);
+				PreparedStatement query = getPreparedStatementMap().get(queryName);
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("ExecutingQuery::" + queryName + "::" + queryString);
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(query.toString());
+				String args = "Args";
+				List<SqlNamedValuePair<?>> pairs = new ArrayList<SqlNamedValuePair<?>>();
+				for(IQueryCriterion<T> criterion:criteria){
+					for(NamedValuePair<?> pair: criterion.getParams()){
+						pairs.add((SqlNamedValuePair<?>)pair);
+						args += "::" + pair.getName() + " = " + pair.getValue();
+					}
+				}
+				Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(args);
+				SqlNamedValuePair<?>[] pairArray = new SqlNamedValuePair<?>[pairs.size()];
+				fillPreparedStatement(query, pairs.toArray(pairArray));
 				ResultSet rs = query.executeQuery();
 				return parse(rs);
 			} catch (SQLException e) {

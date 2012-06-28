@@ -20,7 +20,7 @@ public abstract class FlyweightNamedFactory<T> implements NamedFactory<T>{
 	}
 
 	@Override
-	public <TI extends INamed> T createElement(TI param) {
+	public T createElement(INamed param) {
 		return isValidName(param)? getRegistry().get(param.getName()): null;
 	}
 	@Override

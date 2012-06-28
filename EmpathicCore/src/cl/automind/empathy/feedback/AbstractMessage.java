@@ -9,7 +9,7 @@ import java.util.Map;
 
 public abstract class AbstractMessage implements INamed{
 	public final static String KEY_PREFIX = "@";
-	public final static String KEY_SUFFIX = "";
+	public final static String KEY_SUFFIX = "@";
 	public final static String key(String value){
 		return KEY_PREFIX + value + KEY_SUFFIX;
 	}

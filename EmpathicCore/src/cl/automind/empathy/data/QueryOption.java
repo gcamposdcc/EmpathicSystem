@@ -3,18 +3,21 @@ package cl.automind.empathy.data;
 public class QueryOption implements IQueryOption{
 	private IQueryOption.Type type;
 	private int value;
+	private String name;
 
 	public QueryOption(){
-		setType(Type.None);
-		setValue(0);
+		this(Type.None, Type.None.getDefaultValue(), Type.None.toString());
 	}
 	public QueryOption(Type type){
-		setType(type);
-		setValue(type.getDefaultValue());
+		this(type, type.getDefaultValue());
 	}
 	public QueryOption(Type type, int value){
+		this(type, value, type.toString());
+	}
+	public QueryOption(Type type, int value, String name){
 		setType(type);
 		setValue(value);
+		setName(name);
 	}
 
 	@Override
@@ -35,6 +38,10 @@ public class QueryOption implements IQueryOption{
 	}
 	@Override
 	public String getName() {
-		return getType().toString();
+		return name;
+	}
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 }

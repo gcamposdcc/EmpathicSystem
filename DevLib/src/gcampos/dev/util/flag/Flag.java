@@ -18,6 +18,12 @@ public class Flag implements INamed {
 		this.longFlag = fix(longName);
 		this.task = task;
 	}
+	public Flag(String name, String shortName, String longName, FlagTask task){
+		this.name = name;
+		this.shortFlag = fix(shortName);
+		this.longFlag = fix(longName);
+		this.task = task;
+	}
 	private static String fix(String s){
 		String fixed = s;
 		while(fixed.indexOf("-") == 0){

@@ -24,4 +24,11 @@ public abstract class QueryOptions {
 	static public IQueryOption get(Type type, int value){
 		return new QueryOption(type, value);
 	}
+	static public IQueryOption get(Type type, int value, String name){
+		return new QueryOption(type, value, name);
+	}
+	
+	static public IQueryOption sql(String query){
+		return new QueryOption(Type.Query, Type.Query.getDefaultValue(), query);
+	}
 }

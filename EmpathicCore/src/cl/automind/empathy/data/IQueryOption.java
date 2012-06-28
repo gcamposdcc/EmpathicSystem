@@ -5,6 +5,8 @@ import gcampos.dev.interfaces.structural.INamed;
 public interface IQueryOption extends INamed{
 	int getValue();
 	void setValue(int value);
+	String getName();
+	void setName(String name);
 	Type getType();
 	void setType(Type type);
 	public enum Type{
@@ -15,7 +17,8 @@ public interface IQueryOption extends INamed{
 		None {@Override public int getDefaultValue() {return 0;} },
 		Filter {@Override public int getDefaultValue() {return 10;} },
 		CustomFilter {@Override public int getDefaultValue() {return 10;} },
-		All {@Override public int getDefaultValue() {return 0;} };
+		All {@Override public int getDefaultValue() {return 0;} },
+		Query {@Override public int getDefaultValue() {return 0;} };
 		public int getDefaultValue(){
 			return 0;
 		}

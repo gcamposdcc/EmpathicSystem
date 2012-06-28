@@ -74,16 +74,16 @@ public abstract class AbstractRule implements INamed, IRule{
 	public String[] getStrategies(){
 		return strategies;
 	}
-	protected double getMinValue(){
+	public double getMinValue(){
 		return getRuleValues().getMinValue();
 	}
-	protected double getMaxValue(){
+	public double getMaxValue(){
 		return getRuleValues().getMaxValue();
 	}
-	protected double getThreshold(){
+	public double getThreshold(){
 		return getRuleValues().getThreshold();
 	}
-	protected double getValueRange(){
+	public double getValueRange(){
 		return getRuleValues().getValueRange();
 	}
 
