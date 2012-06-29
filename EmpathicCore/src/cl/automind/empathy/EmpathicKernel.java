@@ -199,7 +199,7 @@ public class EmpathicKernel {
 	}
 
 	public void triggerEmpathy(){
-		showEmpathy(getArbiter().getValidRule().getMessage());
+		showEmpathy();
 	}
 	public void triggerEmpathy(long millis){
 		showEmpathy(getArbiter().getValidRule().getMessage(), millis);
