@@ -19,7 +19,7 @@ import cl.automind.empathy.feedback.EmptyMessage;
  * @author Guillermo
  */
 public abstract class AbstractRule implements INamed, IRule{
-	private AbstractMessage message = new EmptyMessage();
+	private AbstractMessage message;
 	private final Map<String, Object> messageValueMap = new HashMap<String, Object>();
 	private DataRuleMediator dataMediator;
 	private Object[] params = {};
@@ -52,6 +52,7 @@ public abstract class AbstractRule implements INamed, IRule{
 		getRuleValues().setMaxValue(metadata != null ? metadata.maxVal() : RuleMetadata.MAX_VALUE);
 		getRuleValues().setThreshold(metadata != null ? metadata.threshold() : RuleMetadata.THRESHOLD);
 		// </metadata-fields-init>
+		setMessage(getTemplateMessage());
 	}
 	public AbstractRule(DataRuleMediator dataMediator){
 		this();
@@ -106,11 +107,7 @@ public abstract class AbstractRule implements INamed, IRule{
 	@Override
 	public final double evaluate(Object... params){
 		double eval = 0;
-//		try{
-			eval = evaluateImpl(params);
-//		} catch (Exception e){
-//
-//		}
+		eval = evaluateImpl(params);
 		setValue(eval);
 		pushValues();
 		return getLastEvaluationValue();
@@ -263,6 +260,10 @@ public abstract class AbstractRule implements INamed, IRule{
 		}
 
 
+	}
+
+	public AbstractMessage getTemplateMessage() {
+		return new EmptyMessage();
 	}
 
 }
