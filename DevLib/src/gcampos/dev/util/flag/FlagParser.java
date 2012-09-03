@@ -34,6 +34,11 @@ public class FlagParser {
 		Map<String, Collection<String>> flagArgsMap = new HashMap<String, Collection<String>>();
 		getFlagsUsed().clear();
 		Flag flag;
+		String inputString = "";
+		for(String s: args){
+			inputString += s + " ";
+		}
+		LOGGER.info("InputString::" + inputString);
 		for (int i = 0; i < args.length; i++){
 			boolean shortFlag = true;
 			if (args[i].startsWith("-")) {

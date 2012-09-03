@@ -23,7 +23,6 @@ public class SimpleHttpClient extends AbstractHttpClient{
 	@Override
 	public String sendRequest() {
         try {
-
             // Send the request
             URL url = new URL(getUrl()+getRequestParamString());
             URLConnection conn = url.openConnection();

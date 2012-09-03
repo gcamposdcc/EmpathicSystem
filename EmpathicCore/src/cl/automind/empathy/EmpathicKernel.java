@@ -2,6 +2,7 @@ package cl.automind.empathy;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import cl.automind.empathy.data.IDataManager;
@@ -26,6 +27,7 @@ import cl.automind.empathy.ui.IUiManager;
 public class EmpathicKernel {
 
 	public EmpathicKernel(){
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.WARNING);
 		setManagers(new EmpathicManagers());
 		loadEmpathy();
 		getManagers().getRuleManager().registerRule(EmptyRule.INSTANCE.getName(), EmptyRule.INSTANCE);
