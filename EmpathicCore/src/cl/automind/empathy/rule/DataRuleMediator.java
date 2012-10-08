@@ -18,6 +18,7 @@ public class DataRuleMediator {
 	private final void setRuleManager(IRuleManager ruleManager) {
 		this.ruleManager = ruleManager;
 	}
+	@SuppressWarnings("unused")
 	private final IRuleManager getRuleManager() {
 		return ruleManager;
 	}

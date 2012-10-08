@@ -13,4 +13,6 @@ public interface ISqlDataSource<T> extends IDataSource<T> {
 	List<T> executeNamedQuery(String queryName, SqlNamedValuePair<?>... constrains);
 	List<T> parse(ResultSet rs);
 	Collection<SqlNamedValuePair<?>> toPairs(T target);
+	String getSchema();
+	String getTablename();
 }

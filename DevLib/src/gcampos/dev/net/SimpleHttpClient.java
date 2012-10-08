@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
-
 
 public class SimpleHttpClient extends AbstractHttpClient{
 
@@ -24,9 +23,22 @@ public class SimpleHttpClient extends AbstractHttpClient{
 	public String sendRequest() {
         try {
             // Send the request
-            URL url = new URL(getUrl()+getRequestParamString());
+        	URI baseUri = null;
+        	URI fullUri = null;
+        	try {
+				baseUri = new URI(getUrl());
+				fullUri = new URI(
+					baseUri.getScheme(), baseUri.getAuthority(), baseUri.getPath(), getRequestParamString(), null);
+            	System.out.println("SimpleClient::Connect::URI"+ fullUri.toString());
+            	System.out.println("SimpleClient::Connect::URI"+ fullUri.toASCIIString());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+//            URL url = fullUri!= null? fullUri.toURL() : new URL(getUrl() + "?" + getRequestParamString());
+            URL url = fullUri!= null? new URL(fullUri.toASCIIString()) : new URL(getUrl() + "?" + escape(getRequestParamString()));
+//        	URL url = new URL(getUrl() + "?" + getRequestParamString());
             URLConnection conn = url.openConnection();
-        	Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info(""+conn.getURL());
+        	System.out.println("SimpleClient::Connect"+ conn.getURL());
             conn.connect();
 
             Map<String, List<String>> headers = conn.getHeaderFields();

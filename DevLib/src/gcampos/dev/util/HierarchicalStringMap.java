@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class HierarchicalStringMap<T> implements  Map<String, T>{
 
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -1741643963214032417L;
 
 	@Override

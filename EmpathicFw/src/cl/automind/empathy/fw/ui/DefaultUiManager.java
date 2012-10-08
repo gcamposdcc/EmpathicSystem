@@ -32,7 +32,7 @@ public class DefaultUiManager extends AbstractUiManager{
 				AbstractMessage message = getCurrentMessage();
 				try{ Thread.sleep(5000); }
 				catch(Exception e){ Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).warning(e.getMessage());}
-				finally {hideMessage(message); }
+				finally { hideMessage(message); }
 			}
 		};
 		setShowing(true);

@@ -47,6 +47,7 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 					thisClass.getSimpleName().replaceAll("DataSource", "")
 					: metadata.name().trim();
 			this.useSameUrl = metadata.useSameUrl();
+			this.defaultUrl = metadata.defaultUrl();
 			if (metadata.useSameUrl()){
 				this.insertUrl = metadata.defaultUrl();
 				this.deleteUrl = metadata.defaultUrl();
@@ -71,15 +72,28 @@ public abstract class AbstractWebDataSource<T> implements IWebDataSource<T> {
 	@Override
 	public int insert(T value) {
 		String message = toWebString(value);
-		IHttpClient client = getHttpClient();
+		String[] params = message.split("&");
+		
+		final IHttpClient client = getHttpClient();
+		System.out.println(client.getClass());
+		System.out.println(useSameUrl() + "?" + getDefaultUrl() + ":" + getInsertUrl());
 		client.setUrl(useSameUrl() ? getDefaultUrl() : getInsertUrl());
-		client.addRequestParameter("new", message);
+		System.out.println("DataSource:"+getName()+"::Insert:"+(useSameUrl() ? getDefaultUrl() : getInsertUrl()));
+//		client.addRequestParameter("new", message);
+		String[] paramSplit = null;
+		for(String param: params){
+			if (param.isEmpty()) continue;
+			paramSplit = param.split("=");
+			if (paramSplit.length != 2) continue;
+			client.addRequestParameter(paramSplit[0], paramSplit[1]);
+			System.out.println("Adding param " + paramSplit[0] + "=" + paramSplit[1]);
+		}
 		String response = sendRequest(client);
 		int id = -1;
 		try{
 			id = Integer.parseInt(response);
 		} catch (Exception e){
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return id;
 	}

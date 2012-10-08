@@ -8,6 +8,19 @@ import cl.automind.empathy.rule.AbstractRule;
 import cl.automind.empathy.rule.IRule;
 import cl.automind.empathy.rule.RuleUsageData;
 
+/**
+ * The interface for implementing the classes 'responsible' 
+ * for selecting the {@link IRule} that will generate
+ * the {@link AbstractMessage} containing the feedback message for the user.
+ * Due to the fact that almost all the job is done in this {@link IArbiter}'s 
+ * {@link IArbiterCriterion}, this class is basically a <i>mediator</i>
+ * between an {@link EmpathicKernel} and an {@link IArbiterCriterion}.
+ * Besides that, this class keeps track of the different rules selected over time.
+ * The communication between this arbiter and its criterions is done using the
+ * <i>visitor</i> pattern.
+ * @author Guillermo
+ *
+ */
 public interface IArbiter {
 
     /**

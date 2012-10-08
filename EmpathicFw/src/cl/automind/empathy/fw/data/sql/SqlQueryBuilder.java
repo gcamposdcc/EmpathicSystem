@@ -21,7 +21,7 @@ public class SqlQueryBuilder {
 	}
 	public String buildCreateQuery(String idName, boolean hasId, Map<String, ColumnDescriptor> columnDescriptorMap){
 		String query = "";
-		query += "CREATE TABLE " + getDataSource().getName() + " (";
+		query += "CREATE TABLE " + getDataSource().getTablename() + " (";
 		for (ColumnDescriptor columnDescriptor : columnDescriptorMap.values()){
 			query += columnDescriptor.getName() + " ";
 			query += getDataSource().getConnector().getTranslator().toSqlType(columnDescriptor.getType());
@@ -35,7 +35,7 @@ public class SqlQueryBuilder {
 		return query;
 	}
 	public String buildUpdateByIdQuery(String idName, List<String> fieldNames, int fieldCount) {
-		String updateById = "UPDATE " + getDataSource().getName() + " SET ";
+		String updateById = "UPDATE " + getDataSource().getTablename() + " SET ";
 		if (fieldCount > 0) {
 			for (int i = 0; i < fieldCount; i++){
 				updateById += fieldNames.get(i) + " =" + ((i == fieldCount - 1) ? " ? " : " ?, ");
@@ -48,7 +48,7 @@ public class SqlQueryBuilder {
 	}
 
 	public String buildSelectQuery(List<String> fieldNames, int fieldCount) {
-		String query = "SELECT * FROM " + getDataSource().getName() + " WHERE ";
+		String query = "SELECT * FROM " + getDataSource().getTablename() + " WHERE ";
 		if (fieldCount > 0) {
 			SqlType fieldType = SqlType.NONE;
 			for (int i = 0; i < fieldCount; i++){
@@ -64,7 +64,7 @@ public class SqlQueryBuilder {
 	}
 	
 	public String buildDeleteQuery(List<String> fieldNames, int fieldCount) {
-		String query = "DELETE FROM " + getDataSource().getName() + " WHERE ";
+		String query = "DELETE FROM " + getDataSource().getTablename() + " WHERE ";
 		if (fieldCount > 0) {
 			SqlType fieldType = SqlType.NONE;
 			for (int i = 0; i < fieldCount; i++){
@@ -80,7 +80,7 @@ public class SqlQueryBuilder {
 	}
 
 	public String buildUpdateCustomQuery(List<String> fieldNames, int fieldCount) {
-		String query = "UPDATE " + getDataSource().getName() + " SET ";
+		String query = "UPDATE " + getDataSource().getTablename() + " SET ";
 		if (fieldCount > 0) {
 			for (int i = 0; i < fieldCount; i++){
 				query += fieldNames.get(i) + " =" + ((i == fieldCount - 1) ? " ? " : " ?, ");
@@ -92,7 +92,7 @@ public class SqlQueryBuilder {
 	}
 	
 	public String buildUpdateQuery(List<String> fieldNames, int fieldCount) {
-		String query = "UPDATE " + getDataSource().getName() + " SET ";
+		String query = "UPDATE " + getDataSource().getTablename() + " SET ";
 		if (fieldCount > 0) {
 			for (int i = 0; i < fieldCount; i++){
 				query += fieldNames.get(i) + " =" + ((i == fieldCount - 1) ? " ? " : " ?, ");
@@ -116,7 +116,7 @@ public class SqlQueryBuilder {
 	}
 
 	public String buildInsertQuery(List<String> fieldNames, int fieldCount, String idName, boolean hasId) {
-		String insert = "INSERT INTO "+ getDataSource().getName() + " ";
+		String insert = "INSERT INTO "+ getDataSource().getTablename() + " ";
 		if (fieldCount > 0 ) {
 			for (int i = 0; i < fieldCount; i++){
 				insert += (i == 0 ? "(" : ", ") + fieldNames.get(i);

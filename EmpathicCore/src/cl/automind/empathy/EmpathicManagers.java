@@ -13,41 +13,68 @@ import cl.automind.empathy.ui.IUiManager;
 public final class EmpathicManagers {
 	/**
 	 * The manager responsible of the data management.
-	 * @see AbstractDataManager
+	 * @see IDataManager
 	 */
 	private IDataManager dataManager;
 	/**
 	 * The manager responsible of the rule management.
-	 * @see AbstractRuleManager
+	 * @see IRuleManager
 	 */
 	private IRuleManager ruleManager;
 	/**
 	 * The manager responsible of the ui operations.
-	 * @see AbstractUiManager
+	 * @see IUiManager
 	 */
 	private IUiManager uiManager;
 
 	// GETTERS AND SETTERS
+	/**
+	 * Setter for the data manager
+	 * @param dataManager the new data manager
+	 * @see IDataManager
+	 */
 	public void setDataManager(IDataManager dataManager) {
 		this.dataManager = dataManager;
 	}
 
+	/**
+	 * Getter for the data manager
+	 * @see IDataManager
+	 */
 	public IDataManager getDataManager() {
 		return dataManager;
 	}
 
+	/**
+	 * Setter for the user interface manager
+	 * @param uiManager the new user interface manager
+	 * @see IUiManager
+	 */
 	public void setUiManager(IUiManager uiManager) {
 		this.uiManager = uiManager;
 	}
 
+	/**
+	 * Getter for the user interface manager
+	 * @see IUiManager
+	 */
 	public IUiManager getUiManager() {
 		return uiManager;
 	}
 
+	/**
+	 * Setter for the rule manager
+	 * @param ruleManager the new rule manager
+	 * @see IRuleManager
+	 */
 	public void setRuleManager(IRuleManager ruleManager) {
 		this.ruleManager = ruleManager;
 	}
 
+	/**
+	 * Getter for the rule manager
+	 * @see IRuleManager
+	 */
 	public IRuleManager getRuleManager() {
 		return ruleManager;
 	}

@@ -10,6 +10,18 @@ import cl.automind.empathy.rule.EmptyRule;
 import cl.automind.empathy.rule.IRule;
 import cl.automind.empathy.rule.RuleUsageData;
 
+/**
+ * The class 'responsible' for selecting the {@link IRule} that will generate
+ * the {@link AbstractMessage} containing the feedback message for the user.
+ * Due to the fact that almost all the job is done in this {@link IArbiter}'s 
+ * {@link IArbiterCriterion}, this class is basically a <i>mediator</i>
+ * between an {@link EmpathicKernel} and an {@link IArbiterCriterion}.
+ * Besides that, this class keeps track of the different rules selected over time.
+ * The communication between this arbiter and its criterions is done using the
+ * <i>visitor</i> pattern.
+ * @author Guillermo
+ *
+ */
 public abstract class AbstractArbiter implements IArbiter{
 	/**
 	 * The current selected {@link IRule}
@@ -23,11 +35,19 @@ public abstract class AbstractArbiter implements IArbiter{
 	 * The current responsible {@link EmpathicKernel}
 	 */
 	private EmpathicKernel empathicKernel;
-	public AbstractArbiter(){
+	/**
+	 * Creates an empty arbiter with no empathic kernel and no criterion.
+	 */
+	protected AbstractArbiter(){
 
 	}
-
-	public AbstractArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
+	/**
+	 * Creates an arbiter using the given {@link EmpathicKernel} and 
+	 * {@link IArbiterCriterion}.
+	 * @param kernel The kernel from where the rules are extracted
+	 * @param criterion The criterion for rule selection
+	 */
+	protected AbstractArbiter(EmpathicKernel kernel, IArbiterCriterion criterion){
 		setEmpathicKernel(kernel);
 		setCriterion(criterion);
 	}

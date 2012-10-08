@@ -8,6 +8,11 @@ import cl.automind.empathy.EmpathicKernel;
 import cl.automind.empathy.AbstractEmpathicPlugin;
 
 public class DefaultEmpathicKernel extends EmpathicKernel{
+	
+	public DefaultEmpathicKernel() {
+		initEmpathy();
+	}
+	
 	protected static AbstractEmpathicPlugin[] defaultPlugins =
 	{
 		new DefaultEmpathicPlugin()
@@ -25,7 +30,7 @@ public class DefaultEmpathicKernel extends EmpathicKernel{
 	}
 
 	@Override
-	public void startEmpathy() {
+	public void onPostLoad() {
 
 	}
 

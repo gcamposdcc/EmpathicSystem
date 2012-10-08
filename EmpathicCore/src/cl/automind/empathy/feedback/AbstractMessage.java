@@ -61,6 +61,8 @@ public abstract class AbstractMessage implements INamed{
 
 	static public class Context{
 		private String callingRuleName = "";
+		private int targetId = 0;
+		private int targetType = 0;
 		private List<Object> data = new ArrayList<Object>();
 
 		public void setCallingRuleName(String rulename){
@@ -78,10 +80,24 @@ public abstract class AbstractMessage implements INamed{
 		public Context duplicate(){
 			AbstractMessage.Context output =  new AbstractMessage.Context();
 			output.setCallingRuleName(getCallingRuleName());
+			output.setTargetId(getTargetId());
+			output.setTargetType(getTargetType());
 			for (Object data: getData()){
 				output.getData().add(data);
 			}
 			return output;
+		}
+		public int getTargetId() {
+			return targetId;
+		}
+		public void setTargetId(int targetId) {
+			this.targetId = targetId;
+		}
+		public int getTargetType() {
+			return targetType;
+		}
+		public void setTargetType(int targetType) {
+			this.targetType = targetType;
 		}
 	}
 }

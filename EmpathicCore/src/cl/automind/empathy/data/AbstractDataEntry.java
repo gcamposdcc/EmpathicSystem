@@ -1,6 +1,5 @@
 package cl.automind.empathy.data;
 
-
 public abstract class AbstractDataEntry<T> implements Comparable<AbstractDataEntry<T>>{
 	private final int id;
 	private int version;

@@ -89,9 +89,9 @@ public class SqlClassExtractor<T> {
 		int fieldCount = fieldNames.size();
 		// BY ID
 		String updateById = queryBuilder.buildUpdateByIdQuery(idName, fieldNames, fieldCount);
-		ds.getQueryMap().put("selectById", "SELECT * FROM " + ds.getName() + " WHERE "+ idName + " = ?;");
+		ds.getQueryMap().put("selectById", "SELECT * FROM " + ds.getTablename() + " WHERE "+ idName + " = ?;");
 		ds.getDescriptor().addParamToQuery("selectById", idName, 1);
-		ds.getQueryMap().put("deleteById", "DELETE FROM " + ds.getName() + " WHERE "+ idName + " = ?;");
+		ds.getQueryMap().put("deleteById", "DELETE FROM " + ds.getTablename() + " WHERE "+ idName + " = ?;");
 		ds.getDescriptor().addParamToQuery("deleteById", idName, 1);
 		ds.getQueryMap().put("updataById", updateById);
 		// NORMAL
@@ -99,13 +99,13 @@ public class SqlClassExtractor<T> {
 		ds.getQueryMap().put("update", queryBuilder.buildUpdateQuery(fieldNames, fieldCount));
 		ds.getQueryMap().put("delete", queryBuilder.buildDeleteQuery(fieldNames, fieldCount));
 		ds.getQueryMap().put("select", queryBuilder.buildSelectQuery(fieldNames, fieldCount));
-		ds.getQueryMap().put("count", "SELECT count(*) FROM " + ds.getName() + ";");
-		ds.getQueryMap().put("selectAll", "SELECT * FROM " + ds.getName() + ";");
-		ds.getQueryMap().put("drop", "DROP TABLE " + ds.getName() + ";");
+		ds.getQueryMap().put("count", "SELECT count(*) FROM " + ds.getTablename() + ";");
+		ds.getQueryMap().put("selectAll", "SELECT * FROM " + ds.getTablename() + ";");
+		ds.getQueryMap().put("drop", "DROP TABLE " + ds.getTablename() + ";");
 		// CUSTOM
 		ds.getQueryMap().put("updateCustom", queryBuilder.buildUpdateCustomQuery(fieldNames, fieldCount));
-		ds.getQueryMap().put("deleteCustom", "DELETE FROM " + ds.getName());
-		ds.getQueryMap().put("selectCustom", "SELECT * FROM " + ds.getName());
+		ds.getQueryMap().put("deleteCustom", "DELETE FROM " + ds.getTablename());
+		ds.getQueryMap().put("selectCustom", "SELECT * FROM " + ds.getTablename());
 	}
 
 	public static String extractDataSourceName(SqlMetadata metadata, Class<?> templateClass, Class<?> thisClass) {
@@ -117,12 +117,33 @@ public class SqlClassExtractor<T> {
 		}
 		return name;
 	}
+
+	public static String extractDataSourceSchemaName(SqlMetadata metadata) {
+		String name = "";
+		if (metadata != null){
+			name = metadata.schema().trim();
+		}
+		return name;
+	}
+
+	public static boolean extractUsesDynamicName(SqlMetadata metadata) {
+		boolean uses = false;
+		if (metadata != null){
+			uses = metadata.dynamicName();
+		}
+		return uses;
+	}
+	
 	public void extractClassMetadata(){
 		SqlMetadata metadata = getDataSource().getMetadata();
 		if (metadata != null) {
 			if(metadata.namedQueries() != null){
 				for (NamedQuery query: metadata.namedQueries()){
-					getDataSource().getQueryMap().put(query.name(), query.query());
+					getDataSource().getQueryMap().put(
+						query.name(), 
+						getDataSource().usesDynamicName() ? 
+								query.query().replaceAll("#DSNAME#", getDataSource().getTablename()) : 
+								query.query());
 				}
 			}
 		}

@@ -24,18 +24,25 @@ public abstract class AbstractHttpClient implements gcampos.dev.net.IHttpClient{
 	}
 
 	protected String getRequestParamString(){
-		StringBuilder builder = new StringBuilder("?");
+		StringBuilder builder = new StringBuilder("");
         for (Map.Entry<String, String> entry : getParams().entrySet()){
         	builder.append(entry.getKey());
         	builder.append("=");
-        	builder.append(entry.getValue());
+//        	builder.append(entry.getValue());
+        	builder.append(escape(entry.getValue()));
         	builder.append("&");
         }
-        return builder.toString();
+        if (builder.length() > 0) builder.delete(builder.length() - 1, builder.length());
+        String request = builder.toString();
+        System.out.println("Using::" + request);
+        return request;
 	}
 	@Override
 	public String getRequestString() {
-		return getUrl()+getRequestParamString();
+		return getUrl() + "?" + getRequestParamString();
 	}
-
+	public String escape(String s){
+		return Escaper.escape(s);
+	}
+	
 }
